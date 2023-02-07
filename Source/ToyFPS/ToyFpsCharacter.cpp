@@ -3,6 +3,7 @@
 
 #include "ToyFpsCharacter.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
@@ -12,7 +13,7 @@ AToyFpsCharacter::AToyFpsCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	USkeletalMeshComponent* CharacterMeshComponent = GetMesh();
+	/* USkeletalMeshComponent* CharacterMeshComponent = GetMesh();
 
 	if (!CharacterMeshComponent)
 		return;
@@ -51,7 +52,28 @@ AToyFpsCharacter::AToyFpsCharacter()
 	ArmsMeshComponent->SetSkeletalMesh(ArmsObj.Object);
 	ArmsMeshComponent->SetRelativeLocation(FVector(-7.729098, -3.047225, -165.559958));
 	ArmsMeshComponent->SetRelativeRotation(FRotator(-0.080375, -89.856430, -0.083177));
+	ArmsMeshComponent->SetupAttachment(MainCameraComponent);*/
+
+	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
+
+	MainCameraComponent = CreateOptionalDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
+	if (!MainCameraComponent)
+		return;
+
+	MainCameraComponent->SetupAttachment(GetCapsuleComponent());
+	MainCameraComponent->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
+	MainCameraComponent->bUsePawnControlRotation = true;
+
+	ArmsMeshComponent = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("ARMS"));
+
+	if (!ArmsMeshComponent)
+		return;
+
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> ArmsObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Demo/PlayerMannequin/Mesh/Arms.Arms'"));
+	ArmsMeshComponent->SetSkeletalMesh(ArmsObj.Object);
 	ArmsMeshComponent->SetupAttachment(MainCameraComponent);
+	ArmsMeshComponent->SetRelativeLocation(FVector(0.f, 0.f, -150.f));
+	ArmsMeshComponent->SetRelativeRotation(FRotator(0, -90, 0));
 }
 
 // Called when the game starts or when spawned
