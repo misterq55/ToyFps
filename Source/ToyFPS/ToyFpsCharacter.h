@@ -36,6 +36,9 @@ protected:
 	void DoCrouching();
 	void StopCrouching();
 
+	void Sprint();
+	void StopSprinting();
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -55,6 +58,10 @@ public:
 	bool GetSprinting() {
 		return bSprinting;
 	}
+
+private:
+	const float SprintSpeed = 600;
+	const float NormalSpeed = 300.f;
 
 private:
 	UPROPERTY(Category = ToyFpsCharacter, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -85,6 +92,10 @@ private:
 	/** Crouch Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* CrouchAction;
+
+	/** Sprint Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* SprintAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		bool bCrouching = false;

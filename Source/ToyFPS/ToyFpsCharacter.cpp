@@ -4,6 +4,7 @@
 #include "ToyFpsCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 
@@ -16,6 +17,9 @@ AToyFpsCharacter::AToyFpsCharacter()
 	GetCapsuleComponent()->InitCapsuleSize(45.f, 100.f);
 	GetCapsuleComponent()->SetSimulatePhysics(false);
 	GetCapsuleComponent()->SetAreaClassOverride(nullptr);
+
+	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
+	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
 	USkeletalMeshComponent* CharacterMeshComponent = GetMesh();
 
@@ -141,6 +145,18 @@ void AToyFpsCharacter::StopCrouching()
 	UnCrouch();
 }
 
+void AToyFpsCharacter::Sprint()
+{
+	bSprinting = true;
+	GetCharacterMovement()->MaxWalkSpeed = SprintSpeed;
+}
+
+void AToyFpsCharacter::StopSprinting()
+{
+	bSprinting = false;
+	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
+}
+
 // Called to bind functionality to input
 void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -159,7 +175,11 @@ void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 		//Crouching
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AToyFpsCharacter::DoCrouching);
-		// EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopCrouching);
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopCrouching);
+
+		//Sprinting
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Triggered, this, &AToyFpsCharacter::Sprint);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopSprinting);
 	}
 }
 
