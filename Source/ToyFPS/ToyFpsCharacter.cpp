@@ -13,7 +13,11 @@ AToyFpsCharacter::AToyFpsCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	
-	/* USkeletalMeshComponent* CharacterMeshComponent = GetMesh();
+	GetCapsuleComponent()->InitCapsuleSize(45.f, 100.f);
+	GetCapsuleComponent()->SetSimulatePhysics(false);
+	GetCapsuleComponent()->SetAreaClassOverride(nullptr);
+
+	USkeletalMeshComponent* CharacterMeshComponent = GetMesh();
 
 	if (!CharacterMeshComponent)
 		return;
@@ -42,6 +46,7 @@ AToyFpsCharacter::AToyFpsCharacter()
 	MainCameraComponent->SetRelativeLocation(FVector(-5.453166, 9.761212, 6.619132));
 	MainCameraComponent->SetRelativeRotation(FRotator(1.364551, -253.552927, 279.690763));
 	MainCameraComponent->SetupAttachment(CharacterMeshComponent, TEXT("head"));
+	MainCameraComponent->bUsePawnControlRotation = true;
 
 	ArmsMeshComponent = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("ARMS"));
 
@@ -52,9 +57,9 @@ AToyFpsCharacter::AToyFpsCharacter()
 	ArmsMeshComponent->SetSkeletalMesh(ArmsObj.Object);
 	ArmsMeshComponent->SetRelativeLocation(FVector(-7.729098, -3.047225, -165.559958));
 	ArmsMeshComponent->SetRelativeRotation(FRotator(-0.080375, -89.856430, -0.083177));
-	ArmsMeshComponent->SetupAttachment(MainCameraComponent);*/
+	ArmsMeshComponent->SetupAttachment(MainCameraComponent);
 
-	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
+	/*GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 
 	MainCameraComponent = CreateOptionalDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
 	if (!MainCameraComponent)
@@ -73,7 +78,7 @@ AToyFpsCharacter::AToyFpsCharacter()
 	ArmsMeshComponent->SetSkeletalMesh(ArmsObj.Object);
 	ArmsMeshComponent->SetupAttachment(MainCameraComponent);
 	ArmsMeshComponent->SetRelativeLocation(FVector(0.f, 0.f, -150.f));
-	ArmsMeshComponent->SetRelativeRotation(FRotator(0, -90, 0));
+	ArmsMeshComponent->SetRelativeRotation(FRotator(0, -90, 0));*/
 }
 
 // Called when the game starts or when spawned
@@ -124,6 +129,18 @@ void AToyFpsCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
+void AToyFpsCharacter::DoCrouching()
+{
+	/*bCrouching = true;
+	ACharacter::*/Crouch();
+}
+
+void AToyFpsCharacter::StopCrouching()
+{
+	// bCrouching = false;
+	UnCrouch();
+}
+
 // Called to bind functionality to input
 void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -139,6 +156,10 @@ void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 		//Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AToyFpsCharacter::Look);
+
+		//Crouching
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Triggered, this, &AToyFpsCharacter::DoCrouching);
+		// EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopCrouching);
 	}
 }
 

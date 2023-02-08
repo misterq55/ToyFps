@@ -33,9 +33,28 @@ protected:
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
 
+	void DoCrouching();
+	void StopCrouching();
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+public:
+	void SetCrouching(bool InCrouching) {
+		bCrouching = InCrouching;
+	}
+
+	bool GetCrouching() {
+		return bCrouching;
+	}
+
+	void SetSprinting(bool InSprinting) {
+		bSprinting = InSprinting;
+	}
+
+	bool GetSprinting() {
+		return bSprinting;
+	}
 
 private:
 	UPROPERTY(Category = ToyFpsCharacter, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -62,4 +81,14 @@ private:
 	/** Look Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* LookAction;
+
+	/** Crouch Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* CrouchAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		bool bCrouching = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		bool bSprinting = false;
 };
