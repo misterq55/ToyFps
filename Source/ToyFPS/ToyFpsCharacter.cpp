@@ -62,27 +62,6 @@ AToyFpsCharacter::AToyFpsCharacter()
 	ArmsMeshComponent->SetRelativeLocation(FVector(-7.729098, -3.047225, -165.559958));
 	ArmsMeshComponent->SetRelativeRotation(FRotator(-0.080375, -89.856430, -0.083177));
 	ArmsMeshComponent->SetupAttachment(MainCameraComponent);
-
-	/*GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
-
-	MainCameraComponent = CreateOptionalDefaultSubobject<UCameraComponent>(TEXT("CAMERA"));
-	if (!MainCameraComponent)
-		return;
-
-	MainCameraComponent->SetupAttachment(GetCapsuleComponent());
-	MainCameraComponent->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
-	MainCameraComponent->bUsePawnControlRotation = true;
-
-	ArmsMeshComponent = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("ARMS"));
-
-	if (!ArmsMeshComponent)
-		return;
-
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> ArmsObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Demo/PlayerMannequin/Mesh/Arms.Arms'"));
-	ArmsMeshComponent->SetSkeletalMesh(ArmsObj.Object);
-	ArmsMeshComponent->SetupAttachment(MainCameraComponent);
-	ArmsMeshComponent->SetRelativeLocation(FVector(0.f, 0.f, -150.f));
-	ArmsMeshComponent->SetRelativeRotation(FRotator(0, -90, 0));*/
 }
 
 // Called when the game starts or when spawned
@@ -135,13 +114,11 @@ void AToyFpsCharacter::Look(const FInputActionValue& Value)
 
 void AToyFpsCharacter::DoCrouching()
 {
-	/*bCrouching = true;
-	ACharacter::*/Crouch();
+	Crouch();
 }
 
 void AToyFpsCharacter::StopCrouching()
 {
-	// bCrouching = false;
 	UnCrouch();
 }
 
