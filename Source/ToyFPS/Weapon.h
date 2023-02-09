@@ -19,11 +19,41 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void Fire() {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void Reload() {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void Undraw() {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void Draw() {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void Equipe() {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void StopFiring() {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void SecondartAttack() {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void SniperZoom(bool Toggle) {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void HideMuzzleFlash() {}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		virtual void UnHideMuzzleFlash() {}
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 protected:
-	UPROPERTY(Category = ToyFpsCharacter, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "PrimaryWeapon"))
+	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "PrimaryWeapon"))
 		TObjectPtr<USkeletalMeshComponent> PrimaryWeapon;
 };
