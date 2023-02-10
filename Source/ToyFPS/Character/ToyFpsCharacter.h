@@ -76,7 +76,7 @@ private:
 	UPROPERTY(Category = ToyFpsCharacter, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<UCameraComponent> MainCameraComponent;
 
-	UPROPERTY(Category = ToyFpsCharacter, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<USkeletalMeshComponent> ArmsMeshComponent;
 
 	/** MappingContext */
