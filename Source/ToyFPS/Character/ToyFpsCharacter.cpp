@@ -102,6 +102,11 @@ void AToyFpsCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (SpreadCurrent >= SpreadMin)
+	{
+		DecreaseSpread(DeltaTime * SpreadDecreaseSpeed);
+	}
+
 	if (RunningCameraShake == nullptr)
 		return;
 
@@ -223,6 +228,30 @@ void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		//Attacking
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &AToyFpsCharacter::Attack);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopAttacking);
+	}
+}
+
+void AToyFpsCharacter::IncreaseSpread(float InIncreaseAmount)
+{
+	if (SpreadCurrent + InIncreaseAmount >= SpreadMax)
+	{
+		SpreadCurrent = SpreadCurrent + InIncreaseAmount;
+	}
+	else
+	{
+		SpreadCurrent = SpreadMax;
+	}
+}
+
+void AToyFpsCharacter::DecreaseSpread(float InDecreaseAmount)
+{
+	if (SpreadCurrent - InDecreaseAmount <= SpreadMin)
+	{
+		SpreadCurrent = SpreadCurrent - InDecreaseAmount;
+	}
+	else
+	{
+		SpreadCurrent = SpreadMin;
 	}
 }
 

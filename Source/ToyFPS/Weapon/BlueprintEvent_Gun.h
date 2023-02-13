@@ -3,28 +3,28 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Weapon.h"
-#include "BlueprintEvent_Weapon.generated.h"
+#include "Gun.h"
+#include "BlueprintEvent_Gun.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOYFPS_API ABlueprintEvent_Weapon : public AWeapon
+class TOYFPS_API ABlueprintEvent_Gun : public AGun
 {
 	GENERATED_BODY()
-	
+
 public:
-		virtual void Attack();
-		virtual void Reload();
-		virtual void Undraw();
-		virtual void Draw();
-		virtual void Equipe();
-		virtual void StopAttacking();
-		virtual void SecondartAttack();
-		virtual void SniperZoom(bool Toggle);
-		virtual void HideMuzzleFlash();
-		virtual void UnHideMuzzleFlash();
+	virtual void Attack();
+	virtual void Reload();
+	virtual void Undraw();
+	virtual void Draw();
+	virtual void Equipe();
+	virtual void StopAttacking();
+	virtual void SecondartAttack();
+	virtual void SniperZoom(bool Toggle);
+	virtual void HideMuzzleFlash();
+	virtual void UnHideMuzzleFlash();
 
 	UFUNCTION(BlueprintNativeEvent, Category = Weapon)
 		void Attack_BluePrint();
@@ -55,8 +55,4 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, Category = Weapon)
 		void UnhideMuzzleFlash_BluePrint();
-
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-		float bBulletSpread = 0.f;
 };

@@ -65,15 +65,20 @@ public:
 		return bSprinting;
 	}
 
+	void IncreaseSpread(float InIncreaseAmount);
+	void DecreaseSpread(float InDecreaseAmount);
+
 private:
 	const float SprintSpeed = 600;
 	const float NormalSpeed = 300.f;
+	float SpreadDecreaseSpeed = 1.f;
+	
 
 private:
-	UPROPERTY(Category = ToyFpsCharacter, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<USkeletalMeshComponent> HeadMeshComponent;
 
-	UPROPERTY(Category = ToyFpsCharacter, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<UCameraComponent> MainCameraComponent;
 
 	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -113,6 +118,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		bool bSprinting = false;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		bool bAimDownSight = false;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CameraShake, meta = (AllowPrivateAccess = "true"))
 		TSubclassOf<UCameraShakeBase> RunningCameraShake;
 
@@ -123,4 +131,13 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 		TSubclassOf<AWeapon> CurrentWeaponClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
+		float SpreadCurrent = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
+		float SpreadMax = 0.3f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
+		float SpreadMin = 0.f;
 };
