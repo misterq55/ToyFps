@@ -250,11 +250,11 @@ void AToyFpsCharacter::IncreaseSpread(float InIncreaseAmount)
 {
 	if (SpreadCurrent + InIncreaseAmount >= SpreadMax)
 	{
-		SpreadCurrent = SpreadCurrent + InIncreaseAmount;
+		SpreadCurrent = SpreadMax;
 	}
 	else
 	{
-		SpreadCurrent = SpreadMax;
+		SpreadCurrent = SpreadCurrent + InIncreaseAmount;
 	}
 }
 
@@ -262,11 +262,11 @@ void AToyFpsCharacter::DecreaseSpread(float InDecreaseAmount)
 {
 	if (SpreadCurrent - InDecreaseAmount <= SpreadMin)
 	{
-		SpreadCurrent = SpreadCurrent - InDecreaseAmount;
+		SpreadCurrent = SpreadMin;
 	}
 	else
 	{
-		SpreadCurrent = SpreadMin;
+		SpreadCurrent = SpreadCurrent - InDecreaseAmount;
 	}
 }
 
