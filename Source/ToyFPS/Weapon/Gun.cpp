@@ -5,9 +5,4 @@
 
 AGun::AGun()
 {
-	Muzzle = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("Muzzle"));
-	Eject = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("Eject"));
-
-	Muzzle->SetupAttachment(PrimaryWeapon);
-	Eject->SetupAttachment(Muzzle);
 }

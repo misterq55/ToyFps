@@ -10,6 +10,11 @@ AWeapon::AWeapon()
 	PrimaryActorTick.bCanEverTick = true;
 
 	PrimaryWeapon = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("PrimaryWeapon"));
+	Muzzle = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Muzzle"));
+	Eject = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Eject"));
+
+	Muzzle->SetupAttachment(PrimaryWeapon);
+	Eject->SetupAttachment(Muzzle);
 }
 
 // Called when the game starts or when spawned

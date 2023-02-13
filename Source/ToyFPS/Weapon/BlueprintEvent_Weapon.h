@@ -55,8 +55,4 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, Category = Weapon)
 		void UnhideMuzzleFlash_BluePrint();
-
-private:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-		float bBulletSpread = 0.f;
 };

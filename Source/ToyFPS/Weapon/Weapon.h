@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "ToyFPS/ToyFpsDefine.h"
 #include "Weapon.generated.h"
 
 UCLASS()
@@ -55,6 +56,34 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
+		float bBulletSpread = 0.f;
+
 	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "PrimaryWeapon"))
 		TObjectPtr<USkeletalMeshComponent> PrimaryWeapon;
+
+	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "Muzzle"))
+		TObjectPtr<USceneComponent> Muzzle;
+
+	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "Eject"))
+		TObjectPtr<USceneComponent> Eject;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		FRotator OGControllerRotation;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		FRotator PostRecoilRotation;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		float MaxRecoilThreshold;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		float ReloadTime;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		float BulletSpread;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		FWeaponData WeaponData;
 };

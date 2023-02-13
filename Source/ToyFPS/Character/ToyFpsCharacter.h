@@ -45,6 +45,8 @@ protected:
 	void Attack();
 	void StopAttacking();
 
+	void Reload();
+
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -65,8 +67,11 @@ public:
 		return bSprinting;
 	}
 
-	void IncreaseSpread(float InIncreaseAmount);
-	void DecreaseSpread(float InDecreaseAmount);
+	UFUNCTION(BlueprintCallable, Category = ToyFpsCharacter)
+		void IncreaseSpread(float InIncreaseAmount);
+	
+	UFUNCTION(BlueprintCallable, Category = ToyFpsCharacter)
+		void DecreaseSpread(float InDecreaseAmount);
 
 private:
 	const float SprintSpeed = 600;
@@ -112,6 +117,14 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* AttackAction;
 
+	/** Reload Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* ReloadAction;
+
+	/** Meele Attack Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* MeeleAttackAction;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		bool bCrouching = false;
 
@@ -120,6 +133,9 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		bool bAimDownSight = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input, meta = (AllowPrivateAccess = "true"))
+		bool bReloading = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CameraShake, meta = (AllowPrivateAccess = "true"))
 		TSubclassOf<UCameraShakeBase> RunningCameraShake;

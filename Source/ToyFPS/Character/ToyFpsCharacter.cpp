@@ -201,6 +201,18 @@ void AToyFpsCharacter::StopAttacking()
 	CurrentWeapon->StopAttacking();
 }
 
+void AToyFpsCharacter::Reload()
+{
+	if (!CurrentWeaponClass)
+		return;
+
+	AWeapon* CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
+	if (!CurrentWeapon)
+		return;
+
+	CurrentWeapon->Reload();
+}
+
 // Called to bind functionality to input
 void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -228,6 +240,9 @@ void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		//Attacking
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &AToyFpsCharacter::Attack);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopAttacking);
+
+		//Reloading
+		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &AToyFpsCharacter::Reload);
 	}
 }
 

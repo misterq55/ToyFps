@@ -16,11 +16,4 @@ class TOYFPS_API AGun : public AWeapon
 	
 public:
 	AGun();
-
-protected:
-	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = Muzzle))
-		TObjectPtr<USceneComponent> Muzzle;
-
-	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = Eject))
-		TObjectPtr<USceneComponent> Eject;
 };
