@@ -7,6 +7,8 @@
 #include "ToyFPS/ToyFpsDefine.h"
 #include "Weapon.generated.h"
 
+class UAnimSequenceBase;
+
 UCLASS()
 class TOYFPS_API AWeapon : public AActor
 {
@@ -86,4 +88,25 @@ protected:
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FWeaponData WeaponData;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeoponJumpSequence1 = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeoponJumpSequence2 = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeoponJumpSequence3 = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeoponWalk = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeaponRun = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UBlendSpace* BlendSpace_WeaponIdle = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UBlendSpace* BlendSpace_WeaponAdsIdle = nullptr;
 };

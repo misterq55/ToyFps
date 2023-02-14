@@ -179,6 +179,9 @@ void AToyFpsCharacter::StopSprinting()
 
 void AToyFpsCharacter::Attack()
 {
+	if (bSprinting || bReloading)
+		return;
+
 	if (!CurrentWeaponClass)
 		return;
 

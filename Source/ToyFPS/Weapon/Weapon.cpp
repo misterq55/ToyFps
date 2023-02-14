@@ -2,6 +2,8 @@
 
 
 #include "Weapon.h"
+#include "Animation/AnimSequence.h"
+#include "Animation/BlendSpace.h"
 
 // Sets default values
 AWeapon::AWeapon()
