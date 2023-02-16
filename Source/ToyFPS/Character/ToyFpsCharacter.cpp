@@ -277,6 +277,9 @@ void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &AToyFpsCharacter::Attack);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopAttacking);
 
+		//Reload
+		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &AToyFpsCharacter::Reload);
+
 		//Aiming Down Sight
 		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Started, this, &AToyFpsCharacter::DoAimimgDownSight);
 		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopAimingDownSight);

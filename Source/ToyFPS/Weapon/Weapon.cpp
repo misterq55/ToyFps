@@ -8,6 +8,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Camera/CameraComponent.h"
+#include "Engine/DamageEvents.h"
 #include "ToyFPS/Character/ToyFpsCharacter.h"
 
 // Sets default values
@@ -54,6 +55,14 @@ void AWeapon::LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRot
 	OutImactPoint = HitResult.ImpactPoint;
 
 	ProjectileRotation = UKismetMathLibrary::FindLookAtRotation(HitResult.TraceStart, HitResult.TraceEnd);
+
+	if (HitResult.GetActor())
+	{
+		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+
+		FDamageEvent DmgEvent;
+		HitResult.GetActor()->TakeDamage(AttackDamage, DmgEvent, PlayerController, HitResult.GetActor());
+	}
 }
 
 void AWeapon::Tick(float DeltaTime)
