@@ -46,6 +46,9 @@ protected:
 	void StopAttacking();
 
 	void Reload();
+	
+	void DoAimimgDownSight();
+	void StopAimingDownSight();
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -65,6 +68,22 @@ public:
 
 	bool GetSprinting() {
 		return bSprinting;
+	}
+
+	float GetSpreadCurrent() {
+		return SpreadCurrent;
+	}
+
+	bool GetAimDownSight() {
+		return bAimDownSight;
+	}
+
+	void SetAimDownSight(bool InAimDownSight) {
+		bAimDownSight = InAimDownSight;
+	}
+
+	TObjectPtr<UCameraComponent> GetMainCamera() {
+		return MainCameraComponent;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = ToyFpsCharacter)
@@ -124,6 +143,10 @@ private:
 	/** Meele Attack Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* MeeleAttackAction;
+
+	/** Aim Down Sight Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+		class UInputAction* AimDownSightAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		bool bCrouching = false;

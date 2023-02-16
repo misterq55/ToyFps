@@ -37,4 +37,5 @@ void UArmsAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		EnableJump = false;
 
 	IsSprinting = OwningCharacter->GetSprinting();
+	AimDownSight = OwningCharacter->GetAimDownSight();
 }

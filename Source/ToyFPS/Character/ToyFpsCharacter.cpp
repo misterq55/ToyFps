@@ -216,6 +216,39 @@ void AToyFpsCharacter::Reload()
 	CurrentWeapon->Reload();
 }
 
+void AToyFpsCharacter::DoAimimgDownSight()
+{
+	if (bReloading)
+		return;
+
+	bAimDownSight = true;
+
+	if (!CurrentWeaponClass)
+		return;
+
+	AWeapon* CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
+	if (!CurrentWeapon)
+		return;
+
+	CurrentWeapon->SniperZoom(bAimDownSight);
+
+	CurrentWeapon->GetBulletSpread();
+}
+
+void AToyFpsCharacter::StopAimingDownSight()
+{
+	if (bReloading)
+		return;
+
+	bAimDownSight = false;
+
+	AWeapon* CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
+	if (!CurrentWeapon)
+		return;
+
+	CurrentWeapon->SniperZoom(bAimDownSight);
+}
+
 // Called to bind functionality to input
 void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -244,8 +277,9 @@ void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Started, this, &AToyFpsCharacter::Attack);
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopAttacking);
 
-		//Reloading
-		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &AToyFpsCharacter::Reload);
+		//Aiming Down Sight
+		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Started, this, &AToyFpsCharacter::DoAimimgDownSight);
+		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopAimingDownSight);
 	}
 }
 

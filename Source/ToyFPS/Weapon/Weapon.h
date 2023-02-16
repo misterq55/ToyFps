@@ -53,14 +53,21 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 		virtual void UnHideMuzzleFlash() {}
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		void LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation);
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	float GetBulletSpread() {
+		return BulletSpread;
+	}
+
 protected:
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-		float bBulletSpread = 0.f;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon, meta = (AllowPrivateAccess = "true"))
+		float BulletSpread = 0.f;
 
 	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "PrimaryWeapon"))
 		TObjectPtr<USkeletalMeshComponent> PrimaryWeapon;
@@ -82,9 +89,6 @@ protected:
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float ReloadTime;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float BulletSpread;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FWeaponData WeaponData;
