@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Camera/CameraShakeBase.h"
 #include "InputActionValue.h"
 #include "ToyFpsCharacter.generated.h"
 

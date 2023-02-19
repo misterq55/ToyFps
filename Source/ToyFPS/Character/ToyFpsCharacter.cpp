@@ -2,6 +2,8 @@
 
 
 #include "ToyFpsCharacter.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/ChildActorComponent.h"

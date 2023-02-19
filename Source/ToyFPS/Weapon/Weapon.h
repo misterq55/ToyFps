@@ -10,7 +10,7 @@
 class UAnimSequenceBase;
 
 UCLASS()
-class TOYFPS_API AWeapon : public AActor
+class TOYFPS_API AWeapon : public AActor, public IInterface_AssetUserData
 {
 	GENERATED_BODY()
 	
