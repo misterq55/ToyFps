@@ -170,6 +170,9 @@ private:
 		TObjectPtr<UChildActorComponent> CurrentWeaponComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
+		TObjectPtr<AWeapon> CurrentWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 		TSubclassOf<AWeapon> CurrentWeaponClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))

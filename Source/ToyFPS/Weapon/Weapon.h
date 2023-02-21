@@ -56,6 +56,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 		void LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation);
 
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+		void ReloadAmmo();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;

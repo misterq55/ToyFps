@@ -91,12 +91,14 @@ void AToyFpsCharacter::BeginPlay()
 		}
 	}
 
-	if (!CurrentWeaponClass)
-		return;
+	if (CurrentWeaponClass)
+	{
+		CurrentWeaponComponent->CreateChildActor();
+		CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
+	}
 
-	CurrentWeaponComponent->CreateChildActor();
-
-	AActor* SpawnedWeapon = CurrentWeaponComponent->GetChildActor();
+	/*if (CurrentWeapon)
+		CurrentWeapon->AttachToComponent(ArmsMeshComponent, FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));*/
 }
 
 // Called every frame
@@ -187,7 +189,6 @@ void AToyFpsCharacter::Attack()
 	if (!CurrentWeaponClass)
 		return;
 
-	AWeapon* CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
 	if (!CurrentWeapon)
 		return;
 
@@ -199,7 +200,6 @@ void AToyFpsCharacter::StopAttacking()
 	if (!CurrentWeaponClass)
 		return;
 
-	AWeapon* CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
 	if (!CurrentWeapon)
 		return;
 
@@ -211,7 +211,6 @@ void AToyFpsCharacter::Reload()
 	if (!CurrentWeaponClass)
 		return;
 
-	AWeapon* CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
 	if (!CurrentWeapon)
 		return;
 
@@ -228,7 +227,6 @@ void AToyFpsCharacter::DoAimimgDownSight()
 	if (!CurrentWeaponClass)
 		return;
 
-	AWeapon* CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
 	if (!CurrentWeapon)
 		return;
 
@@ -244,7 +242,6 @@ void AToyFpsCharacter::StopAimingDownSight()
 
 	bAimDownSight = false;
 
-	AWeapon* CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
 	if (!CurrentWeapon)
 		return;
 

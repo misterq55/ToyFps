@@ -65,6 +65,11 @@ void AWeapon::LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRot
 	}
 }
 
+void AWeapon::ReloadAmmo()
+{
+	WeaponData.AmmoCount = WeaponData.MaxAmmo;
+}
+
 void AWeapon::Tick(float DeltaTime)
 {
 }
