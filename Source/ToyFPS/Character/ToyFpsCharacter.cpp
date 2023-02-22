@@ -12,6 +12,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "ToyFPS/Weapon/Weapon.h"
+#include "ToyFPS/AnimInstance/ArmsAnimInstance.h"
 
 // Sets default values
 AToyFpsCharacter::AToyFpsCharacter()
@@ -91,14 +92,11 @@ void AToyFpsCharacter::BeginPlay()
 		}
 	}
 
-	if (CurrentWeaponClass)
-	{
-		CurrentWeaponComponent->CreateChildActor();
-		CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
-	}
+	CurrentWeaponComponent->CreateChildActor();
+	CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
 
-	/*if (CurrentWeapon)
-		CurrentWeapon->AttachToComponent(ArmsMeshComponent, FAttachmentTransformRules::KeepRelativeTransform, TEXT("WeaponSocket"));*/
+	UArmsAnimInstance* ArmsAnimInstance = Cast<UArmsAnimInstance>(ArmsMeshComponent->GetAnimInstance());
+	ArmsAnimInstance->SetWeaponData(CurrentWeapon);
 }
 
 // Called every frame

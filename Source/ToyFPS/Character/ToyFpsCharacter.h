@@ -87,6 +87,10 @@ public:
 		return MainCameraComponent;
 	}
 
+	TObjectPtr<AWeapon> GetCurrentWeapon() {
+		return CurrentWeapon;
+	}
+
 	UFUNCTION(BlueprintCallable, Category = ToyFpsCharacter)
 		void IncreaseSpread(float InIncreaseAmount);
 	

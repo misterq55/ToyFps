@@ -67,6 +67,10 @@ public:
 		return BulletSpread;
 	}
 
+	FWeaponData& GetWeaponData() {
+		return WeaponData;
+	}
+
 protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon, meta = (AllowPrivateAccess = "true"))

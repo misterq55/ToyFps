@@ -3,6 +3,7 @@
 
 #include "ArmsAnimInstance.h"
 #include "ToyFPS/Character/ToyFpsCharacter.h"
+#include "ToyFPS/Weapon/Weapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 void UArmsAnimInstance::NativeInitializeAnimation()
@@ -38,4 +39,21 @@ void UArmsAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	IsSprinting = OwningCharacter->GetSprinting();
 	AimDownSight = OwningCharacter->GetAimDownSight();
+}
+
+void UArmsAnimInstance::SetWeaponData(AWeapon* InWeapon)
+{
+	AWeapon* OwnedWeapon = InWeapon;
+
+	if (!OwnedWeapon)
+		return;
+
+	FWeaponData& WeaponData = OwnedWeapon->GetWeaponData();
+	BlendSpace_WeaponIdle = WeaponData.BlendSpace_WeaponIdle;
+	BlendSpace_WeaponAdsIdle = WeaponData.BlendSpace_WeaponAdsIdle;
+	AnimSequence_WeoponJumpSequence1 = WeaponData.AnimSequence_WeoponJumpSequence1;
+	AnimSequence_WeoponJumpSequence2 = WeaponData.AnimSequence_WeoponJumpSequence2;
+	AnimSequence_WeoponJumpSequence3 = WeaponData.AnimSequence_WeoponJumpSequence3;
+	AnimSequence_WeoponWalk = WeaponData.AnimSequence_WeoponWalk;
+	AnimSequence_WeaponRun = WeaponData.AnimSequence_WeaponRun;
 }

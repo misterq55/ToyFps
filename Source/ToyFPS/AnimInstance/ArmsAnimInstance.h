@@ -11,6 +11,8 @@
  */
 
 class AToyFpsCharacter;
+class AWeapon;
+
 UCLASS()
 class TOYFPS_API UArmsAnimInstance : public UAnimInstance
 {
@@ -19,6 +21,7 @@ class TOYFPS_API UArmsAnimInstance : public UAnimInstance
 public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+	void SetWeaponData(AWeapon* InWeapon);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)
@@ -44,4 +47,25 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)
 		bool EnableJump = false;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeoponJumpSequence1 = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeoponJumpSequence2 = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeoponJumpSequence3 = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeoponWalk = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		UAnimSequenceBase* AnimSequence_WeaponRun = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		UBlendSpace* BlendSpace_WeaponIdle = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+		UBlendSpace* BlendSpace_WeaponAdsIdle = nullptr;
 };
