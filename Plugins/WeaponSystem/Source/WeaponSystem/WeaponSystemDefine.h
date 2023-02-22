@@ -1,9 +1,9 @@
 #pragma once
 #include "CoreMinimal.h"
-#include "ToyFpsDefine.generated.h"
+#include "WeaponSystemDefine.generated.h"
 
 USTRUCT(BlueprintType)
-struct TOYFPS_API FWeaponData
+struct WEAPONSYSTEM_API FWeaponData
 {
 	GENERATED_BODY()
 	
@@ -14,10 +14,10 @@ struct TOYFPS_API FWeaponData
 		float AttackDamage = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		int32 AmmoCount;
+		int32 AmmoCount = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		int32 MaxAmmo;
+		int32 MaxAmmo = 0;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
 		FTransform MuzzleTransform;
@@ -26,17 +26,19 @@ struct TOYFPS_API FWeaponData
 		FTransform EjectTransform;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		float ReloadTime;
+		float ReloadTime = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		float BuleetSpread;
+		float BulletSpread = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		float UndrawTime;
+		float UndrawTime = 0.f;
 
-	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", DisplayName = "PrimaryWeapon"))
-		// TObjectPtr<USkeletalMesh> PrimaryWeaponMesh;
-		USkeletalMesh* PrimaryWeaponMesh;
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TObjectPtr<USkeletalMesh> WeaponMesh;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TObjectPtr<UStaticMesh> WeaponPickUpMesh;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UAnimSequenceBase* AnimSequence_WeoponJumpSequence1 = nullptr;

@@ -8,7 +8,7 @@
 /**
  * 
  */
-class TOYFPS_API FWeaponEditor : public FAssetEditorToolkit
+class WEAPONSYSTEM_API FWeaponEditor : public FAssetEditorToolkit
 {
 public:
 	void InitEditor(const TArray<UObject*>& InObjects);

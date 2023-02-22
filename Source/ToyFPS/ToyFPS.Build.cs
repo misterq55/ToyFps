@@ -14,7 +14,7 @@ public class ToyFPS : ModuleRules
 			new string[] { 
 				"Slate",
 				"SlateCore",
-				"UnrealEd", 
+				"WeaponSystem",
 			});
 
 		// Uncomment if you are using Slate UI

@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "ToyFPS/ToyFpsDefine.h"
+#include "WeaponSystem/WeaponSystemDefine.h"
 #include "Weapon.generated.h"
 
 class UAnimSequenceBase;
 
 UCLASS()
-class TOYFPS_API AWeapon : public AActor, public IInterface_AssetUserData
+class WEAPONSYSTEM_API AWeapon : public AActor
 {
 	GENERATED_BODY()
 	
@@ -62,19 +62,12 @@ public:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	float GetBulletSpread() {
-		return BulletSpread;
-	}
-
+	
 	FWeaponData& GetWeaponData() {
 		return WeaponData;
 	}
 
 protected:
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-		float BulletSpread = 0.f;
 
 	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "PrimaryWeapon"))
 		TObjectPtr<USkeletalMeshComponent> PrimaryWeapon;
@@ -95,32 +88,5 @@ protected:
 		float MaxRecoilThreshold;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float ReloadTime;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float AttackDamage = 0.f;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FWeaponData WeaponData;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponJumpSequence1 = nullptr;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponJumpSequence2 = nullptr;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponJumpSequence3 = nullptr;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponWalk = nullptr;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeaponRun = nullptr;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UBlendSpace* BlendSpace_WeaponIdle = nullptr;
-
-	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UBlendSpace* BlendSpace_WeaponAdsIdle = nullptr;
 };

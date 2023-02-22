@@ -1,6 +1,6 @@
 #include "WeaponAssetAction.h"
-#include "ToyFPS/Weapon/Weapon.h"
-#include "ToyFps/Editor/WeaponEditor/WeaponEditor.h"
+#include "WeaponSystem/Weapon/Weapon.h"
+#include "WeaponSystem/WeaponEditor/WeaponEditor.h"
 
 FText FWeaponAssetAction::GetName() const
 {

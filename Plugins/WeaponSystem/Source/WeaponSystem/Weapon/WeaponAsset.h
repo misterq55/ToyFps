@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
-#include "ToyFPS/ToyFpsDefine.h"
+#include "WeaponSystem/WeaponSystemDefine.h"
 #include "WeaponAsset.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOYFPS_API UWeaponAsset : public UDataAsset
+class WEAPONSYSTEM_API UWeaponAsset : public UDataAsset
 {
 	GENERATED_BODY()
 	

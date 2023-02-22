@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class TOYFPS_API UWeaponAssetFactory : public UFactory
+class WEAPONSYSTEM_API UWeaponAssetFactory : public UFactory
 {
 	GENERATED_UCLASS_BODY()
 

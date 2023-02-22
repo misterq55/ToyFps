@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Weapon.h"
+#include "WeaponSystem/Weapon/Weapon.h"
 #include "BlueprintEvent_Weapon.generated.h"
 
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class TOYFPS_API ABlueprintEvent_Weapon : public AWeapon
 {
 	GENERATED_BODY()
@@ -25,6 +25,16 @@ public:
 		virtual void SniperZoom(bool Toggle);
 		virtual void HideMuzzleFlash();
 		virtual void UnHideMuzzleFlash();
+
+		UFUNCTION(BlueprintCallable, Category = Weapon)
+			float GetBulletSpread() {
+			return WeaponData.BulletSpread;
+		}
+
+		UFUNCTION(BlueprintCallable, Category = Weapon)
+			float GetReloadTime() {
+			return WeaponData.ReloadTime;
+		}
 
 	UFUNCTION(BlueprintNativeEvent, Category = Weapon)
 		void Attack_BluePrint();

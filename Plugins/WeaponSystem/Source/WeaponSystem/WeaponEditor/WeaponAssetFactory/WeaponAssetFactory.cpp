@@ -2,7 +2,7 @@
 
 
 #include "WeaponAssetFactory.h"
-#include "ToyFPS/Weapon/WeaponAsset.h"
+#include "WeaponSystem/Weapon/WeaponAsset.h"
 
 UWeaponAssetFactory::UWeaponAssetFactory(const FObjectInitializer& ObjectInitializer)
 	:Super(ObjectInitializer)

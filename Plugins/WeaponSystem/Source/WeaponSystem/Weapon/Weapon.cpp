@@ -9,7 +9,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/DamageEvents.h"
-#include "ToyFPS/Character/ToyFpsCharacter.h"
+// #include "ToyFPS/Character/ToyFpsCharacter.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -30,18 +30,21 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	PrimaryWeapon->SetSkeletalMesh(WeaponData.WeaponMesh);
+	Muzzle->SetRelativeTransform(WeaponData.MuzzleTransform);
+	Eject->SetRelativeTransform(WeaponData.EjectTransform);
 }
 
 void AWeapon::LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation)
 {
-	AToyFpsCharacter* ToyFpsCharacter = Cast<AToyFpsCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	/*AToyFpsCharacter* ToyFpsCharacter = Cast<AToyFpsCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (!ToyFpsCharacter)
 		return;
 
 	FVector StartLocation = ToyFpsCharacter->GetMainCamera()->GetComponentLocation();
 	FVector ForwardVector = ToyFpsCharacter->GetMainCamera()->GetForwardVector() * 20000.f;
 
-	float Max = ToyFpsCharacter->GetSpreadCurrent() * 10000.f + BulletSpread;
+	float Max = ToyFpsCharacter->GetSpreadCurrent() * 10000.f + WeaponData.BulletSpread;
 	float Min = Max * -1.f;
 
 	FVector EndLocation = FVector(UKismetMathLibrary::RandomFloatInRange(Min, Max), UKismetMathLibrary::RandomFloatInRange(Min, Max), UKismetMathLibrary::RandomFloatInRange(Min, Max)) + ForwardVector;
@@ -61,8 +64,8 @@ void AWeapon::LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRot
 		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 
 		FDamageEvent DmgEvent;
-		HitResult.GetActor()->TakeDamage(AttackDamage, DmgEvent, PlayerController, HitResult.GetActor());
-	}
+		HitResult.GetActor()->TakeDamage(WeaponData.AttackDamage, DmgEvent, PlayerController, HitResult.GetActor());
+	}*/
 }
 
 void AWeapon::ReloadAmmo()

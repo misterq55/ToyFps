@@ -11,7 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "ToyFPS/Weapon/Weapon.h"
+#include "WeaponSystem/Weapon/Weapon.h"
 #include "ToyFPS/AnimInstance/ArmsAnimInstance.h"
 
 // Sets default values
@@ -229,8 +229,6 @@ void AToyFpsCharacter::DoAimimgDownSight()
 		return;
 
 	CurrentWeapon->SniperZoom(bAimDownSight);
-
-	CurrentWeapon->GetBulletSpread();
 }
 
 void AToyFpsCharacter::StopAimingDownSight()
