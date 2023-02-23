@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "WeaponSystem/Weapon/Weapon.h"
+#include "Weapon.h"
 #include "BlueprintEvent_Weapon.generated.h"
 
 /**

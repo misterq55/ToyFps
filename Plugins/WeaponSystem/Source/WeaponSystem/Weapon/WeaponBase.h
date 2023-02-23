@@ -5,18 +5,16 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "WeaponSystem/WeaponSystemDefine.h"
-#include "Weapon.generated.h"
-
-class UAnimSequenceBase;
+#include "WeaponBase.generated.h"
 
 UCLASS()
-class WEAPONSYSTEM_API AWeapon : public AActor
+class WEAPONSYSTEM_API AWeaponBase : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AWeapon();
+	AWeaponBase();
 
 protected:
 	// Called when the game starts or when spawned
@@ -54,7 +52,7 @@ public:
 		virtual void UnHideMuzzleFlash() {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-		void LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation);
+		virtual void LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation) {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 		void ReloadAmmo();
@@ -62,10 +60,13 @@ public:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-	
+
 	FWeaponData& GetWeaponData() {
 		return WeaponData;
 	}
+
+	void SetWeaponData(FWeaponData InWeaponData);
+	void ResetWeapon();
 
 protected:
 

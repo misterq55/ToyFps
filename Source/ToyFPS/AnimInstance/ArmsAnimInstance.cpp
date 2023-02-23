@@ -3,7 +3,7 @@
 
 #include "ArmsAnimInstance.h"
 #include "ToyFPS/Character/ToyFpsCharacter.h"
-#include "WeaponSystem/Weapon/Weapon.h"
+#include "ToyFPS/Weapon/Weapon.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 void UArmsAnimInstance::NativeInitializeAnimation()

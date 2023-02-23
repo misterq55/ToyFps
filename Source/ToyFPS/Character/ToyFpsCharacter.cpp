@@ -6,13 +6,12 @@
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Components/ChildActorComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "WeaponSystem/Weapon/Weapon.h"
-#include "ToyFPS/AnimInstance/ArmsAnimInstance.h"
+#include "Components/ChildActorComponent.h"
+#include "ToyFPS/Weapon/Weapon.h"
 
 // Sets default values
 AToyFpsCharacter::AToyFpsCharacter()
@@ -68,14 +67,6 @@ AToyFpsCharacter::AToyFpsCharacter()
 	ArmsMeshComponent->SetRelativeLocation(FVector(-7.729098, -3.047225, -165.559958));
 	ArmsMeshComponent->SetRelativeRotation(FRotator(-0.080375, -89.856430, -0.083177));
 	ArmsMeshComponent->SetupAttachment(MainCameraComponent);
-
-	CurrentWeaponComponent = CreateOptionalDefaultSubobject<UChildActorComponent>(TEXT("Weapon"));
-
-	if (!CurrentWeaponComponent)
-		return;
-
-	CurrentWeaponComponent->SetChildActorClass(CurrentWeaponClass);
-	CurrentWeaponComponent->SetupAttachment(ArmsMeshComponent, TEXT("WeaponSocket"));
 }
 
 // Called when the game starts or when spawned
@@ -91,12 +82,6 @@ void AToyFpsCharacter::BeginPlay()
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
 	}
-
-	CurrentWeaponComponent->CreateChildActor();
-	CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
-
-	UArmsAnimInstance* ArmsAnimInstance = Cast<UArmsAnimInstance>(ArmsMeshComponent->GetAnimInstance());
-	ArmsAnimInstance->SetWeaponData(CurrentWeapon);
 }
 
 // Called every frame
@@ -184,9 +169,6 @@ void AToyFpsCharacter::Attack()
 	if (bSprinting || bReloading)
 		return;
 
-	if (!CurrentWeaponClass)
-		return;
-
 	if (!CurrentWeapon)
 		return;
 
@@ -195,9 +177,6 @@ void AToyFpsCharacter::Attack()
 
 void AToyFpsCharacter::StopAttacking()
 {
-	if (!CurrentWeaponClass)
-		return;
-
 	if (!CurrentWeapon)
 		return;
 
@@ -206,9 +185,6 @@ void AToyFpsCharacter::StopAttacking()
 
 void AToyFpsCharacter::Reload()
 {
-	if (!CurrentWeaponClass)
-		return;
-
 	if (!CurrentWeapon)
 		return;
 
@@ -221,9 +197,6 @@ void AToyFpsCharacter::DoAimimgDownSight()
 		return;
 
 	bAimDownSight = true;
-
-	if (!CurrentWeaponClass)
-		return;
 
 	if (!CurrentWeapon)
 		return;

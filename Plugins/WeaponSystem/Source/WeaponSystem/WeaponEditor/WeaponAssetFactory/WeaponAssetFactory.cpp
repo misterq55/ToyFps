@@ -19,5 +19,5 @@ UObject* UWeaponAssetFactory::FactoryCreateNew(UClass* InClass, UObject* InParen
 
 bool UWeaponAssetFactory::ShouldShowInNewMenu() const
 {
-	return false;
+	return true;
 }

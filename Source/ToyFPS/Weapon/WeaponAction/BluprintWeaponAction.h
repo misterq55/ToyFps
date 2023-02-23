@@ -10,7 +10,7 @@
  */
 
 UCLASS(BlueprintType, Blueprintable)
-class WEAPONSYSTEM_API UBluprintWeaponAction : public UWeaponAction
+class TOYFPS_API UBluprintWeaponAction : public UWeaponAction
 {
 	GENERATED_BODY()
 

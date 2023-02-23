@@ -20,5 +20,6 @@ public:
 		return WeaponData;
 	}
 protected:
+	UPROPERTY(EditDefaultsOnly)
 	FWeaponData WeaponData;
 };

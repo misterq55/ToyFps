@@ -9,7 +9,7 @@
 #include "Kismet/KismetSystemLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/DamageEvents.h"
-// #include "ToyFPS/Character/ToyFpsCharacter.h"
+#include "ToyFPS/Character/ToyFpsCharacter.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -30,14 +30,12 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	PrimaryWeapon->SetSkeletalMesh(WeaponData.WeaponMesh);
-	Muzzle->SetRelativeTransform(WeaponData.MuzzleTransform);
-	Eject->SetRelativeTransform(WeaponData.EjectTransform);
+	ResetWeapon();
 }
 
 void AWeapon::LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation)
 {
-	/*AToyFpsCharacter* ToyFpsCharacter = Cast<AToyFpsCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	AToyFpsCharacter* ToyFpsCharacter = Cast<AToyFpsCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (!ToyFpsCharacter)
 		return;
 
@@ -65,13 +63,13 @@ void AWeapon::LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRot
 
 		FDamageEvent DmgEvent;
 		HitResult.GetActor()->TakeDamage(WeaponData.AttackDamage, DmgEvent, PlayerController, HitResult.GetActor());
-	}*/
+	}
 }
 
-void AWeapon::ReloadAmmo()
-{
-	WeaponData.AmmoCount = WeaponData.MaxAmmo;
-}
+//void AWeapon::ReloadAmmo()
+//{
+//	WeaponData.AmmoCount = WeaponData.MaxAmmo;
+//}
 
 void AWeapon::Tick(float DeltaTime)
 {

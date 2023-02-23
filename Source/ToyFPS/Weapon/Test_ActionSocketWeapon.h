@@ -13,7 +13,7 @@
 class UWeaponAction;
 
 UCLASS()
-class WEAPONSYSTEM_API ATest_ActionSocketWeapon : public AWeapon
+class TOYFPS_API ATest_ActionSocketWeapon : public AWeapon
 {
 	GENERATED_BODY()
 	

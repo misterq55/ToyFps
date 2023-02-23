@@ -39,6 +39,7 @@ public class WeaponSystem : ModuleRules
 				"Slate",
 				"SlateCore",
 				"UnrealEd", 
+				"KismetWidgets",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

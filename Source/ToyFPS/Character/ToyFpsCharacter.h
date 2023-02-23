@@ -103,7 +103,7 @@ private:
 	float SpreadDecreaseSpeed = 1.f;
 	
 
-private:
+protected:
 	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<USkeletalMeshComponent> HeadMeshComponent;
 
@@ -171,13 +171,7 @@ private:
 	bool bRunningCameraShake = false;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-		TObjectPtr<UChildActorComponent> CurrentWeaponComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<AWeapon> CurrentWeapon;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-		TSubclassOf<AWeapon> CurrentWeaponClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
 		float SpreadCurrent = 0.f;

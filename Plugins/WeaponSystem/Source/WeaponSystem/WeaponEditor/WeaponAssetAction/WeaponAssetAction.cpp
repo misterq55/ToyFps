@@ -1,15 +1,16 @@
 #include "WeaponAssetAction.h"
-#include "WeaponSystem/Weapon/Weapon.h"
+#include "WeaponSystem/Weapon/WeaponAsset.h"
 #include "WeaponSystem/WeaponEditor/WeaponEditor.h"
+
 
 FText FWeaponAssetAction::GetName() const
 {
-	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_Weapon", "Weapon Asset");
+	return INVTEXT("Weapon");
 }
 
 UClass* FWeaponAssetAction::GetSupportedClass() const
 {
-	return AWeapon::StaticClass();
+	return UWeaponAsset::StaticClass();
 }
 
 uint32 FWeaponAssetAction::GetCategories()
@@ -26,3 +27,5 @@ void FWeaponAssetAction::OpenAssetEditor(const TArray<UObject*>& InObjects, TSha
 {
 	MakeShared<FWeaponEditor>()->InitEditor(InObjects);
 }
+
+
