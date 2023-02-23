@@ -11,7 +11,7 @@
  */
 
 class AToyFpsCharacter;
-class AWeapon;
+class AWeaponBase;
 
 UCLASS()
 class TOYFPS_API UArmsAnimInstance : public UAnimInstance
@@ -21,7 +21,7 @@ class TOYFPS_API UArmsAnimInstance : public UAnimInstance
 public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
-	void SetWeaponData(AWeapon* InWeapon);
+	void SetWeaponData(AWeaponBase* InWeapon);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)

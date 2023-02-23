@@ -9,6 +9,9 @@
 /**
  * 
  */
+
+class UChildActorComponent;
+
 UCLASS()
 class TOYFPS_API AToyFpsCharacterWithWeaponBP : public AToyFpsCharacter
 {
@@ -25,5 +28,5 @@ private:
 		TObjectPtr<UChildActorComponent> CurrentWeaponComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-		TSubclassOf<AWeapon> CurrentWeaponClass;
+		TSubclassOf<AWeaponBase> CurrentWeaponClass;
 };

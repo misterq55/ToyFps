@@ -3,7 +3,7 @@
 
 #include "ArmsAnimInstance.h"
 #include "ToyFPS/Character/ToyFpsCharacter.h"
-#include "ToyFPS/Weapon/Weapon.h"
+#include "WeaponSystem/Weapon/WeaponBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
 void UArmsAnimInstance::NativeInitializeAnimation()
@@ -41,9 +41,9 @@ void UArmsAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	AimDownSight = OwningCharacter->GetAimDownSight();
 }
 
-void UArmsAnimInstance::SetWeaponData(AWeapon* InWeapon)
+void UArmsAnimInstance::SetWeaponData(AWeaponBase* InWeapon)
 {
-	AWeapon* OwnedWeapon = InWeapon;
+	AWeaponBase* OwnedWeapon = InWeapon;
 
 	if (!OwnedWeapon)
 		return;

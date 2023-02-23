@@ -3,18 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Character.h"
-#include "Camera/CameraShakeBase.h"
+#include "WeaponSystem/Character/FpsCharacterBase.h"
 #include "InputActionValue.h"
 #include "ToyFpsCharacter.generated.h"
 
-class UCameraComponent;
-class UCameraShakeBase;
-class UChildActorComponent;
-class AWeapon;
+
 
 UCLASS()
-class TOYFPS_API AToyFpsCharacter : public ACharacter
+class TOYFPS_API AToyFpsCharacter : public AFpsCharacterBase
 {
 	GENERATED_BODY()
 
@@ -54,64 +50,7 @@ protected:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-public:
-	void SetCrouching(bool InCrouching) {
-		bCrouching = InCrouching;
-	}
-
-	bool GetCrouching() {
-		return bCrouching;
-	}
-
-	void SetSprinting(bool InSprinting) {
-		bSprinting = InSprinting;
-	}
-
-	bool GetSprinting() {
-		return bSprinting;
-	}
-
-	float GetSpreadCurrent() {
-		return SpreadCurrent;
-	}
-
-	bool GetAimDownSight() {
-		return bAimDownSight;
-	}
-
-	void SetAimDownSight(bool InAimDownSight) {
-		bAimDownSight = InAimDownSight;
-	}
-
-	TObjectPtr<UCameraComponent> GetMainCamera() {
-		return MainCameraComponent;
-	}
-
-	TObjectPtr<AWeapon> GetCurrentWeapon() {
-		return CurrentWeapon;
-	}
-
-	UFUNCTION(BlueprintCallable, Category = ToyFpsCharacter)
-		void IncreaseSpread(float InIncreaseAmount);
-	
-	UFUNCTION(BlueprintCallable, Category = ToyFpsCharacter)
-		void DecreaseSpread(float InDecreaseAmount);
-
-private:
-	const float SprintSpeed = 600;
-	const float NormalSpeed = 300.f;
-	float SpreadDecreaseSpeed = 1.f;
-	
-
 protected:
-	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		TObjectPtr<USkeletalMeshComponent> HeadMeshComponent;
-
-	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		TObjectPtr<UCameraComponent> MainCameraComponent;
-
-	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		TObjectPtr<USkeletalMeshComponent> ArmsMeshComponent;
 
 	/** MappingContext */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -152,33 +91,4 @@ protected:
 	/** Aim Down Sight Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* AimDownSightAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-		bool bCrouching = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-		bool bSprinting = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-		bool bAimDownSight = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Input, meta = (AllowPrivateAccess = "true"))
-		bool bReloading = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CameraShake, meta = (AllowPrivateAccess = "true"))
-		TSubclassOf<UCameraShakeBase> RunningCameraShake;
-
-	bool bRunningCameraShake = false;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
-		TObjectPtr<AWeapon> CurrentWeapon;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
-		float SpreadCurrent = 0.f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
-		float SpreadMax = 0.3f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
-		float SpreadMin = 0.f;
 };

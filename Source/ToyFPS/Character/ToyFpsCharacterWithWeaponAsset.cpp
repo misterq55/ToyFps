@@ -21,7 +21,7 @@ void AToyFpsCharacterWithWeaponAsset::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentWeapon = Cast<AWeapon>(GetWorld()->SpawnActor(WeaponAsset->GetWeaponData().WeaponClass));
+	CurrentWeapon = Cast<AWeaponBase>(GetWorld()->SpawnActor(WeaponAsset->GetWeaponData().WeaponClass));
 	CurrentWeapon->SetWeaponData(WeaponAsset->GetWeaponData());
 	CurrentWeapon->AttachToComponent(WeaponPivot, FAttachmentTransformRules::KeepRelativeTransform);
 	CurrentWeapon->ResetWeapon();
