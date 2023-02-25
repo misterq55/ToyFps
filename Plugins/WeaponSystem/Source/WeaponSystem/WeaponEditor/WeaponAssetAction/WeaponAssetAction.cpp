@@ -20,7 +20,7 @@ uint32 FWeaponAssetAction::GetCategories()
 
 FColor FWeaponAssetAction::GetTypeColor() const
 {
-	return FColor::Red;
+	return FColor(0, 141, 98);
 }
 
 void FWeaponAssetAction::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<class IToolkitHost> EditWithinLevelEditor)

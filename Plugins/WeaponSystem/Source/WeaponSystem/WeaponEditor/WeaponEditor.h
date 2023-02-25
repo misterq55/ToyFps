@@ -10,6 +10,8 @@
  */
 
 class IDetailsView;
+class SWeaponEditorViewport;
+class FPreviewScene;
 
 class WEAPONSYSTEM_API FWeaponEditor : public FAssetEditorToolkit
 {
@@ -25,7 +27,12 @@ protected:
 	void RegisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager);
 	void UnregisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager);
 	TSharedRef<SDockTab> SpawnTab_Details(const FSpawnTabArgs& Args);
+	TSharedRef<SDockTab> SpawnTab_EditorViewport(const FSpawnTabArgs& Args);
+	TSharedRef<SDockTab> SpawnTab_FirstPersonViewport(const FSpawnTabArgs& Args);
 
 private:
 	TSharedPtr<IDetailsView> DetailsView;
+	TSharedPtr<SWeaponEditorViewport> EditorViewport;
+	TSharedPtr<SWeaponEditorViewport> FirstPersonViewport;
+	TSharedPtr<FPreviewScene> WeaponEditorPreviewScene;
 };
