@@ -1,17 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ArmsAnimInstance.h"
-#include "ToyFPS/Character/ToyFpsCharacter.h"
+#include "ArmsAnimInstanceBase.h"
+#include "WeaponSystem/Character/FpsCharacterBase.h"
 #include "WeaponSystem/Weapon/WeaponBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
 
-void UArmsAnimInstance::NativeInitializeAnimation()
+void UArmsAnimInstanceBase::NativeInitializeAnimation()
 {
-	OwningCharacter = Cast<AToyFpsCharacter>(TryGetPawnOwner());
+	OwningCharacter = Cast<AFpsCharacterBase>(TryGetPawnOwner());
 }
 
-void UArmsAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
+void UArmsAnimInstanceBase::NativeUpdateAnimation(float DeltaSeconds)
 {
 	Super::NativeUpdateAnimation(DeltaSeconds);
 
@@ -41,7 +41,7 @@ void UArmsAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	AimDownSight = OwningCharacter->GetAimDownSight();
 }
 
-void UArmsAnimInstance::SetWeaponData(AWeaponBase* InWeapon)
+void UArmsAnimInstanceBase::SetWeaponData(AWeaponBase* InWeapon)
 {
 	AWeaponBase* OwnedWeapon = InWeapon;
 

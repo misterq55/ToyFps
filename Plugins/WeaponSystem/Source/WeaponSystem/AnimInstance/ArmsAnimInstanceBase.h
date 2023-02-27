@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "ArmsAnimInstance.generated.h"
+#include "ArmsAnimInstanceBase.generated.h"
 
 /**
  * 
  */
 
-class AToyFpsCharacter;
+class AFpsCharacterBase;
 class AWeaponBase;
 
 UCLASS()
-class TOYFPS_API UArmsAnimInstance : public UAnimInstance
+class WEAPONSYSTEM_API UArmsAnimInstanceBase : public UAnimInstance
 {
 	GENERATED_BODY()
 	
@@ -25,7 +25,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)
-	AToyFpsCharacter* OwningCharacter = nullptr;
+		AFpsCharacterBase* OwningCharacter = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)
 		float Direction = 0.f;

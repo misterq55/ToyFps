@@ -6,7 +6,7 @@
 class FWeaponEditorViewportClient_Editor : public FWeaponEditorViewportClient
 {
 public:
-	FWeaponEditorViewportClient_Editor(FEditorModeTools* InModeTools, FPreviewScene* InPreviewScene);
+	FWeaponEditorViewportClient_Editor(FEditorModeTools* InModeTools, FPreviewScene* InPreviewScene, TWeakPtr<FWeaponEditor> InWeaponEditor);
 	virtual ~FWeaponEditorViewportClient_Editor() {}
 
 	virtual void Tick(float DeltaSeconds) override;

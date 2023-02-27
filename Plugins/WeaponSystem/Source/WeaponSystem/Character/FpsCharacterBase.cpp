@@ -2,7 +2,6 @@
 
 
 #include "FpsCharacterBase.h"
-#include "UObject/ConstructorHelpers.h"
 #include "Engine/LocalPlayer.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -27,8 +26,6 @@ AFpsCharacterBase::AFpsCharacterBase()
 	if (!CharacterMeshComponent)
 		return;
 
-	/*static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Demo/PlayerMannequin/Mesh/PlayerMannequin.PlayerMannequin'"));
-	CharacterMeshComponent->SetSkeletalMesh(MeshObj.Object);*/
 	CharacterMeshComponent->SetRelativeLocation(FVector(0.f, 0.f, -100.f));
 	CharacterMeshComponent->SetRelativeRotation(FRotator(-0.f, -90.f, -0.f));
 
@@ -37,8 +34,6 @@ AFpsCharacterBase::AFpsCharacterBase()
 	if (!HeadMeshComponent)
 		return;
 
-	/*static ConstructorHelpers::FObjectFinder<USkeletalMesh> HeadObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Demo/PlayerMannequin/Mesh/Head.Head'"));
-	HeadMeshComponent->SetSkeletalMesh(HeadObj.Object);*/
 	HeadMeshComponent->SetRelativeLocation(FVector(-165.869286, -1.064955, -16.934584));
 	HeadMeshComponent->SetRelativeRotation(FRotator(-69.414944, -285.594594, 287.355255));
 	HeadMeshComponent->SetupAttachment(CharacterMeshComponent, TEXT("head"));
@@ -58,8 +53,6 @@ AFpsCharacterBase::AFpsCharacterBase()
 	if (!ArmsMeshComponent)
 		return;
 
-	/*static ConstructorHelpers::FObjectFinder<USkeletalMesh> ArmsObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Demo/PlayerMannequin/Mesh/Arms.Arms'"));
-	ArmsMeshComponent->SetSkeletalMesh(ArmsObj.Object);*/
 	ArmsMeshComponent->SetRelativeLocation(FVector(-7.729098, -3.047225, -165.559958));
 	ArmsMeshComponent->SetRelativeRotation(FRotator(-0.080375, -89.856430, -0.083177));
 	ArmsMeshComponent->SetupAttachment(MainCameraComponent);

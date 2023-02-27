@@ -17,15 +17,15 @@ TSharedRef<FEditorViewportClient> SWeaponEditorViewport::MakeEditorViewportClien
 	switch (ViewportType)
 	{
 	case EWeaponEditorViewport::EditorViewport:
-		EditorViewportClient = MakeShareable(new FWeaponEditorViewportClient_Editor(nullptr, WeaponEditorPreviewScene));
+		EditorViewportClient = MakeShareable(new FWeaponEditorViewportClient_Editor(nullptr, WeaponEditorPreviewScene, WeaponEditor));
 		break;
 
 	case EWeaponEditorViewport::FirstPersonViewport:
-		EditorViewportClient = MakeShareable(new FWeaponEditorViewportClient_FirstPerson(nullptr, WeaponEditorPreviewScene));
+		EditorViewportClient = MakeShareable(new FWeaponEditorViewportClient_FirstPerson(nullptr, WeaponEditorPreviewScene, WeaponEditor));
 		break;
 
 	default:
-		EditorViewportClient = MakeShareable(new FWeaponEditorViewportClient(nullptr, WeaponEditorPreviewScene));
+		EditorViewportClient = MakeShareable(new FWeaponEditorViewportClient(nullptr, WeaponEditorPreviewScene, WeaponEditor));
 		break;
 	};
 

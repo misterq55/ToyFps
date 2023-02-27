@@ -11,6 +11,7 @@
 
 class IDetailsView;
 class SWeaponEditorViewport;
+class AEditorCharacter;
 class FPreviewScene;
 
 class WEAPONSYSTEM_API FWeaponEditor : public FAssetEditorToolkit
@@ -22,6 +23,8 @@ public:
 
 	virtual FString GetWorldCentricTabPrefix() const override;
 	virtual FLinearColor GetWorldCentricTabColorScale() const override;
+
+	TObjectPtr<AEditorCharacter> GetEditorCharacter();
 
 protected:
 	void RegisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager);
@@ -35,4 +38,5 @@ private:
 	TSharedPtr<SWeaponEditorViewport> EditorViewport;
 	TSharedPtr<SWeaponEditorViewport> FirstPersonViewport;
 	TSharedPtr<FPreviewScene> WeaponEditorPreviewScene;
+	TObjectPtr<AEditorCharacter> EditorCharacter;
 };

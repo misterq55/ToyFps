@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "CharacterAnimInstance.generated.h"
+#include "CharacterAnimInstanceBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class TOYFPS_API UCharacterAnimInstance : public UAnimInstance
+class WEAPONSYSTEM_API UCharacterAnimInstanceBase : public UAnimInstance
 {
 	GENERATED_BODY()
 	

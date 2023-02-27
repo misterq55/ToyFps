@@ -3,8 +3,8 @@
 
 #include "ToyFpsCharacterWithWeaponAsset.h"
 #include "WeaponSystem/Weapon/WeaponAsset.h"
-#include "ToyFPS/Weapon/Weapon.h"
-#include "ToyFPS/AnimInstance/ArmsAnimInstance.h"
+#include "WeaponSystem/Weapon/WeaponBase.h"
+#include "WeaponSystem/AnimInstance/ArmsAnimInstanceBase.h"
 
 AToyFpsCharacterWithWeaponAsset::AToyFpsCharacterWithWeaponAsset()
 	: Super()
@@ -26,6 +26,6 @@ void AToyFpsCharacterWithWeaponAsset::BeginPlay()
 	CurrentWeapon->AttachToComponent(WeaponPivot, FAttachmentTransformRules::KeepRelativeTransform);
 	CurrentWeapon->ResetWeapon();
 
-	UArmsAnimInstance* ArmsAnimInstance = Cast<UArmsAnimInstance>(ArmsMeshComponent->GetAnimInstance());
+	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
 	ArmsAnimInstance->SetWeaponData(CurrentWeapon);
 }

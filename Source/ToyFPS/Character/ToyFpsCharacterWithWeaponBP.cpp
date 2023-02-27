@@ -3,7 +3,7 @@
 
 #include "ToyFpsCharacterWithWeaponBP.h"
 #include "ToyFPS/Weapon/Weapon.h"
-#include "ToyFPS/AnimInstance/ArmsAnimInstance.h"
+#include "WeaponSystem/AnimInstance/ArmsAnimInstanceBase.h"
 
 AToyFpsCharacterWithWeaponBP::AToyFpsCharacterWithWeaponBP()
 	: Super()
@@ -24,6 +24,6 @@ void AToyFpsCharacterWithWeaponBP::BeginPlay()
 	CurrentWeaponComponent->CreateChildActor();
 	CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
 
-	UArmsAnimInstance* ArmsAnimInstance = Cast<UArmsAnimInstance>(ArmsMeshComponent->GetAnimInstance());
+	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
 	ArmsAnimInstance->SetWeaponData(CurrentWeapon);
 }
