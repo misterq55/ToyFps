@@ -1,3 +1,5 @@
+#pragma once
+
 #include "SEditorViewport.h"
 
 class FWeaponEditor;

@@ -8,6 +8,7 @@
 FWeaponEditorViewportClient_FirstPerson::FWeaponEditorViewportClient_FirstPerson(FEditorModeTools* InModeTools, FPreviewScene* InPreviewScene, TWeakPtr<FWeaponEditor> InWeaponEditor)
 	: FWeaponEditorViewportClient(InModeTools, InPreviewScene, InWeaponEditor)
 {
+	Viewport->ViewportResizedEvent.AddRaw(this, &FWeaponEditorViewportClient_FirstPerson::OnViewportResize);
 }
 
 void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
@@ -21,6 +22,10 @@ void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
 	SetViewLocation(ViewInfo.Location);
 	SetViewRotation(EditorCharacter->GetViewRotation());
 
+	AspectRatio = ViewInfo.AspectRatio;
+
+	FIntPoint ViewportSize = Viewport->GetSizeXY();
+	Viewport->ViewportResizedEvent;
 	Invalidate();
 }
 
@@ -37,4 +42,15 @@ void FWeaponEditorViewportClient_FirstPerson::MouseMove(FViewport* InViewport, i
 	{
 		int32 Temp = 0;
 	}
+}
+
+FSceneView* FWeaponEditorViewportClient_FirstPerson::CalcSceneView(FSceneViewFamily* ViewFamily, const int32 StereoViewIndex)
+{
+	FSceneView* SceneView = FEditorViewportClient::CalcSceneView(ViewFamily, StereoViewIndex);
+	SceneView->UnscaledViewRect;
+	return SceneView;
+}
+
+void FWeaponEditorViewportClient_FirstPerson::OnViewportResize(FViewport* InViewport, uint32 InParams)
+{
 }
