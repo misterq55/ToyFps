@@ -3,6 +3,8 @@
 #include "CoreMinimal.h"
 #include "WeaponEditorViewportClient.h"
 
+class FViewport;
+
 class FWeaponEditorViewportClient_FirstPerson : public FWeaponEditorViewportClient
 {
 public:
@@ -10,4 +12,5 @@ public:
 	virtual ~FWeaponEditorViewportClient_FirstPerson() {}
 
 	virtual void Tick(float DeltaSeconds) override;
+	virtual void MouseMove(FViewport* InViewport, int32 x, int32 y) override;
 };

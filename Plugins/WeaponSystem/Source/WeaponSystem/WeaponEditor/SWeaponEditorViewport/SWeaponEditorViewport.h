@@ -1,7 +1,7 @@
 #include "SEditorViewport.h"
-#include "EditorViewportClient.h"
 
 class FWeaponEditor;
+class FEditorViewportClient;
 class FWeaponEditorViewportClient;
 class FPreviewScene;
 
