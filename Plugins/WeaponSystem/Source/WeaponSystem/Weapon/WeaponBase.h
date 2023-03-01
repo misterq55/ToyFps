@@ -52,7 +52,7 @@ public:
 		virtual void UnHideMuzzleFlash() {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-		virtual void LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation) {}
+		virtual void LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation);
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 		void ReloadAmmo();

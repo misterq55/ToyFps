@@ -42,6 +42,8 @@ public class WeaponSystem : ModuleRules
 				"KismetWidgets",
 				"AdvancedPreviewScene",
 				"InputCore",
+        "GameplayAbilities",
+        "GameplayTasks",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

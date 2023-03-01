@@ -22,10 +22,6 @@ void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
 	SetViewLocation(ViewInfo.Location);
 	SetViewRotation(EditorCharacter->GetViewRotation());
 
-	AspectRatio = ViewInfo.AspectRatio;
-
-	FIntPoint ViewportSize = Viewport->GetSizeXY();
-	Viewport->ViewportResizedEvent;
 	Invalidate();
 }
 
@@ -53,4 +49,9 @@ FSceneView* FWeaponEditorViewportClient_FirstPerson::CalcSceneView(FSceneViewFam
 
 void FWeaponEditorViewportClient_FirstPerson::OnViewportResize(FViewport* InViewport, uint32 InParams)
 {
+	//float Height = InViewport->GetSizeXY().Y;
+	//float Width = Height * AspectRatio;
+	//InViewport->SetInitialSize(FIntPoint(Width, Height));
+
+	// InViewport->MoveWindow
 }

@@ -2,6 +2,8 @@
 #include "CoreMinimal.h"
 #include "WeaponSystemDefine.generated.h"
 
+class UWeaponAbility;
+
 USTRUCT(BlueprintType)
 struct WEAPONSYSTEM_API FWeaponData
 {
@@ -60,4 +62,10 @@ struct WEAPONSYSTEM_API FWeaponData
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UBlendSpace* BlendSpace_WeaponAdsIdle = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UWeaponAbility* AttackAbility = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UWeaponAbility* ReloadAbility = nullptr;
 };
