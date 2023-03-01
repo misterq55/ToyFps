@@ -23,6 +23,10 @@
 			]
 		},
 		{
+			"Name": "WeaponSystem",
+			"Enabled": true
+		},
+		{
 			"Name": "GameplayAbilities",
 			"Enabled": true
 		}

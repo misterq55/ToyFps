@@ -3,6 +3,12 @@
 
 #include "WeaponWithAbilities.h"
 #include "WeaponSystem/Weapon/WeaponAbility/WeaponAbility.h"
+#include "AbilitySystemComponent.h"
+
+AWeaponWithAbilities::AWeaponWithAbilities()
+{
+	// AbilitySystemComponent = CreateOptionalDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystem"));
+}
 
 // Called when the game starts or when spawned
 void AWeaponWithAbilities::BeginPlay()

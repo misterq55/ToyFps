@@ -26,6 +26,8 @@ public class WeaponSystem : ModuleRules
 			new string[]
 			{
 				"Core",
+				"GameplayAbilities",
+				"GameplayTasks",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
@@ -42,8 +44,6 @@ public class WeaponSystem : ModuleRules
 				"KismetWidgets",
 				"AdvancedPreviewScene",
 				"InputCore",
-        "GameplayAbilities",
-        "GameplayTasks",
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
