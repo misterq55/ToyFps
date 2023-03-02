@@ -66,7 +66,7 @@ public:
 	}
 
 	void SetWeaponData(FWeaponData InWeaponData);
-	void ResetWeapon();
+	virtual void ResetWeapon();
 
 protected:
 

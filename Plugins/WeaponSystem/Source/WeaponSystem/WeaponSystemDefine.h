@@ -64,8 +64,8 @@ struct WEAPONSYSTEM_API FWeaponData
 		UBlendSpace* BlendSpace_WeaponAdsIdle = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UWeaponAbility* AttackAbility = nullptr;
+		TSubclassOf<UWeaponAbility> AttackAbility = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UWeaponAbility* ReloadAbility = nullptr;
+		TSubclassOf<UWeaponAbility> ReloadAbility = nullptr;
 };

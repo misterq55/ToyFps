@@ -1,0 +1,37 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+#pragma once
+
+#include "AbilitySystemInterface.h"
+#include "CoreMinimal.h"
+#include "WeaponBase.h"
+#include "WeaponWithAbilities.generated.h"
+
+/**
+ * 
+ */
+
+class UAbilitySystemComponent;
+
+UCLASS()
+class WEAPONSYSTEM_API AWeaponWithAbilities : public AWeaponBase, public IAbilitySystemInterface
+{
+	GENERATED_BODY()
+
+public:
+	AWeaponWithAbilities();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
+public:
+	virtual void ResetWeapon() override;
+
+	virtual void Attack();
+	/** Returns AbilitySystemComponent subobject **/
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+private:
+	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+};

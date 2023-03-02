@@ -26,8 +26,8 @@ public class WeaponSystem : ModuleRules
 			new string[]
 			{
 				"Core",
-				"GameplayAbilities",
 				"GameplayTasks",
+				"GameplayAbilities",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
