@@ -9,9 +9,11 @@
 /**
  *
  */
+
+class AFpsCharacterBase;
+
 UCLASS(BlueprintType, Blueprintable)
 class WEAPONSYSTEM_API UWeaponAbility : public UGameplayAbility
 {
 	GENERATED_BODY()
-
 };
