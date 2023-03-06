@@ -7,6 +7,7 @@
 #include "WeaponSystem/WeaponSystemDefine.h"
 #include "WeaponBase.generated.h"
 
+class AFpsCharacterBase;
 class UTimelineComponent;
 
 UCLASS()
@@ -68,6 +69,15 @@ public:
 	}
 
 	void SetWeaponData(FWeaponData InWeaponData);
+	void SetOwningCharacter(AFpsCharacterBase* InCharacter) {
+		OwningCharacter = InCharacter;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = Weapon)
+	AFpsCharacterBase* GetOwningCharacter() {
+		return OwningCharacter;
+	};
+
 	virtual void ResetWeapon();
 
 protected:
@@ -95,4 +105,7 @@ protected:
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FWeaponData WeaponData;
+
+private:
+	TObjectPtr<AFpsCharacterBase> OwningCharacter;
 };

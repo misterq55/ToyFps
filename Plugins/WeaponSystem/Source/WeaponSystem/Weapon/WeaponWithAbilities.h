@@ -30,6 +30,7 @@ public:
 	virtual void ResetWeapon() override;
 
 	virtual void Attack() override;
+	virtual void Reload() override;
 	virtual void StopAttacking() override;
 
 	/** Returns AbilitySystemComponent subobject **/
@@ -38,4 +39,5 @@ public:
 private:
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 	FGameplayAbilitySpec AttackAbilitySpec;
+	FGameplayAbilitySpec ReloadAbilitySpec;
 };

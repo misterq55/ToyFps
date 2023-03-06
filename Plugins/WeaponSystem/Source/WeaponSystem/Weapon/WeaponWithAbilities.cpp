@@ -3,6 +3,7 @@
 
 #include "WeaponWithAbilities.h"
 #include "WeaponSystem/Weapon/WeaponAbility/WeaponAbility.h"
+#include "Components/TimelineComponent.h"
 #include "AbilitySystemComponent.h"
 
 AWeaponWithAbilities::AWeaponWithAbilities()
@@ -12,6 +13,8 @@ AWeaponWithAbilities::AWeaponWithAbilities()
 	PrimaryWeapon = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("PrimaryWeapon"));
 	Muzzle = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Muzzle"));
 	Eject = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Eject"));
+
+	RecoilPattern = CreateOptionalDefaultSubobject<UTimelineComponent>(TEXT("RecoilPattern"));
 
 	Muzzle->SetupAttachment(PrimaryWeapon);
 	Eject->SetupAttachment(Muzzle);
@@ -35,6 +38,9 @@ void AWeaponWithAbilities::ResetWeapon()
 
 	AttackAbilitySpec = AbilitySystemComponent->BuildAbilitySpecFromClass(WeaponData.AttackAbility, 0, -1);
 	AbilitySystemComponent->GiveAbility(AttackAbilitySpec);
+
+	ReloadAbilitySpec = AbilitySystemComponent->BuildAbilitySpecFromClass(WeaponData.ReloadAbility, 0, -1);
+	AbilitySystemComponent->GiveAbility(ReloadAbilitySpec);
 }
 
 void AWeaponWithAbilities::Attack()
@@ -43,6 +49,14 @@ void AWeaponWithAbilities::Attack()
 		return;
 
 	AbilitySystemComponent->TryActivateAbility(AttackAbilitySpec.Handle);
+}
+
+void AWeaponWithAbilities::Reload()
+{
+	if (!WeaponData.ReloadAbility)
+		return;
+
+	AbilitySystemComponent->TryActivateAbility(ReloadAbilitySpec.Handle);
 }
 
 void AWeaponWithAbilities::StopAttacking()

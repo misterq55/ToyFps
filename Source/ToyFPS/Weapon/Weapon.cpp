@@ -2,7 +2,6 @@
 
 
 #include "Weapon.h"
-#include "Components/TimelineComponent.h"
 
 // Sets default values
 AWeapon::AWeapon()
@@ -13,8 +12,6 @@ AWeapon::AWeapon()
 	PrimaryWeapon = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("PrimaryWeapon"));
 	Muzzle = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Muzzle"));
 	Eject = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Eject"));
-
-	RecoilPattern = CreateOptionalDefaultSubobject<UTimelineComponent>(TEXT("RecoilPattern"));
 
 	Muzzle->SetupAttachment(PrimaryWeapon);
 	Eject->SetupAttachment(Muzzle);
