@@ -7,6 +7,8 @@
 #include "WeaponSystem/WeaponSystemDefine.h"
 #include "WeaponBase.generated.h"
 
+class UTimelineComponent;
+
 UCLASS()
 class WEAPONSYSTEM_API AWeaponBase : public AActor
 {
@@ -78,6 +80,9 @@ protected:
 
 	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "Eject"))
 		TObjectPtr<USceneComponent> Eject;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TObjectPtr<UTimelineComponent> RecoilPattern;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		FRotator OGControllerRotation;

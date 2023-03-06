@@ -33,8 +33,8 @@ void AWeaponWithAbilities::ResetWeapon()
 	if (!WeaponData.AttackAbility)
 		return;
 
-	FGameplayAbilitySpec AbilitySpec = AbilitySystemComponent->BuildAbilitySpecFromClass(WeaponData.AttackAbility, 0, -1);
-	AbilitySystemComponent->GiveAbility(AbilitySpec);
+	AttackAbilitySpec = AbilitySystemComponent->BuildAbilitySpecFromClass(WeaponData.AttackAbility, 0, -1);
+	AbilitySystemComponent->GiveAbility(AttackAbilitySpec);
 }
 
 void AWeaponWithAbilities::Attack()
@@ -42,7 +42,15 @@ void AWeaponWithAbilities::Attack()
 	if (!WeaponData.AttackAbility)
 		return;
 
-	AbilitySystemComponent->TryActivateAbilityByClass(WeaponData.AttackAbility);
+	AbilitySystemComponent->TryActivateAbility(AttackAbilitySpec.Handle);
+}
+
+void AWeaponWithAbilities::StopAttacking()
+{
+	if (!WeaponData.AttackAbility)
+		return;
+
+	AbilitySystemComponent->CancelAbility(AttackAbilitySpec.Ability);
 }
 
 UAbilitySystemComponent* AWeaponWithAbilities::GetAbilitySystemComponent() const

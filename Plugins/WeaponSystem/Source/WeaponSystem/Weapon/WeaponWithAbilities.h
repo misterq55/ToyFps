@@ -4,6 +4,7 @@
 
 #include "AbilitySystemInterface.h"
 #include "CoreMinimal.h"
+#include "GameplayAbilitySpec.h"
 #include "WeaponBase.h"
 #include "WeaponWithAbilities.generated.h"
 
@@ -28,10 +29,13 @@ protected:
 public:
 	virtual void ResetWeapon() override;
 
-	virtual void Attack();
+	virtual void Attack() override;
+	virtual void StopAttacking() override;
+
 	/** Returns AbilitySystemComponent subobject **/
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 private:
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+	FGameplayAbilitySpec AttackAbilitySpec;
 };
