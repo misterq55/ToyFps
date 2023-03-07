@@ -11,6 +11,9 @@
 
 class IDetailsView;
 class SWeaponEditorViewport;
+class SWeaponInfo;
+class SWeaponAnimationAssets;
+class SWeaponAbilities;
 class AEditorCharacter;
 class FPreviewScene;
 
@@ -32,11 +35,17 @@ protected:
 	TSharedRef<SDockTab> SpawnTab_Details(const FSpawnTabArgs& Args);
 	TSharedRef<SDockTab> SpawnTab_EditorViewport(const FSpawnTabArgs& Args);
 	TSharedRef<SDockTab> SpawnTab_FirstPersonViewport(const FSpawnTabArgs& Args);
+	TSharedRef<SDockTab> SpawnTab_WeaponInfo(const FSpawnTabArgs& Args);
+	TSharedRef<SDockTab> SpawnTab_AnimationAssets(const FSpawnTabArgs& Args);
+	TSharedRef<SDockTab> SpawnTab_WeaponAbilities(const FSpawnTabArgs& Args);
 
 private:
 	TSharedPtr<IDetailsView> DetailsView;
 	TSharedPtr<SWeaponEditorViewport> EditorViewport;
 	TSharedPtr<SWeaponEditorViewport> FirstPersonViewport;
+	TSharedPtr<SWeaponInfo> WeaponInfo;
+	TSharedPtr<SWeaponAnimationAssets> WeaponAnimationAssets;
+	TSharedPtr<SWeaponAbilities> WeaponAbilities;
 	TSharedPtr<FPreviewScene> WeaponEditorPreviewScene;
 	TObjectPtr<AEditorCharacter> EditorCharacter;
 };

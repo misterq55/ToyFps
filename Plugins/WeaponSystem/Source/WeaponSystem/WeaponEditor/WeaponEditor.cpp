@@ -5,6 +5,9 @@
 #include "Widgets/Docking/SDockTab.h"
 #include "IDetailsView.h"
 #include "WeaponSystem/WeaponEditor/SWeaponEditorViewport/SWeaponEditorViewport.h"
+#include "WeaponSystem/WeaponEditor/SWeaponInfo/SWeaponInfo.h"
+#include "WeaponSystem/WeaponEditor/SWeaponAnimationAssets/SWeaponAnimationAssets.h"
+#include "WeaponSystem/WeaponEditor/SWeaponAbilities/SWeaponAbilities.h"
 #include "AdvancedPreviewScene.h"
 #include "WeaponSystem/Character/EditorCharacter.h"
 
@@ -28,6 +31,10 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 
 	EditorViewport = SNew(SWeaponEditorViewport, SharedThis(this), SWeaponEditorViewport::EWeaponEditorViewport::EditorViewport, WeaponEditorPreviewScene.Get());
 	FirstPersonViewport = SNew(SWeaponEditorViewport, SharedThis(this), SWeaponEditorViewport::EWeaponEditorViewport::FirstPersonViewport, WeaponEditorPreviewScene.Get());
+
+	WeaponInfo = SNew(SWeaponInfo, SharedThis(this));
+	WeaponAnimationAssets = SNew(SWeaponAnimationAssets, SharedThis(this));
+	WeaponAbilities = SNew(SWeaponAbilities, SharedThis(this));
 
 	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("WeaponEditor_Layout_v1")
 		->AddArea
@@ -73,14 +80,17 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 						(
 							FTabManager::NewStack()
 							->SetSizeCoefficient(0.2f)
-							->AddTab(TEXT("Empty"), ETabState::OpenedTab)
+							->AddTab(TEXT("WeaponAbilities"), ETabState::OpenedTab)
 						)
 					)
 					->Split
 					(
 						FTabManager::NewStack()
 						->SetSizeCoefficient(0.2f)
-						->AddTab(TEXT("DetailsView"), ETabState::OpenedTab)
+						->AddTab(TEXT("WeaponInfo"), ETabState::OpenedTab)
+						->AddTab(TEXT("AnimationAssets"), ETabState::OpenedTab)
+						->SetForegroundTab(FName(TEXT("WeaponInfo")))
+
 					)
 				)
 			)
@@ -119,6 +129,10 @@ void FWeaponEditor::RegisterTabSpawners(const TSharedRef<class FTabManager>& InT
 	InTabManager->RegisterTabSpawner(TEXT("DetailsView"), FOnSpawnTab::CreateSP(this, &FWeaponEditor::SpawnTab_Details));
 	InTabManager->RegisterTabSpawner(TEXT("EditorViewport"), FOnSpawnTab::CreateSP(this, &FWeaponEditor::SpawnTab_EditorViewport));
 	InTabManager->RegisterTabSpawner(TEXT("FirstPersonViewport"), FOnSpawnTab::CreateSP(this, &FWeaponEditor::SpawnTab_FirstPersonViewport));
+	InTabManager->RegisterTabSpawner(TEXT("WeaponInfo"), FOnSpawnTab::CreateSP(this, &FWeaponEditor::SpawnTab_WeaponInfo));
+	InTabManager->RegisterTabSpawner(TEXT("AnimationAssets"), FOnSpawnTab::CreateSP(this, &FWeaponEditor::SpawnTab_AnimationAssets));
+	InTabManager->RegisterTabSpawner(TEXT("WeaponAbilities"), FOnSpawnTab::CreateSP(this, &FWeaponEditor::SpawnTab_WeaponAbilities));
+
 }
 
 void FWeaponEditor::UnregisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager)
@@ -126,6 +140,9 @@ void FWeaponEditor::UnregisterTabSpawners(const TSharedRef<class FTabManager>& I
 	InTabManager->UnregisterTabSpawner(TEXT("DetailsView"));
 	InTabManager->UnregisterTabSpawner(TEXT("EditorViewport"));
 	InTabManager->UnregisterTabSpawner(TEXT("FirstPersonViewport"));
+	InTabManager->UnregisterTabSpawner(TEXT("WeaponInfo"));
+	InTabManager->UnregisterTabSpawner(TEXT("AnimationAssets"));
+	InTabManager->UnregisterTabSpawner(TEXT("WeaponAbilities"));
 }
 
 TSharedRef<SDockTab> FWeaponEditor::SpawnTab_Details(const FSpawnTabArgs& Args)
@@ -151,3 +168,28 @@ TSharedRef<SDockTab> FWeaponEditor::SpawnTab_FirstPersonViewport(const FSpawnTab
 			FirstPersonViewport.ToSharedRef()
 		];
 }
+
+TSharedRef<SDockTab> FWeaponEditor::SpawnTab_WeaponInfo(const FSpawnTabArgs& Args)
+{
+	return SNew(SDockTab)
+		[
+			WeaponInfo.ToSharedRef()
+		];
+}
+
+TSharedRef<SDockTab> FWeaponEditor::SpawnTab_AnimationAssets(const FSpawnTabArgs& Args)
+{
+	return SNew(SDockTab)
+		[
+			WeaponAnimationAssets.ToSharedRef()
+		];
+}
+
+TSharedRef<SDockTab> FWeaponEditor::SpawnTab_WeaponAbilities(const FSpawnTabArgs& Args)
+{
+	return SNew(SDockTab)
+		[
+			WeaponAbilities.ToSharedRef()
+		];
+}
+
