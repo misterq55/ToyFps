@@ -3,7 +3,6 @@
 #include "Widgets/SCompoundWidget.h"
 
 class FWeaponEditor;
-
 class SWeaponAbilities : public SCompoundWidget
 {
 public:
@@ -14,4 +13,6 @@ public:
 
 private:
 	TWeakPtr<FWeaponEditor> WeaponEditor;
+	TSharedPtr<FAssetThumbnailPool> AssetThumbnailPool;
+	TWeakObjectPtr<const UClass> TempClass;
 };

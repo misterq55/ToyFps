@@ -14,4 +14,6 @@ public:
 
 private:
 	TWeakPtr<FWeaponEditor> WeaponEditor;
+	TSharedPtr<FAssetThumbnailPool> AssetThumbnailPool;
+	FString TempPath, TempPath2;
 };

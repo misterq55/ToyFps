@@ -89,6 +89,7 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 						->SetSizeCoefficient(0.2f)
 						->AddTab(TEXT("WeaponInfo"), ETabState::OpenedTab)
 						->AddTab(TEXT("AnimationAssets"), ETabState::OpenedTab)
+						->AddTab(TEXT("DetailsView"), ETabState::OpenedTab)
 						->SetForegroundTab(FName(TEXT("WeaponInfo")))
 
 					)

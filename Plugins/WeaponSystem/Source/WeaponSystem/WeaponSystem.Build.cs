@@ -28,6 +28,7 @@ public class WeaponSystem : ModuleRules
 				"Core",
 				"GameplayTasks",
 				"GameplayAbilities",
+				"PropertyEditor",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
