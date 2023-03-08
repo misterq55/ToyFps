@@ -16,6 +16,7 @@ class SWeaponAnimationAssets;
 class SWeaponAbilities;
 class AEditorCharacter;
 class FPreviewScene;
+class UWeaponEditorViewModel;
 
 class WEAPONSYSTEM_API FWeaponEditor : public FAssetEditorToolkit
 {
@@ -28,6 +29,7 @@ public:
 	virtual FLinearColor GetWorldCentricTabColorScale() const override;
 
 	TObjectPtr<AEditorCharacter> GetEditorCharacter();
+	UWeaponEditorViewModel* GetViewModel() { return ViewModel; }
 
 protected:
 	void RegisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager);
@@ -47,5 +49,5 @@ private:
 	TSharedPtr<SWeaponAnimationAssets> WeaponAnimationAssets;
 	TSharedPtr<SWeaponAbilities> WeaponAbilities;
 	TSharedPtr<FPreviewScene> WeaponEditorPreviewScene;
-	TObjectPtr<AEditorCharacter> EditorCharacter;
+	UWeaponEditorViewModel* ViewModel;
 };

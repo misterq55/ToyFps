@@ -10,6 +10,7 @@
 #include "WeaponSystem/WeaponEditor/SWeaponAbilities/SWeaponAbilities.h"
 #include "AdvancedPreviewScene.h"
 #include "WeaponSystem/Character/EditorCharacter.h"
+#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
 
 void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 {
@@ -24,10 +25,10 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 	}
 
 	WeaponEditorPreviewScene = MakeShareable(new FAdvancedPreviewScene(FPreviewScene::ConstructionValues()));
-
-	EditorCharacter = WeaponEditorPreviewScene->GetWorld()->SpawnActor<AEditorCharacter>();
-	EditorCharacter->SetWeaponAsset(InObjects[0]);
-	EditorCharacter->SpawnWeaponActor();
+	
+	ViewModel = NewObject<UWeaponEditorViewModel>(WeaponEditorPreviewScene->GetWorld());
+	ViewModel->SetEditorWorld(WeaponEditorPreviewScene->GetWorld());
+	ViewModel->InitializeViewModel(InObjects);
 
 	EditorViewport = SNew(SWeaponEditorViewport, SharedThis(this), SWeaponEditorViewport::EWeaponEditorViewport::EditorViewport, WeaponEditorPreviewScene.Get());
 	FirstPersonViewport = SNew(SWeaponEditorViewport, SharedThis(this), SWeaponEditorViewport::EWeaponEditorViewport::FirstPersonViewport, WeaponEditorPreviewScene.Get());
@@ -122,7 +123,7 @@ FLinearColor FWeaponEditor::GetWorldCentricTabColorScale() const
 
 TObjectPtr<AEditorCharacter> FWeaponEditor::GetEditorCharacter()
 {
-	return EditorCharacter;
+	return ViewModel->GetEditorCharacter();
 }
 
 void FWeaponEditor::RegisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager)

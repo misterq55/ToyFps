@@ -41,19 +41,30 @@ void UArmsAnimInstanceBase::NativeUpdateAnimation(float DeltaSeconds)
 	AimDownSight = OwningCharacter->GetAimDownSight();
 }
 
-void UArmsAnimInstanceBase::SetWeaponData(AWeaponBase* InWeapon)
+//void UArmsAnimInstanceBase::SetWeaponData(AWeaponBase* InWeapon)
+//{
+//	AWeaponBase* OwnedWeapon = InWeapon;
+//
+//	if (!OwnedWeapon)
+//		return;
+//
+//	FWeaponData& WeaponData = OwnedWeapon->GetWeaponData();
+//	BlendSpace_WeaponIdle = WeaponData.BlendSpace_WeaponIdle;
+//	BlendSpace_WeaponAdsIdle = WeaponData.BlendSpace_WeaponAdsIdle;
+//	AnimSequence_WeoponJumpSequence1 = WeaponData.AnimSequence_WeoponJumpSequence1;
+//	AnimSequence_WeoponJumpSequence2 = WeaponData.AnimSequence_WeoponJumpSequence2;
+//	AnimSequence_WeoponJumpSequence3 = WeaponData.AnimSequence_WeoponJumpSequence3;
+//	AnimSequence_WeoponWalk = WeaponData.AnimSequence_WeoponWalk;
+//	AnimSequence_WeaponRun = WeaponData.AnimSequence_WeaponRun;
+//}
+
+void UArmsAnimInstanceBase::SetWeaponData(const FWeaponData& InWeaponData)
 {
-	AWeaponBase* OwnedWeapon = InWeapon;
-
-	if (!OwnedWeapon)
-		return;
-
-	FWeaponData& WeaponData = OwnedWeapon->GetWeaponData();
-	BlendSpace_WeaponIdle = WeaponData.BlendSpace_WeaponIdle;
-	BlendSpace_WeaponAdsIdle = WeaponData.BlendSpace_WeaponAdsIdle;
-	AnimSequence_WeoponJumpSequence1 = WeaponData.AnimSequence_WeoponJumpSequence1;
-	AnimSequence_WeoponJumpSequence2 = WeaponData.AnimSequence_WeoponJumpSequence2;
-	AnimSequence_WeoponJumpSequence3 = WeaponData.AnimSequence_WeoponJumpSequence3;
-	AnimSequence_WeoponWalk = WeaponData.AnimSequence_WeoponWalk;
-	AnimSequence_WeaponRun = WeaponData.AnimSequence_WeaponRun;
+	BlendSpace_WeaponIdle = InWeaponData.BlendSpace_WeaponIdle;
+	BlendSpace_WeaponAdsIdle = InWeaponData.BlendSpace_WeaponAdsIdle;
+	AnimSequence_WeoponJumpSequence1 = InWeaponData.AnimSequence_WeoponJumpSequence1;
+	AnimSequence_WeoponJumpSequence2 = InWeaponData.AnimSequence_WeoponJumpSequence2;
+	AnimSequence_WeoponJumpSequence3 = InWeaponData.AnimSequence_WeoponJumpSequence3;
+	AnimSequence_WeoponWalk = InWeaponData.AnimSequence_WeoponWalk;
+	AnimSequence_WeaponRun = InWeaponData.AnimSequence_WeaponRun;
 }

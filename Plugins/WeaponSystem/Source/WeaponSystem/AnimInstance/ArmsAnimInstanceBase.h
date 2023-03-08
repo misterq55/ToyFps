@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "WeaponSystem/WeaponSystemDefine.h"
 #include "ArmsAnimInstanceBase.generated.h"
 
 /**
@@ -21,7 +22,8 @@ class WEAPONSYSTEM_API UArmsAnimInstanceBase : public UAnimInstance
 public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
-	void SetWeaponData(AWeaponBase* InWeapon);
+	// void SetWeaponData(AWeaponBase* InWeapon);
+	void SetWeaponData(const FWeaponData& InWeaponData);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)

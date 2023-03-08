@@ -20,7 +20,8 @@ class WEAPONSYSTEM_API AEditorCharacter : public AFpsCharacterBase
 public:
 	AEditorCharacter();
 	void SpawnWeaponActor();
-	void SetWeaponAsset(UObject* InWeaponAsset);
+	void SetWeaponAsset(UWeaponAsset* InWeaponAsset);
+	void ResetArmsAnimInstance();
 
 private:
 	TObjectPtr<USceneComponent> WeaponPivot;

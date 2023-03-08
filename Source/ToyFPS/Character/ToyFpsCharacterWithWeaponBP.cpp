@@ -25,5 +25,5 @@ void AToyFpsCharacterWithWeaponBP::BeginPlay()
 	CurrentWeapon = Cast<AWeapon>(CurrentWeaponComponent->GetChildActor());
 
 	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
-	ArmsAnimInstance->SetWeaponData(CurrentWeapon);
+	ArmsAnimInstance->SetWeaponData(CurrentWeapon->GetWeaponData());
 }
