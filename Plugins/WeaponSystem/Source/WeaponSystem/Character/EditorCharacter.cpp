@@ -49,7 +49,7 @@ void AEditorCharacter::SpawnWeaponActor()
 	CurrentWeapon->SetOwningCharacter(this);
 	CurrentWeapon->SetWeaponData(WeaponAsset->GetWeaponData());
 	CurrentWeapon->AttachToComponent(WeaponPivot, FAttachmentTransformRules::KeepRelativeTransform);
-	CurrentWeapon->ResetWeapon();
+	CurrentWeapon->ResetWeapon(WeaponAsset->GetWeaponData());
 	ResetArmsAnimInstance();
 }
 
@@ -61,7 +61,14 @@ void AEditorCharacter::SetWeaponAsset(UWeaponAsset* InWeaponAsset)
 void AEditorCharacter::ResetArmsAnimInstance()
 {
 	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
-	// ArmsAnimInstance->SetWeaponData(CurrentWeapon);
 	// ArmsAnimInstance->SetWeaponData(CurrentWeapon->GetWeaponData());
 	ArmsAnimInstance->SetWeaponData(WeaponAsset->GetWeaponData());
+}
+
+void AEditorCharacter::ResetWeaponData(const FWeaponData& InWeaponData)
+{
+	if (!CurrentWeapon)
+		return;
+
+	CurrentWeapon->ResetWeapon(WeaponAsset->GetWeaponData());
 }

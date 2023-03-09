@@ -78,7 +78,7 @@ public:
 		return OwningCharacter;
 	};
 
-	virtual void ResetWeapon();
+	virtual void ResetWeapon(const FWeaponData& InWeaponData);
 
 protected:
 

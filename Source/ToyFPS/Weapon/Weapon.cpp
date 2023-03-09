@@ -22,7 +22,7 @@ void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	ResetWeapon();
+	ResetWeapon(WeaponData);
 }
 
 void AWeapon::Tick(float DeltaTime)

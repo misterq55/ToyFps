@@ -26,12 +26,12 @@ AWeaponWithAbilities::AWeaponWithAbilities()
 void AWeaponWithAbilities::BeginPlay()
 {
 	Super::BeginPlay();
-	ResetWeapon();
+	ResetWeapon(WeaponData);
 }
 
-void AWeaponWithAbilities::ResetWeapon()
+void AWeaponWithAbilities::ResetWeapon(const FWeaponData& InWeaponData)
 {
-	Super::ResetWeapon();
+	Super::ResetWeapon(InWeaponData);
 
 	if (!WeaponData.AttackAbility)
 		return;

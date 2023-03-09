@@ -1,6 +1,7 @@
 #include "SWeaponAbilities.h"
 #include "WeaponSystem/WeaponEditor/WeaponEditor.h"
-#include "PropertyCustomizationHelpers.h"
+#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
+#include "WeaponSystem/WeaponEditor/SWeaponEditorClassProperty/SWeaponEditorClassProperty.h"
 
 #include "WeaponSystem/Weapon/WeaponAbility/WeaponAbility.h"
 
@@ -12,15 +13,11 @@ void SWeaponAbilities::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEdi
 
 	ChildSlot
 		[
-			SNew(SClassPropertyEntryBox)
-			.MetaClass(UWeaponAbility::StaticClass())
-		.SelectedClass_Lambda([this]()
-			{
-				return TempClass.Get();
-			})
-		.OnSetClass_Lambda([this](const UClass* SelectedClass)
-			{
-				TempClass = MakeWeakObjectPtr(SelectedClass);
-			})
+			SNew(SWeaponEditorClassProperty)
+			.ClassName(FText::FromString(TEXT("Attack Ability")))
+		.MetaClass(UWeaponAbility::StaticClass())
+		.SelectedClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnGetClass)
+		.OnSetClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnSetClass)
+		.OnClicked_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::ClickedOnRunAttackAbility)
 		];
 }

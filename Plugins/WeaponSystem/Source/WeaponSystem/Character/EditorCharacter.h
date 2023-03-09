@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "FpsCharacterBase.h"
+#include "WeaponSystem/WeaponSystemDefine.h"
 #include "EditorCharacter.generated.h"
 
 /**
@@ -22,6 +23,7 @@ public:
 	void SpawnWeaponActor();
 	void SetWeaponAsset(UWeaponAsset* InWeaponAsset);
 	void ResetArmsAnimInstance();
+	void ResetWeaponData(const FWeaponData& InWeaponData);
 
 private:
 	TObjectPtr<USceneComponent> WeaponPivot;

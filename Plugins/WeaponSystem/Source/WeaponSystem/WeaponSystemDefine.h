@@ -1,8 +1,9 @@
 #pragma once
 #include "CoreMinimal.h"
+#include "WeaponSystem/Weapon/WeaponAbility/WeaponAbility.h"
 #include "WeaponSystemDefine.generated.h"
 
-class UWeaponAbility;
+// class UWeaponAbility;
 
 USTRUCT(BlueprintType)
 struct WEAPONSYSTEM_API FWeaponData
@@ -52,7 +53,7 @@ struct WEAPONSYSTEM_API FWeaponData
 		UAnimSequenceBase* AnimSequence_WeoponJumpSequence3 = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponWalk = nullptr;
+		UAnimSequenceBase* AnimSequence_WeaponWalk = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UAnimSequenceBase* AnimSequence_WeaponRun = nullptr;

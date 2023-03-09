@@ -54,7 +54,7 @@ void UArmsAnimInstanceBase::NativeUpdateAnimation(float DeltaSeconds)
 //	AnimSequence_WeoponJumpSequence1 = WeaponData.AnimSequence_WeoponJumpSequence1;
 //	AnimSequence_WeoponJumpSequence2 = WeaponData.AnimSequence_WeoponJumpSequence2;
 //	AnimSequence_WeoponJumpSequence3 = WeaponData.AnimSequence_WeoponJumpSequence3;
-//	AnimSequence_WeoponWalk = WeaponData.AnimSequence_WeoponWalk;
+//	AnimSequence_WeaponWalk = WeaponData.AnimSequence_WeaponWalk;
 //	AnimSequence_WeaponRun = WeaponData.AnimSequence_WeaponRun;
 //}
 
@@ -65,6 +65,6 @@ void UArmsAnimInstanceBase::SetWeaponData(const FWeaponData& InWeaponData)
 	AnimSequence_WeoponJumpSequence1 = InWeaponData.AnimSequence_WeoponJumpSequence1;
 	AnimSequence_WeoponJumpSequence2 = InWeaponData.AnimSequence_WeoponJumpSequence2;
 	AnimSequence_WeoponJumpSequence3 = InWeaponData.AnimSequence_WeoponJumpSequence3;
-	AnimSequence_WeoponWalk = InWeaponData.AnimSequence_WeoponWalk;
+	AnimSequence_WeaponWalk = InWeaponData.AnimSequence_WeaponWalk;
 	AnimSequence_WeaponRun = InWeaponData.AnimSequence_WeaponRun;
 }

@@ -60,7 +60,7 @@ protected:
 		UAnimSequenceBase* AnimSequence_WeoponJumpSequence3 = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponWalk = nullptr;
+		UAnimSequenceBase* AnimSequence_WeaponWalk = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		UAnimSequenceBase* AnimSequence_WeaponRun = nullptr;

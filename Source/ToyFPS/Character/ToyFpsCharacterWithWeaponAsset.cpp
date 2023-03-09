@@ -25,7 +25,7 @@ void AToyFpsCharacterWithWeaponAsset::BeginPlay()
 	CurrentWeapon->SetOwningCharacter(this);
 	CurrentWeapon->SetWeaponData(WeaponAsset->GetWeaponData());
 	CurrentWeapon->AttachToComponent(WeaponPivot, FAttachmentTransformRules::KeepRelativeTransform);
-	CurrentWeapon->ResetWeapon();
+	CurrentWeapon->ResetWeapon(WeaponAsset->GetWeaponData());
 
 	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
 	ArmsAnimInstance->SetWeaponData(CurrentWeapon->GetWeaponData());

@@ -27,7 +27,7 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	virtual void ResetWeapon() override;
+	virtual void ResetWeapon(const FWeaponData& InWeaponData) override;
 
 	virtual void Attack() override;
 	virtual void Reload() override;

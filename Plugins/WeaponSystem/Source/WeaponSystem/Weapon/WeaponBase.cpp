@@ -36,11 +36,11 @@ void AWeaponBase::SetWeaponData(FWeaponData InWeaponData)
 	WeaponData = InWeaponData;
 }
 
-void AWeaponBase::ResetWeapon()
+void AWeaponBase::ResetWeapon(const FWeaponData& InWeaponData)
 {
-	PrimaryWeapon->SetSkeletalMesh(WeaponData.WeaponMesh);
-	Muzzle->SetRelativeTransform(WeaponData.MuzzleTransform);
-	Eject->SetRelativeTransform(WeaponData.EjectTransform);
+	PrimaryWeapon->SetSkeletalMesh(InWeaponData.WeaponMesh);
+	Muzzle->SetRelativeTransform(InWeaponData.MuzzleTransform);
+	Eject->SetRelativeTransform(InWeaponData.EjectTransform);
 }
 
 void AWeaponBase::LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation)
