@@ -13,6 +13,4 @@ public:
 
 private:
 	TWeakPtr<FWeaponEditor> WeaponEditor;
-	TSharedPtr<FAssetThumbnailPool> AssetThumbnailPool;
-	TWeakObjectPtr<const UClass> TempClass;
 };

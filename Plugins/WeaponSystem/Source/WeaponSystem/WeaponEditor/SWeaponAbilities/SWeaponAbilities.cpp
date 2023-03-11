@@ -9,15 +9,13 @@ void SWeaponAbilities::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEdi
 {
 	WeaponEditor = InSpriteEditor;
 	
-	AssetThumbnailPool = MakeShareable(new FAssetThumbnailPool(1024));
-
 	ChildSlot
 		[
 			SNew(SWeaponEditorClassProperty)
 			.ClassName(FText::FromString(TEXT("Attack Ability")))
-		.MetaClass(UWeaponAbility::StaticClass())
-		.SelectedClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnGetClass)
-		.OnSetClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnSetClass)
-		.OnClicked_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::ClickedOnRunAttackAbility)
+			.MetaClass(UWeaponAbility::StaticClass())
+			.SelectedClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnGetClass)
+			.OnSetClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnSetClass)
+			.OnClicked_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::ClickedOnRunAttackAbility)
 		];
 }
