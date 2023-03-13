@@ -34,6 +34,7 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 	SetJump3AnimSequencePath(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence3->GetPathName());
 
 	AttackAbilityClass = MakeWeakObjectPtr(CurrentWeaponAsset->GetWeaponData().AttackAbility->GetOwnerClass());
+	ReloadAbilityClass = MakeWeakObjectPtr(CurrentWeaponAsset->GetWeaponData().ReloadAbility->GetOwnerClass());
 
 	return true;
 }
@@ -134,6 +135,16 @@ FReply UWeaponEditorViewModel::ClickedOnRunAttackAbility()
 		return FReply::Handled();
 		
 	EditorCharacter->GetCurrentWeapon()->Attack();
+
+	return FReply::Handled();
+}
+
+FReply UWeaponEditorViewModel::ClickedOnRunReloadAbility()
+{
+	if (!EditorCharacter)
+		return FReply::Handled();
+
+	EditorCharacter->GetCurrentWeapon()->Reload();
 
 	return FReply::Handled();
 }

@@ -11,11 +11,27 @@ void SWeaponAbilities::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEdi
 	
 	ChildSlot
 		[
-			SNew(SWeaponEditorClassProperty)
-			.ClassName(FText::FromString(TEXT("Attack Ability")))
-			.MetaClass(UWeaponAbility::StaticClass())
-			.SelectedClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnGetClass)
-			.OnSetClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnSetClass)
-			.OnClicked_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::ClickedOnRunAttackAbility)
+			SNew(SHorizontalBox)
+			+ SHorizontalBox::Slot()
+			.AutoWidth()
+			[
+				SNew(SWeaponEditorClassProperty)
+				.ClassName(FText::FromString(TEXT("Attack Ability")))
+				.MetaClass(UWeaponAbility::StaticClass())
+				.SelectedClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnGetAttackAbilityClass)
+				.OnSetClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnSetAttackAbilityClass)
+				.OnClicked_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::ClickedOnRunAttackAbility)
+			]
+
+			+ SHorizontalBox::Slot()
+				.AutoWidth()
+				[
+					SNew(SWeaponEditorClassProperty)
+					.ClassName(FText::FromString(TEXT("Reload Ability")))
+				.MetaClass(UWeaponAbility::StaticClass())
+				.SelectedClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnGetReloadAbilityClass)
+				.OnSetClass_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnSetReloadAbilityClass)
+				.OnClicked_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::ClickedOnRunReloadAbility)
+				]
 		];
 }

@@ -58,17 +58,29 @@ public:
 	void SetJump3AnimSequencePath(FString InJump3AnimSequencePath) { Jump3AnimSequencePath = InJump3AnimSequencePath; }
 	void OnChangeJump3AnimSequenceAsset(const FAssetData& AssetData);
 
-	const UClass* OnGetClass() const
+	const UClass* OnGetAttackAbilityClass() const
 	{
 		return AttackAbilityClass.Get();
 	}
 
-	void OnSetClass(const UClass* SelectedClass)
+	void OnSetAttackAbilityClass(const UClass* SelectedClass)
 	{
 		AttackAbilityClass = MakeWeakObjectPtr(SelectedClass);
 	}
 
 	FReply ClickedOnRunAttackAbility();
+
+	const UClass* OnGetReloadAbilityClass() const
+	{
+		return ReloadAbilityClass.Get();
+	}
+
+	void OnSetReloadAbilityClass(const UClass* SelectedClass)
+	{
+		ReloadAbilityClass = MakeWeakObjectPtr(SelectedClass);
+	}
+
+	FReply ClickedOnRunReloadAbility();
 
 private:
 	UWorld* EditorWorld = nullptr;
@@ -84,4 +96,5 @@ private:
 	FString Jump3AnimSequencePath;
 	TObjectPtr<class UWeaponAsset> CurrentWeaponAsset;
 	TWeakObjectPtr<const UClass> AttackAbilityClass;
+	TWeakObjectPtr<const UClass> ReloadAbilityClass;
 };
