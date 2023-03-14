@@ -23,6 +23,9 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION(BlueprintCallable, Category = AmmoShell)
+		virtual void ApplyPhysics();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
