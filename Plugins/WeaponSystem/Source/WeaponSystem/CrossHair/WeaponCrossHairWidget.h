@@ -23,7 +23,7 @@ public:
 
 protected:
 	TArray<FVector2D> CrossHairUnitVectors;
-	TArray<float> FlagValues;
+	TArray<FVector2D> InitialPositionVectors;
 	TObjectPtr<class AFpsCharacterBase> OwningCharacter;
 
 	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -34,4 +34,7 @@ protected:
 
 	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float LowerBound = -25.f;
+
+	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		FVector2D CenterPivot;
 };

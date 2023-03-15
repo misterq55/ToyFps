@@ -9,6 +9,8 @@
 
 void UWeaponCrossHairWidget::NativeConstruct()
 {
+	Super::NativeConstruct();
+
 	FTimerHandle SetCrossHairHandle;
 	GetWorld()->GetTimerManager().SetTimer(SetCrossHairHandle, FTimerDelegate::CreateLambda([&]()
 		{
@@ -25,25 +27,16 @@ void UWeaponCrossHairWidget::NativeConstruct()
 	
 	for (UPanelSlot* PanelSlot : CanvasPanel->GetSlots())
 	{
-		/*UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(PanelSlot);
-		FVector2D PositionVector = CanvasPanelSlot->GetPosition();
-		PositionVector.Normalize();
-		CrossHairUnitVectors.Add(PositionVector);*/
-
 		UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(PanelSlot);
+		FVector2D PositionVector = CanvasPanelSlot->GetPosition();
+		InitialPositionVectors.Add(PositionVector);
 
-		float FlagValue = 1.0;
-
-		FVector2D Position = CanvasPanelSlot->GetPosition();
-		if (Position.X * Position.Y < 0)
-			FlagValue *= -1.f;
-
-		FlagValues.Add(FlagValue);
+		FVector2D UnitVector = PositionVector - CenterPivot;
+		UnitVector.Normalize();
+		CrossHairUnitVectors.Add(UnitVector);
 	}
 	
 	OwningCharacter = Cast<AFpsCharacterBase>(GetOwningPlayerPawn());
-	
-	// Super::NativeConstruct();
 }
 
 void UWeaponCrossHairWidget::SetCrossHair()
@@ -65,21 +58,12 @@ void UWeaponCrossHairWidget::SetCrossHair()
 		FVector Velocity = OwningCharacter->GetVelocity();
 		float VelocityLength = Velocity.Length();
 		float Target = VelocityLength * 0.4f * -1.f;
+		Target *= 0.01f;
 
+		// 무기 발사에 의한 크로스 헤어 벌어짐
 		float MapRangedUnclampedValue = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
-		FVector2D Position = CanvasPanelSlot->GetPosition();
-
-		FVector2D NewPosition =
-			FVector2D(UKismetMathLibrary::FInterpTo(Position.X, Target, DeltaTimeSeconds, InterpSpeed),
-				UKismetMathLibrary::FInterpTo(Position.Y, Target, DeltaTimeSeconds, InterpSpeed));
-
-		NewPosition.X = UKismetMathLibrary::FClamp(NewPosition.X, UpperBound, LowerBound) + MapRangedUnclampedValue;
-		NewPosition.Y = UKismetMathLibrary::FClamp(NewPosition.Y, UpperBound, LowerBound) + MapRangedUnclampedValue;
-
-		NewPosition.X *= FlagValues[i];
-		NewPosition.Y *= FlagValues[i];
-
-		CanvasPanelSlot->SetPosition(NewPosition);
+		float Power = Target + MapRangedUnclampedValue;
+		CanvasPanelSlot->SetPosition((InitialPositionVectors[i] + CrossHairUnitVectors[i]) * Power);
 	}
 }
 
