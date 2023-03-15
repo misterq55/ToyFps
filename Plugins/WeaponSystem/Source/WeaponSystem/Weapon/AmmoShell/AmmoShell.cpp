@@ -35,7 +35,7 @@ void AAmmoShell::ApplyPhysics()
 
 	AmmoShellMeshComponent->BodyInstance.bSimulatePhysics = true;
 	AmmoShellMeshComponent->BodyInstance.WeldParent = false;
-	BeginPlay();
+	// BeginPlay();
 }
 
 // Called every frame

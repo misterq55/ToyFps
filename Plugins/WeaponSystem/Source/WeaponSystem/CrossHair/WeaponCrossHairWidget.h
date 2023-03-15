@@ -13,5 +13,25 @@ UCLASS()
 class WEAPONSYSTEM_API UWeaponCrossHairWidget : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
+public:
+	virtual void NativeConstruct() override;
+
+public:
+	void SetCrossHair();
+	void HideWhileADS();
+
+protected:
+	TArray<FVector2D> CrossHairUnitVectors;
+	TArray<float> FlagValues;
+	TObjectPtr<class AFpsCharacterBase> OwningCharacter;
+
+	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		float InterpSpeed = 3.f;
+
+	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		float UpperBound = -110.f;
+
+	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		float LowerBound = -25.f;
 };

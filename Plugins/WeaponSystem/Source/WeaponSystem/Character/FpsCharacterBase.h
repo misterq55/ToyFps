@@ -51,6 +51,14 @@ public:
 		return SpreadCurrent;
 	}
 
+	float GetSpreadMax() {
+		return SpreadMax;
+	}
+
+	float GetSpreadMin() {
+		return SpreadMin;
+	}
+
 	bool GetAimDownSight() {
 		return bAimDownSight;
 	}
