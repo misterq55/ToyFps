@@ -31,7 +31,7 @@ void UWeaponCrossHairWidget::NativeConstruct()
 		FVector2D PositionVector = CanvasPanelSlot->GetPosition();
 		InitialPositionVectors.Add(PositionVector);
 
-		FVector2D UnitVector = PositionVector - CenterPivot;
+		FVector2D UnitVector = CenterPivot - PositionVector;
 		UnitVector.Normalize();
 		CrossHairUnitVectors.Add(UnitVector);
 	}
@@ -58,12 +58,12 @@ void UWeaponCrossHairWidget::SetCrossHair()
 		FVector Velocity = OwningCharacter->GetVelocity();
 		float VelocityLength = Velocity.Length();
 		float Target = VelocityLength * 0.4f * -1.f;
-		Target *= 0.01f;
+		Target *= 0.5f;
 
 		// 무기 발사에 의한 크로스 헤어 벌어짐
 		float MapRangedUnclampedValue = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
 		float Power = Target + MapRangedUnclampedValue;
-		CanvasPanelSlot->SetPosition((InitialPositionVectors[i] + CrossHairUnitVectors[i]) * Power);
+		CanvasPanelSlot->SetPosition(InitialPositionVectors[i] + CrossHairUnitVectors[i] * Power);
 	}
 }
 
