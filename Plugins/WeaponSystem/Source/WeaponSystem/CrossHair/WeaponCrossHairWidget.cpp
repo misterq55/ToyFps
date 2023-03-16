@@ -24,12 +24,13 @@ void UWeaponCrossHairWidget::NativeConstruct()
 		}), 0.01f, true);
 
 	UCanvasPanel* CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("CanvasPanel")));
-	
-	for (UPanelSlot* PanelSlot : CanvasPanel->GetSlots())
+	if (!CanvasPanel)
+		return;
+
+	for (int32 i = 0; i < CanvasPanel->GetSlots().Num(); i++)
 	{
-		UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(PanelSlot);
+		UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[i]);
 		FVector2D PositionVector = CanvasPanelSlot->GetPosition();
-		InitialPositionVectors.Add(PositionVector);
 
 		FVector2D UnitVector = CenterPivot - PositionVector;
 		UnitVector.Normalize();
@@ -49,10 +50,7 @@ void UWeaponCrossHairWidget::SetCrossHair()
 	float DeltaTimeSeconds = GetWorld()->DeltaTimeSeconds;
 	
 	// 무기 발사에 의한 크로스 헤어 벌어짐
-	float MapRangedUnclampedValue = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
-
-	// FInterpTo
-	// FClamp
+	float WeaponFirePower = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
 
 	for (int32 i = 0; i < CanvasPanel->GetSlots().Num(); i++)
 	{
@@ -64,24 +62,27 @@ void UWeaponCrossHairWidget::SetCrossHair()
 
 		FVector Velocity = OwningCharacter->GetVelocity();
 		float VelocityLength = Velocity.Length();
-		float Target = VelocityLength * 0.4f * -1.f;
-
-		FVector2D PowerVector = CrossHairUnitVectors[i] * (Target + MapRangedUnclampedValue * 100);
+		float Power = VelocityLength * 0.4f * -1.f;
 		
-		FVector2D InterpedVector;
-		InterpedVector.X = UKismetMathLibrary::FInterpTo(Position.X, PowerVector.X, DeltaTimeSeconds, InterpSpeed);
-		InterpedVector.Y = UKismetMathLibrary::FInterpTo(Position.Y, PowerVector.Y, DeltaTimeSeconds, InterpSpeed);
+		FVector2D UnitVector = CrossHairUnitVectors[i];
+		FVector2D PowerVector = UnitVector * Power;
+		
+		FVector2D InterpedVector = 
+			FVector2D(
+				UKismetMathLibrary::FInterpTo(Position.X, PowerVector.X, DeltaTimeSeconds, InterpSpeed),
+			UKismetMathLibrary::FInterpTo(Position.Y, PowerVector.Y, DeltaTimeSeconds, InterpSpeed));
 
-		float FlagValue = 1.f;
-		if (Position.X * Position.Y < 0)
-			FlagValue *= -1.f;
+		if (UnitVector.X * UnitVector.Y > 0)
+			Swap(UpperBound, LowerBound);
 
-		FVector2D UpperBoundVector = CrossHairUnitVectors[i] * UpperBound * FlagValue;
-		FVector2D LowerBoundVector = CrossHairUnitVectors[i] * LowerBound * FlagValue;
+		FVector2D UpperBoundVector = UnitVector * UpperBound;
+		FVector2D LowerBoundVector = UnitVector * LowerBound;
+
+		FVector2D WeaponFirePowerVector = UnitVector * WeaponFirePower * 2.5f;
 
 		FVector2D NewPosition;
-		NewPosition.X = UKismetMathLibrary::FClamp(InterpedVector.X, UpperBoundVector.X, LowerBoundVector.X);
-		NewPosition.Y = UKismetMathLibrary::FClamp(InterpedVector.Y, UpperBoundVector.Y, LowerBoundVector.Y);
+		NewPosition.X = UKismetMathLibrary::FClamp(InterpedVector.X, UpperBoundVector.X, LowerBoundVector.X) + WeaponFirePowerVector.X;
+		NewPosition.Y = UKismetMathLibrary::FClamp(InterpedVector.Y, UpperBoundVector.Y, LowerBoundVector.Y) + WeaponFirePowerVector.Y;
 
 		CanvasPanelSlot->SetPosition(NewPosition);
 	}
