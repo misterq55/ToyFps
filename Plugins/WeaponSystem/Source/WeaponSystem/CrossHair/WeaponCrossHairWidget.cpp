@@ -47,23 +47,43 @@ void UWeaponCrossHairWidget::SetCrossHair()
 		return;
 
 	float DeltaTimeSeconds = GetWorld()->DeltaTimeSeconds;
+	
+	// 무기 발사에 의한 크로스 헤어 벌어짐
+	float MapRangedUnclampedValue = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
+
+	// FInterpTo
+	// FClamp
 
 	for (int32 i = 0; i < CanvasPanel->GetSlots().Num(); i++)
 	{
 		UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[i]);
-		
+		FVector2D Position = CanvasPanelSlot->GetPosition();
+
 		if (!CanvasPanelSlot)
 			continue;
 
 		FVector Velocity = OwningCharacter->GetVelocity();
 		float VelocityLength = Velocity.Length();
 		float Target = VelocityLength * 0.4f * -1.f;
-		Target *= 0.5f;
 
-		// 무기 발사에 의한 크로스 헤어 벌어짐
-		float MapRangedUnclampedValue = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
-		float Power = Target + MapRangedUnclampedValue;
-		CanvasPanelSlot->SetPosition(InitialPositionVectors[i] + CrossHairUnitVectors[i] * Power);
+		FVector2D PowerVector = CrossHairUnitVectors[i] * (Target + MapRangedUnclampedValue * 100);
+		
+		FVector2D InterpedVector;
+		InterpedVector.X = UKismetMathLibrary::FInterpTo(Position.X, PowerVector.X, DeltaTimeSeconds, InterpSpeed);
+		InterpedVector.Y = UKismetMathLibrary::FInterpTo(Position.Y, PowerVector.Y, DeltaTimeSeconds, InterpSpeed);
+
+		float FlagValue = 1.f;
+		if (Position.X * Position.Y < 0)
+			FlagValue *= -1.f;
+
+		FVector2D UpperBoundVector = CrossHairUnitVectors[i] * UpperBound * FlagValue;
+		FVector2D LowerBoundVector = CrossHairUnitVectors[i] * LowerBound * FlagValue;
+
+		FVector2D NewPosition;
+		NewPosition.X = UKismetMathLibrary::FClamp(InterpedVector.X, UpperBoundVector.X, LowerBoundVector.X);
+		NewPosition.Y = UKismetMathLibrary::FClamp(InterpedVector.Y, UpperBoundVector.Y, LowerBoundVector.Y);
+
+		CanvasPanelSlot->SetPosition(NewPosition);
 	}
 }
 
