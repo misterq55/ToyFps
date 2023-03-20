@@ -31,8 +31,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 				.AllowedClass(USkeletalMesh::StaticClass())
 				.EnableContentPicker(true)
 				.ThumbnailPool(AssetThumbnailPool)
-				.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetWeaponMeshPath)
-				.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeWeaponMeshAsset))
+				.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WeaponMesh")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+				.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WeaponMesh")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 			]
 
 			// Weapon Mesh
@@ -47,8 +47,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 				.AllowedClass(UStaticMesh::StaticClass())
 				.EnableContentPicker(true)
 				.ThumbnailPool(AssetThumbnailPool)
-				.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetWeaponPickUpMeshPath)
-				.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeWeaponPickUpMeshAsset))
+				.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WeaponPickUpMeshPath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+				.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WeaponPickUpMeshPath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 			]
 
 			// Idle BlendSpace
@@ -63,8 +63,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 				.AllowedClass(UBlendSpace::StaticClass())
 				.EnableContentPicker(true)
 				.ThumbnailPool(AssetThumbnailPool)
-				.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetIdlePath)
-				.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeIdleAsset))
+				.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("IdlePath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+				.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("IdlePath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 			]
 
 			// Idle ADS BlendSpace
@@ -79,8 +79,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 					.AllowedClass(UBlendSpace::StaticClass())
 					.EnableContentPicker(true)
 					.ThumbnailPool(AssetThumbnailPool)
-					.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetAdsIdlePath)
-					.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeAdsIdleAsset))
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsIdlePath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsIdlePath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 				]
 
 			// Walk AnimSequence
@@ -95,8 +95,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 					.AllowedClass(UAnimSequenceBase::StaticClass())
 					.EnableContentPicker(true)
 					.ThumbnailPool(AssetThumbnailPool)
-					.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetWalkAnimSequencePath)
-					.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeWalkAnimSequenceAsset))
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WalkAnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WalkAnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 				]
 
 			// Run AnimSequence
@@ -111,8 +111,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 					.AllowedClass(UAnimSequenceBase::StaticClass())
 					.EnableContentPicker(true)
 					.ThumbnailPool(AssetThumbnailPool)
-					.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetRunAnimSequencePath)
-					.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeRunAnimSequenceAsset))
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("RunAnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("RunAnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 				]
 
 			// Jump1 AnimSequence
@@ -127,8 +127,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 					.AllowedClass(UAnimSequenceBase::StaticClass())
 					.EnableContentPicker(true)
 					.ThumbnailPool(AssetThumbnailPool)
-					.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetJump1AnimSequencePath)
-					.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeJump1AnimSequenceAsset))
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("Jump1AnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("Jump1AnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 				]
 
 			// Jump2 AnimSequence
@@ -143,8 +143,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 					.AllowedClass(UAnimSequenceBase::StaticClass())
 					.EnableContentPicker(true)
 					.ThumbnailPool(AssetThumbnailPool)
-					.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetJump2AnimSequencePath)
-					.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeJump2AnimSequenceAsset))
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("Jump2AnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("Jump2AnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 				]
 
 			// Jump3 AnimSequence
@@ -159,8 +159,8 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 					.AllowedClass(UAnimSequenceBase::StaticClass())
 					.EnableContentPicker(true)
 					.ThumbnailPool(AssetThumbnailPool)
-					.ObjectPath_UObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::GetJump3AnimSequencePath)
-					.OnObjectChanged(FOnSetObject::CreateUObject(WeaponEditor.Pin()->GetViewModel(), &UWeaponEditorViewModel::OnChangeJump3AnimSequenceAsset))
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("Jump3AnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("Jump3AnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 				]
 		];
 }

@@ -23,128 +23,118 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 	EditorCharacter->SetWeaponAsset(CurrentWeaponAsset);
 	EditorCharacter->SpawnWeaponActor();
 
-	SetWeaponMeshPath(CurrentWeaponAsset->GetWeaponData().WeaponMesh->GetPathName());
-	SetWeaponPickUpMeshPath(CurrentWeaponAsset->GetWeaponData().WeaponPickUpMesh->GetPathName());
-	SetIdlePath(CurrentWeaponAsset->GetWeaponData().BlendSpace_WeaponIdle->GetPathName());
-	SetAdsIdlePath(CurrentWeaponAsset->GetWeaponData().BlendSpace_WeaponAdsIdle->GetPathName());
-	SetWalkAnimSequencePath(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponWalk->GetPathName());
-	SetRunAnimSequencePath(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponRun->GetPathName());
-	SetJump1AnimSequencePath(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence1->GetPathName());
-	SetJump2AnimSequencePath(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence2->GetPathName());
-	SetJump3AnimSequencePath(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence3->GetPathName());
+	ViewModelAssetObject.Add(TEXT("WeaponMesh"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().WeaponMesh->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
 
-	AttackAbilityClass = MakeWeakObjectPtr(CurrentWeaponAsset->GetWeaponData().AttackAbility->GetOwnerClass());
-	ReloadAbilityClass = MakeWeakObjectPtr(CurrentWeaponAsset->GetWeaponData().ReloadAbility->GetOwnerClass());
+			CurrentWeaponAsset->GetWeaponData().WeaponMesh = Cast<USkeletalMesh>(AssetData.GetAsset());
+			EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+		}
+		)));
+
+	ViewModelAssetObject.Add(TEXT("WeaponPickUpMeshPath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().WeaponPickUpMesh->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().WeaponPickUpMesh = Cast<UStaticMesh>(AssetData.GetAsset());;
+			EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("IdlePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().BlendSpace_WeaponIdle->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().BlendSpace_WeaponIdle = Cast<UBlendSpace>(AssetData.GetAsset());
+			EditorCharacter->ResetArmsAnimInstance();
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("AdsIdlePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().BlendSpace_WeaponAdsIdle->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().BlendSpace_WeaponAdsIdle = Cast<UBlendSpace>(AssetData.GetAsset());
+			EditorCharacter->ResetArmsAnimInstance();
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("WalkAnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponWalk->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponWalk = Cast<UAnimSequenceBase>(AssetData.GetAsset());
+			EditorCharacter->ResetArmsAnimInstance();
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("RunAnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponRun->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponRun = Cast<UAnimSequenceBase>(AssetData.GetAsset());
+			EditorCharacter->ResetArmsAnimInstance();
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("Jump1AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence1->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence1 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
+			EditorCharacter->ResetArmsAnimInstance();
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("Jump2AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence2->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence2 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
+			EditorCharacter->ResetArmsAnimInstance();
+		}
+	)));
+
+
+	ViewModelAssetObject.Add(TEXT("Jump3AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence3->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence3 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
+			EditorCharacter->ResetArmsAnimInstance();
+		}
+	)));
+
+	ViewModelAbilityObject.Add(TEXT("Attack"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().AttackAbility->GetOwnerClass(),
+		[&]() {
+			EditorCharacter->GetCurrentWeapon()->Attack();
+		}
+	)));
+
+	ViewModelAbilityObject.Add(TEXT("Reload"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().AttackAbility->GetOwnerClass(),
+		[&]() {
+			EditorCharacter->GetCurrentWeapon()->Attack();
+		}
+	)));
 
 	return true;
 }
 
-void UWeaponEditorViewModel::OnChangeWeaponMeshAsset(const FAssetData& AssetData)
+TSharedPtr<FViewModelAssetObject> UWeaponEditorViewModel::GetViewModelAssetObject(const FString& InKey)
 {
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetWeaponMeshPath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().WeaponMesh = Cast<USkeletalMesh>(AssetData.GetAsset());
-	EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+	return ViewModelAssetObject[InKey];
 }
 
-void UWeaponEditorViewModel::OnChangeWeaponPickUpMeshAsset(const FAssetData& AssetData)
+TSharedPtr<FViewModelAbilityObject> UWeaponEditorViewModel::GetViewModelAbilityObject(const FString& InKey)
 {
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetWeaponPickUpMeshPath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().WeaponPickUpMesh = Cast<UStaticMesh>(AssetData.GetAsset());;
-	EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
-}
-
-void UWeaponEditorViewModel::OnChangeIdleAsset(const FAssetData& AssetData)
-{
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetIdlePath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().BlendSpace_WeaponIdle = Cast<UBlendSpace>(AssetData.GetAsset());
-	EditorCharacter->ResetArmsAnimInstance();
-}
-
-void UWeaponEditorViewModel::OnChangeAdsIdleAsset(const FAssetData& AssetData)
-{
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetAdsIdlePath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().BlendSpace_WeaponAdsIdle = Cast<UBlendSpace>(AssetData.GetAsset());
-	EditorCharacter->ResetArmsAnimInstance();
-}
-
-void UWeaponEditorViewModel::OnChangeWalkAnimSequenceAsset(const FAssetData& AssetData)
-{
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetWalkAnimSequencePath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponWalk = Cast<UAnimSequenceBase>(AssetData.GetAsset());
-	EditorCharacter->ResetArmsAnimInstance();
-}
-
-void UWeaponEditorViewModel::OnChangeRunAnimSequenceAsset(const FAssetData& AssetData)
-{
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetRunAnimSequencePath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponRun = Cast<UAnimSequenceBase>(AssetData.GetAsset());
-	EditorCharacter->ResetArmsAnimInstance();
-}
-
-void UWeaponEditorViewModel::OnChangeJump1AnimSequenceAsset(const FAssetData& AssetData)
-{
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetJump1AnimSequencePath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence1 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
-	EditorCharacter->ResetArmsAnimInstance();
-}
-
-void UWeaponEditorViewModel::OnChangeJump2AnimSequenceAsset(const FAssetData& AssetData)
-{
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetJump2AnimSequencePath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence2 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
-	EditorCharacter->ResetArmsAnimInstance();
-}
-
-void UWeaponEditorViewModel::OnChangeJump3AnimSequenceAsset(const FAssetData& AssetData)
-{
-	if (!CurrentWeaponAsset)
-		return;
-
-	SetJump3AnimSequencePath(AssetData.GetObjectPathString());
-	CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence3 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
-	EditorCharacter->ResetArmsAnimInstance();
-}
-
-FReply UWeaponEditorViewModel::ClickedOnRunAttackAbility()
-{
-	if (!EditorCharacter)
-		return FReply::Handled();
-		
-	EditorCharacter->GetCurrentWeapon()->Attack();
-
-	return FReply::Handled();
-}
-
-FReply UWeaponEditorViewModel::ClickedOnRunReloadAbility()
-{
-	if (!EditorCharacter)
-		return FReply::Handled();
-
-	EditorCharacter->GetCurrentWeapon()->Reload();
-
-	return FReply::Handled();
+	return ViewModelAbilityObject[InKey];
 }

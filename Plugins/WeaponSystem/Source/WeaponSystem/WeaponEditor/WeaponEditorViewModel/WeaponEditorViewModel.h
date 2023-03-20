@@ -9,6 +9,71 @@
 /**
  * 
  */
+
+class FViewModelAssetObject
+{
+public:
+	FViewModelAssetObject() {}
+	FViewModelAssetObject(FString InAssetPath, std::function<void(const FAssetData& AssetData)> InAssetChangeLambda) {
+		SetAssetPath(InAssetPath);
+		OnChangeAssetLambda = InAssetChangeLambda;
+	}
+
+	~FViewModelAssetObject() {}
+
+public:
+	FString GetAssetPath() const { return AssetPath; }
+	void SetAssetPath(FString InAssetPath) { AssetPath = InAssetPath; }
+	void OnChangeAsset(const FAssetData& AssetData) {
+		if (OnChangeAssetLambda)
+		{
+			OnChangeAssetLambda(AssetData);
+			SetAssetPath(AssetData.GetObjectPathString());
+		}
+	}
+
+private:
+	FString AssetPath;
+	std::function<void(const FAssetData& AssetData)> OnChangeAssetLambda;
+};
+
+class FViewModelAbilityObject
+{
+public:
+	FViewModelAbilityObject() {}
+	FViewModelAbilityObject(const UClass* SelectedClass, std::function<void()> InOnClickAbilityLambda) {
+		if (SelectedClass)
+		{
+			AbilityClass = MakeWeakObjectPtr(SelectedClass);
+			OnClickAbilityLambda = InOnClickAbilityLambda;
+		}
+	}
+	~FViewModelAbilityObject() {}
+
+public:
+	const UClass* OnGetAbilityClass() const
+	{
+		return AbilityClass.Get();
+	}
+
+	void OnSetAbilityClass(const UClass* SelectedClass)
+	{
+		AbilityClass = MakeWeakObjectPtr(SelectedClass);
+	}
+
+	FReply ClickedOnRunAbility() {
+		if (OnClickAbilityLambda)
+		{
+			OnClickAbilityLambda();
+		}
+
+		return FReply::Handled();
+	}
+private:
+	TWeakObjectPtr<const UClass> AbilityClass;
+	std::function<void()> OnClickAbilityLambda;
+};
+
 UCLASS()
 class WEAPONSYSTEM_API UWeaponEditorViewModel : public UObject
 {
@@ -22,79 +87,15 @@ public:
 		return EditorCharacter;
 	}
 
-	FString GetWeaponMeshPath() const { return WeaponMeshPath; }
-	void SetWeaponMeshPath(FString InWeaponMeshPath) { WeaponMeshPath = InWeaponMeshPath; }
-	void OnChangeWeaponMeshAsset(const FAssetData& AssetData);
-
-	FString GetWeaponPickUpMeshPath() const { return WeaponPickUpMeshPath; }
-	void SetWeaponPickUpMeshPath(FString InWeaponPickUpMeshPath) { WeaponPickUpMeshPath = InWeaponPickUpMeshPath; }
-	void OnChangeWeaponPickUpMeshAsset(const FAssetData& AssetData);
-
-	FString GetIdlePath() const { return IdlePath; }
-	void SetIdlePath(FString InIdlePath) { IdlePath = InIdlePath; }
-	void OnChangeIdleAsset(const FAssetData& AssetData);
-
-	FString GetAdsIdlePath() const { return AdsIdlePath; }
-	void SetAdsIdlePath(FString InAdsIdlePath) { AdsIdlePath = InAdsIdlePath; }
-	void OnChangeAdsIdleAsset(const FAssetData& AssetData);
-
-	FString GetWalkAnimSequencePath() const { return WalkAnimSequencePath; }
-	void SetWalkAnimSequencePath(FString InWalkAnimSequencePath) { WalkAnimSequencePath = InWalkAnimSequencePath; }
-	void OnChangeWalkAnimSequenceAsset(const FAssetData& AssetData);
-
-	FString GetRunAnimSequencePath() const { return RunAnimSequencePath; }
-	void SetRunAnimSequencePath(FString InRunAnimSequencePath) { RunAnimSequencePath = InRunAnimSequencePath; }
-	void OnChangeRunAnimSequenceAsset(const FAssetData& AssetData);
-
-	FString GetJump1AnimSequencePath() const { return Jump1AnimSequencePath; }
-	void SetJump1AnimSequencePath(FString InJump1AnimSequencePath) { Jump1AnimSequencePath = InJump1AnimSequencePath; }
-	void OnChangeJump1AnimSequenceAsset(const FAssetData& AssetData);
-
-	FString GetJump2AnimSequencePath() const { return Jump2AnimSequencePath; }
-	void SetJump2AnimSequencePath(FString InJump2AnimSequencePath) { Jump2AnimSequencePath = InJump2AnimSequencePath; }
-	void OnChangeJump2AnimSequenceAsset(const FAssetData& AssetData);
-
-	FString GetJump3AnimSequencePath() const { return Jump3AnimSequencePath; }
-	void SetJump3AnimSequencePath(FString InJump3AnimSequencePath) { Jump3AnimSequencePath = InJump3AnimSequencePath; }
-	void OnChangeJump3AnimSequenceAsset(const FAssetData& AssetData);
-
-	const UClass* OnGetAttackAbilityClass() const
-	{
-		return AttackAbilityClass.Get();
-	}
-
-	void OnSetAttackAbilityClass(const UClass* SelectedClass)
-	{
-		AttackAbilityClass = MakeWeakObjectPtr(SelectedClass);
-	}
-
-	FReply ClickedOnRunAttackAbility();
-
-	const UClass* OnGetReloadAbilityClass() const
-	{
-		return ReloadAbilityClass.Get();
-	}
-
-	void OnSetReloadAbilityClass(const UClass* SelectedClass)
-	{
-		ReloadAbilityClass = MakeWeakObjectPtr(SelectedClass);
-	}
-
-	FReply ClickedOnRunReloadAbility();
+	TSharedPtr<FViewModelAssetObject> GetViewModelAssetObject(const FString& InKey);
+	TSharedPtr<FViewModelAbilityObject> GetViewModelAbilityObject(const FString& InKey);
 
 private:
 	UWorld* EditorWorld = nullptr;
 	TObjectPtr<class AEditorCharacter> EditorCharacter = nullptr;
-	FString WeaponMeshPath;
-	FString WeaponPickUpMeshPath;
-	FString IdlePath;
-	FString AdsIdlePath;
-	FString WalkAnimSequencePath;
-	FString RunAnimSequencePath;
-	FString Jump1AnimSequencePath;
-	FString Jump2AnimSequencePath;
-	FString Jump3AnimSequencePath;
+
+	TMap<FString, TSharedPtr<FViewModelAssetObject>> ViewModelAssetObject;
+	TMap<FString, TSharedPtr<FViewModelAbilityObject>> ViewModelAbilityObject;
+
 	TObjectPtr<class UWeaponAsset> CurrentWeaponAsset;
-	TWeakObjectPtr<const UClass> AttackAbilityClass;
-	TWeakObjectPtr<const UClass> ReloadAbilityClass;
 };
