@@ -21,6 +21,9 @@ public:
 	void SetCrossHair();
 	void HideWhileADS();
 
+private:
+	FVector2D MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector);
+
 protected:
 	TArray<FVector2D> CrossHairUnitVectors;
 	TObjectPtr<class AFpsCharacterBase> OwningCharacter;

@@ -72,17 +72,8 @@ void UWeaponCrossHairWidget::SetCrossHair()
 				UKismetMathLibrary::FInterpTo(Position.X, PowerVector.X, DeltaTimeSeconds, InterpSpeed),
 			UKismetMathLibrary::FInterpTo(Position.Y, PowerVector.Y, DeltaTimeSeconds, InterpSpeed));
 
-		if (UnitVector.X * UnitVector.Y > 0)
-			Swap(UpperBound, LowerBound);
-
-		FVector2D UpperBoundVector = UnitVector * UpperBound;
-		FVector2D LowerBoundVector = UnitVector * LowerBound;
-
 		FVector2D WeaponFirePowerVector = UnitVector * WeaponFirePower * 2.5f;
-
-		FVector2D NewPosition;
-		NewPosition.X = UKismetMathLibrary::FClamp(InterpedVector.X, UpperBoundVector.X, LowerBoundVector.X) + WeaponFirePowerVector.X;
-		NewPosition.Y = UKismetMathLibrary::FClamp(InterpedVector.Y, UpperBoundVector.Y, LowerBoundVector.Y) + WeaponFirePowerVector.Y;
+		FVector2D NewPosition = MakePositionLimit(InterpedVector + WeaponFirePowerVector, UnitVector * UpperBound, UnitVector * LowerBound);
 
 		CanvasPanelSlot->SetPosition(NewPosition);
 	}
@@ -90,4 +81,40 @@ void UWeaponCrossHairWidget::SetCrossHair()
 
 void UWeaponCrossHairWidget::HideWhileADS()
 {
+}
+
+FVector2D UWeaponCrossHairWidget::MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector)
+{
+	FVector2D NewPosition = InPosition;
+
+	FVector2D CalcUpperBoundVector = InUpperBoundVector;
+	if (CalcUpperBoundVector.X < 0)
+		CalcUpperBoundVector.X *= -1.f;
+	if (CalcUpperBoundVector.Y < 0)
+		CalcUpperBoundVector.Y *= -1.f;
+
+	FVector2D CalcLowerBoundVector = InLowerBoundVector;
+	if (CalcLowerBoundVector.X < 0)
+		CalcLowerBoundVector.X *= -1.f;
+	if (CalcLowerBoundVector.Y < 0)
+		CalcLowerBoundVector.Y *= -1.f;
+
+	float CalcX = NewPosition.X;
+	if (CalcX < 0)
+		CalcX *= -1.f;
+	float CalcY = NewPosition.Y;
+	if (CalcY < 0)
+		CalcY *= -1.f;
+
+	if (CalcX < CalcLowerBoundVector.X)
+		NewPosition.X = InLowerBoundVector.X;
+	else if (CalcX > CalcUpperBoundVector.X)
+		NewPosition.X = InUpperBoundVector.X;
+
+	if (CalcY < CalcLowerBoundVector.Y)
+		NewPosition.Y = InLowerBoundVector.Y;
+	else if (CalcY > CalcUpperBoundVector.Y)
+		NewPosition.Y = InUpperBoundVector.Y;
+
+	return NewPosition;
 }
