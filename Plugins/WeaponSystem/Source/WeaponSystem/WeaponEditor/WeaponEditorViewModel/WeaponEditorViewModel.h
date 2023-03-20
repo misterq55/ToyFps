@@ -41,6 +41,7 @@ class FViewModelAbilityObject
 {
 public:
 	FViewModelAbilityObject() {}
+	
 	FViewModelAbilityObject(const UClass* SelectedClass, std::function<void()> InOnClickAbilityLambda) {
 		if (SelectedClass)
 		{
@@ -48,6 +49,17 @@ public:
 			OnClickAbilityLambda = InOnClickAbilityLambda;
 		}
 	}
+
+	//FViewModelAbilityObject(TSubclassOf<class UWeaponAbility> InWeaponAbilityClass, std::function<void()> InOnClickAbilityLambda) {
+	//	if (WeaponAbilityClass)
+	//	{
+	//		// AbilityClass = MakeWeakObjectPtr(SelectedClass);
+	//		WeaponAbilityClass = InWeaponAbilityClass;
+	//		AbilityClass = MakeWeakObjectPtr(WeaponAbilityClass->GetOwnerClass());
+	//		OnClickAbilityLambda = InOnClickAbilityLambda;
+	//	}
+	//}
+
 	~FViewModelAbilityObject() {}
 
 public:
@@ -71,6 +83,7 @@ public:
 	}
 private:
 	TWeakObjectPtr<const UClass> AbilityClass;
+	TSubclassOf<class UWeaponAbility> WeaponAbilityClass;
 	std::function<void()> OnClickAbilityLambda;
 };
 

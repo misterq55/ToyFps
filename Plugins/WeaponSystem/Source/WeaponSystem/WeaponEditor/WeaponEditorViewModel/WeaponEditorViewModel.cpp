@@ -120,9 +120,9 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 		}
 	)));
 
-	ViewModelAbilityObject.Add(TEXT("Reload"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().AttackAbility->GetOwnerClass(),
+	ViewModelAbilityObject.Add(TEXT("Reload"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().ReloadAbility->GetOwnerClass(),
 		[&]() {
-			EditorCharacter->GetCurrentWeapon()->Attack();
+			EditorCharacter->GetCurrentWeapon()->Reload();
 		}
 	)));
 
