@@ -8,6 +8,7 @@
 
 #include "Animation/BlendSpace.h"
 #include "Animation/AnimSequenceBase.h"
+#include "Animation/AnimMontage.h"
 
 void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor)
 {
@@ -161,6 +162,102 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 					.ThumbnailPool(AssetThumbnailPool)
 					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("Jump3AnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
 					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("Jump3AnimSequencePath")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
+				]
+
+			// Weapon Fire AnimSequence
+			+ SVerticalBox::Slot()
+				.AutoHeight()
+				.HAlign(HAlign_Left)
+				[
+					SNew(SWeaponEditorAssetProperty)
+					.ObjectName(FText::FromString(TEXT("Weapon Fire Animation Montage")))
+					.DisplayBrowse(true)
+					.DisplayThumbnail(true)
+					.AllowedClass(UAnimMontage::StaticClass())
+					.EnableContentPicker(true)
+					.ThumbnailPool(AssetThumbnailPool)
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WeaponFireAnimMontage")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WeaponFireAnimMontage")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
+				]
+
+			// Ads Weapon Fire AnimSequence
+			+ SVerticalBox::Slot()
+				.AutoHeight()
+				.HAlign(HAlign_Left)
+				[
+					SNew(SWeaponEditorAssetProperty)
+					.ObjectName(FText::FromString(TEXT("Ads Weapon Fire Animation Montage")))
+					.DisplayBrowse(true)
+					.DisplayThumbnail(true)
+					.AllowedClass(UAnimMontage::StaticClass())
+					.EnableContentPicker(true)
+					.ThumbnailPool(AssetThumbnailPool)
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsWeaponFireAnimMontage")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsWeaponFireAnimMontage")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
+				]
+
+			// Weapon Reload AnimSequence
+			+ SVerticalBox::Slot()
+				.AutoHeight()
+				.HAlign(HAlign_Left)
+				[
+					SNew(SWeaponEditorAssetProperty)
+					.ObjectName(FText::FromString(TEXT("Weapon Reload Animation Montage")))
+					.DisplayBrowse(true)
+					.DisplayThumbnail(true)
+					.AllowedClass(UAnimMontage::StaticClass())
+					.EnableContentPicker(true)
+					.ThumbnailPool(AssetThumbnailPool)
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("WeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
+				]
+
+			// Ads Weapon Reload AnimSequence
+			+ SVerticalBox::Slot()
+				.AutoHeight()
+				.HAlign(HAlign_Left)
+				[
+					SNew(SWeaponEditorAssetProperty)
+					.ObjectName(FText::FromString(TEXT("Ads Weapon Reload Animation Montage")))
+					.DisplayBrowse(true)
+					.DisplayThumbnail(true)
+					.AllowedClass(UAnimMontage::StaticClass())
+					.EnableContentPicker(true)
+					.ThumbnailPool(AssetThumbnailPool)
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsWeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsWeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
+				]
+
+			// Weapon Reload AnimSequence
+			+ SVerticalBox::Slot()
+				.AutoHeight()
+				.HAlign(HAlign_Left)
+				[
+					SNew(SWeaponEditorAssetProperty)
+					.ObjectName(FText::FromString(TEXT("Empty Weapon Reload Animation Montage")))
+					.DisplayBrowse(true)
+					.DisplayThumbnail(true)
+					.AllowedClass(UAnimMontage::StaticClass())
+					.EnableContentPicker(true)
+					.ThumbnailPool(AssetThumbnailPool)
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("EmptyWeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("EmptyWeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
+				]
+
+			// Weapon Reload AnimSequence
+			+ SVerticalBox::Slot()
+				.AutoHeight()
+				.HAlign(HAlign_Left)
+				[
+					SNew(SWeaponEditorAssetProperty)
+					.ObjectName(FText::FromString(TEXT("Ads Empty Weapon Reload Animation Montage")))
+					.DisplayBrowse(true)
+					.DisplayThumbnail(true)
+					.AllowedClass(UAnimMontage::StaticClass())
+					.EnableContentPicker(true)
+					.ThumbnailPool(AssetThumbnailPool)
+					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsEmptyWeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
+					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsEmptyWeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
 				]
 		];
 }

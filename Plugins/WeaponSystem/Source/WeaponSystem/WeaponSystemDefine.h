@@ -9,8 +9,8 @@ USTRUCT(BlueprintType)
 struct WEAPONSYSTEM_API FWeaponData
 {
 	GENERATED_BODY()
-	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
+
+		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
 		TSubclassOf<class AWeaponBase> WeaponClass;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
@@ -57,6 +57,24 @@ struct WEAPONSYSTEM_API FWeaponData
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UAnimSequenceBase* AnimSequence_WeaponRun = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimMontage* AnimMontage_WeaponFire = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimMontage* AnimMontage_AdsWeaponFire = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimMontage* AnimMontage_WeaponReload = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimMontage* AnimMontage_AdsWeaponReload = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimMontage* AnimMontage_EmptyWeaponReload = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UAnimMontage* AnimMontage_AdsEmptyWeaponReload = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UBlendSpace* BlendSpace_WeaponIdle = nullptr;

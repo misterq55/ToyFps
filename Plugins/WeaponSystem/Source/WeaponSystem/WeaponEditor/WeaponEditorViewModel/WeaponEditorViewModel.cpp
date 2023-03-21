@@ -114,6 +114,66 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 		}
 	)));
 
+	ViewModelAssetObject.Add(TEXT("WeaponFireAnimMontage"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimMontage_WeaponFire->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimMontage_WeaponFire = Cast<UAnimMontage>(AssetData.GetAsset());
+			EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("AdsWeaponFireAnimMontage"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimMontage_AdsWeaponFire->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimMontage_AdsWeaponFire = Cast<UAnimMontage>(AssetData.GetAsset());
+			EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("WeaponReloadAnimMontage"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimMontage_WeaponReload->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimMontage_WeaponReload = Cast<UAnimMontage>(AssetData.GetAsset());
+			EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("AdsWeaponReloadAnimMontage"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimMontage_AdsWeaponReload->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimMontage_AdsWeaponReload = Cast<UAnimMontage>(AssetData.GetAsset());
+			EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("EmptyWeaponReloadAnimMontage"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimMontage_EmptyWeaponReload->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimMontage_EmptyWeaponReload = Cast<UAnimMontage>(AssetData.GetAsset());
+			EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+		}
+	)));
+
+	ViewModelAssetObject.Add(TEXT("AdsEmptyWeaponReloadAnimMontage"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimMontage_AdsEmptyWeaponReload->GetPathName(),
+		[&](const FAssetData& AssetData) {
+			if (!CurrentWeaponAsset)
+				return;
+
+			CurrentWeaponAsset->GetWeaponData().AnimMontage_AdsEmptyWeaponReload = Cast<UAnimMontage>(AssetData.GetAsset());
+			EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+		}
+	)));
+
 	auto OnSetAttackAbilityClass = [&](const UClass* SelectedClass) {
 		CurrentWeaponAsset->GetWeaponData().AttackAbility = SelectedClass->GetOwnerClass();
 		EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
