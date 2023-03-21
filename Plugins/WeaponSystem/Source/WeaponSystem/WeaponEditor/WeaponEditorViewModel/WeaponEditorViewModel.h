@@ -41,24 +41,12 @@ class FViewModelAbilityObject
 {
 public:
 	FViewModelAbilityObject() {}
-	
-	FViewModelAbilityObject(const UClass* SelectedClass, std::function<void()> InOnClickAbilityLambda) {
-		if (SelectedClass)
-		{
-			AbilityClass = MakeWeakObjectPtr(SelectedClass);
-			OnClickAbilityLambda = InOnClickAbilityLambda;
-		}
-	}
 
-	//FViewModelAbilityObject(TSubclassOf<class UWeaponAbility> InWeaponAbilityClass, std::function<void()> InOnClickAbilityLambda) {
-	//	if (WeaponAbilityClass)
-	//	{
-	//		// AbilityClass = MakeWeakObjectPtr(SelectedClass);
-	//		WeaponAbilityClass = InWeaponAbilityClass;
-	//		AbilityClass = MakeWeakObjectPtr(WeaponAbilityClass->GetOwnerClass());
-	//		OnClickAbilityLambda = InOnClickAbilityLambda;
-	//	}
-	//}
+	FViewModelAbilityObject(const UClass* SelectedClass, std::function<void(const UClass* SelectedClass)> InOnSetClassLambda, std::function<void()> InOnClickAbilityLambda) {
+		AbilityClass = MakeWeakObjectPtr(SelectedClass);
+		OnSetClassLambda = InOnSetClassLambda;
+		OnClickAbilityLambda = InOnClickAbilityLambda;
+	}
 
 	~FViewModelAbilityObject() {}
 
@@ -70,20 +58,20 @@ public:
 
 	void OnSetAbilityClass(const UClass* SelectedClass)
 	{
+		OnSetClassLambda(SelectedClass);
 		AbilityClass = MakeWeakObjectPtr(SelectedClass);
 	}
 
 	FReply ClickedOnRunAbility() {
+		
 		if (OnClickAbilityLambda)
-		{
 			OnClickAbilityLambda();
-		}
 
 		return FReply::Handled();
 	}
 private:
 	TWeakObjectPtr<const UClass> AbilityClass;
-	TSubclassOf<class UWeaponAbility> WeaponAbilityClass;
+	std::function<void(const UClass* SelectedClass)> OnSetClassLambda;
 	std::function<void()> OnClickAbilityLambda;
 };
 

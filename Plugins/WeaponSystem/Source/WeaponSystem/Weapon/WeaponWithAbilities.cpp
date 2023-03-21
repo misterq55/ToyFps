@@ -33,6 +33,8 @@ void AWeaponWithAbilities::ResetWeapon(const FWeaponData& InWeaponData)
 {
 	Super::ResetWeapon(InWeaponData);
 
+	WeaponData = InWeaponData;
+
 	if (!WeaponData.AttackAbility)
 		return;
 

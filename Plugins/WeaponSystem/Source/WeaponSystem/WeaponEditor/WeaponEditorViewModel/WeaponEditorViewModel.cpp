@@ -114,16 +114,32 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 		}
 	)));
 
+	auto OnSetAttackAbilityClass = [&](const UClass* SelectedClass) {
+		CurrentWeaponAsset->GetWeaponData().AttackAbility = SelectedClass->GetOwnerClass();
+		EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+	};
+
+	auto OnClickAttackAbility = [&]() {
+		EditorCharacter->GetCurrentWeapon()->Attack();
+	};
+
 	ViewModelAbilityObject.Add(TEXT("Attack"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().AttackAbility->GetOwnerClass(),
-		[&]() {
-			EditorCharacter->GetCurrentWeapon()->Attack();
-		}
+		OnSetAttackAbilityClass,
+		OnClickAttackAbility
 	)));
 
+	auto OnSetReloadAbilityClass = [&](const UClass* SelectedClass) {
+		CurrentWeaponAsset->GetWeaponData().ReloadAbility = SelectedClass->GetOwnerClass();
+		EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());
+	};
+
+	auto OnClickReloadAbility = [&]() {
+		EditorCharacter->GetCurrentWeapon()->Reload();
+	};
+
 	ViewModelAbilityObject.Add(TEXT("Reload"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().ReloadAbility->GetOwnerClass(),
-		[&]() {
-			EditorCharacter->GetCurrentWeapon()->Reload();
-		}
+		OnSetReloadAbilityClass,
+		OnClickReloadAbility
 	)));
 
 	return true;
