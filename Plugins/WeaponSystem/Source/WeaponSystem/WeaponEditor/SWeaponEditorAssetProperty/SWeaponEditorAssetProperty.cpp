@@ -10,21 +10,39 @@ void SWeaponEditorAssetProperty::Construct(const FArguments& InArgs)
 				.AutoWidth()
 				.VAlign(VAlign_Top)
 			[
-				SNew(STextBlock)
-				.Text(InArgs._ObjectName)
+				SNew(SBox)
+				.Padding(FMargin(4.0f, 0.0f, 0.0f, 0.0f))
+				.WidthOverride(200.f)
+				.HeightOverride(50.f)
+				[
+					SNew(SBorder)
+					[
+						SNew(STextBlock)
+						.Text(InArgs._ObjectName)
+					]
+				]
 			]
 			+ SHorizontalBox::Slot()
 			.AutoWidth()
 			.VAlign(VAlign_Top)
 			[
-				SNew(SObjectPropertyEntryBox)
-				.DisplayBrowse(InArgs._DisplayBrowse)
-				.DisplayThumbnail(InArgs._DisplayThumbnail)
-				.AllowedClass(InArgs._AllowedClass)
-				.EnableContentPicker(InArgs._EnableContentPicker)
-				.ThumbnailPool(InArgs._ThumbnailPool)
-				.ObjectPath(InArgs._ObjectPath)
-				.OnObjectChanged(InArgs._OnObjectChanged)
+				SNew(SBox)
+				.Padding(FMargin(4.0f, 0.0f, 0.0f, 0.0f))
+				.WidthOverride(200.f)
+				.HeightOverride(50.f)
+				[
+					SNew(SBorder)
+					[
+						SNew(SObjectPropertyEntryBox)
+						.DisplayBrowse(InArgs._DisplayBrowse)
+						.DisplayThumbnail(InArgs._DisplayThumbnail)
+						.AllowedClass(InArgs._AllowedClass)
+						.EnableContentPicker(InArgs._EnableContentPicker)
+						.ThumbnailPool(InArgs._ThumbnailPool)
+						.ObjectPath(InArgs._ObjectPath)
+						.OnObjectChanged(InArgs._OnObjectChanged)
+					]
+				]
 			]
 		];
 }

@@ -22,7 +22,6 @@ class WEAPONSYSTEM_API UArmsAnimInstanceBase : public UAnimInstance
 public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
-	// void SetWeaponData(AWeaponBase* InWeapon);
 	void SetWeaponData(const FWeaponData& InWeaponData);
 
 protected:

@@ -3,15 +3,10 @@
 #include "WeaponSystem/Weapon/WeaponAbility/WeaponAbility.h"
 #include "WeaponSystemDefine.generated.h"
 
-// class UWeaponAbility;
-
 USTRUCT(BlueprintType)
 struct WEAPONSYSTEM_API FWeaponData
 {
 	GENERATED_BODY()
-
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		TSubclassOf<class AWeaponBase> WeaponClass;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float AttackDamage = 0.f;

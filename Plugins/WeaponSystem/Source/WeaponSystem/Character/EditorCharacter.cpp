@@ -7,7 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/ArrowComponent.h"
 #include "WeaponSystem/Weapon/WeaponAsset.h"
-#include "WeaponSystem/Weapon/WeaponBase.h"
+#include "WeaponSystem/Weapon/WeaponWithAbilities.h"
 #include "WeaponSystem/AnimInstance/ArmsAnimInstanceBase.h"
 
 AEditorCharacter::AEditorCharacter()
@@ -45,7 +45,11 @@ AEditorCharacter::AEditorCharacter()
 
 void AEditorCharacter::SpawnWeaponActor()
 {
-	CurrentWeapon = Cast<AWeaponBase>(GetWorld()->SpawnActor(WeaponAsset->GetWeaponData().WeaponClass));
+	CurrentWeapon = Cast<AWeaponBase>(GetWorld()->SpawnActor(AWeaponWithAbilities::StaticClass()));
+	
+	if (!CurrentWeapon)
+		return;
+
 	CurrentWeapon->SetOwningCharacter(this);
 	CurrentWeapon->SetWeaponData(WeaponAsset->GetWeaponData());
 	CurrentWeapon->AttachToComponent(WeaponPivot, FAttachmentTransformRules::KeepRelativeTransform);
@@ -61,7 +65,6 @@ void AEditorCharacter::SetWeaponAsset(UWeaponAsset* InWeaponAsset)
 void AEditorCharacter::ResetArmsAnimInstance()
 {
 	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
-	// ArmsAnimInstance->SetWeaponData(CurrentWeapon->GetWeaponData());
 	ArmsAnimInstance->SetWeaponData(WeaponAsset->GetWeaponData());
 }
 
