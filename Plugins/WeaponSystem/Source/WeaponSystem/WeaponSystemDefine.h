@@ -1,6 +1,7 @@
 #pragma once
 #include "CoreMinimal.h"
 #include "WeaponSystem/Weapon/WeaponAbility/WeaponAbility.h"
+#include "WeaponSystem/CrossHair/WeaponCrossHairWidget.h"
 #include "WeaponSystemDefine.generated.h"
 
 USTRUCT(BlueprintType)
@@ -82,4 +83,7 @@ struct WEAPONSYSTEM_API FWeaponData
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TSubclassOf<UWeaponAbility> ReloadAbility = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		TSubclassOf<UWeaponCrossHairWidget> CrossHair = nullptr;
 };

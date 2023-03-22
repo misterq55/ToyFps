@@ -174,6 +174,19 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 		}
 	)));
 
+	UObject* SpawnedObject = GetWorld()->SpawnActor<UWeaponCrossHairWidget>(CurrentWeaponAsset->GetWeaponData().CrossHair);
+
+	ViewModelAbilityObject.Add(TEXT("CrossHair"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().CrossHair->GetOwnerClass(),
+		[&](const UClass* SelectedClass) {
+			CurrentWeaponAsset->GetWeaponData().CrossHair = SelectedClass->GetOwnerClass();
+		},
+		[&]() {
+			UObject* SpawnedObject = GetWorld()->SpawnActor<UWeaponCrossHairWidget>(CurrentWeaponAsset->GetWeaponData().CrossHair);
+			UUserWidget* CrossHair = Cast<UUserWidget>(SpawnedObject);
+			CrossHair->AddToViewport();
+		}
+	)));
+
 	auto OnSetAttackAbilityClass = [&](const UClass* SelectedClass) {
 		CurrentWeaponAsset->GetWeaponData().AttackAbility = SelectedClass->GetOwnerClass();
 		EditorCharacter->ResetWeaponData(CurrentWeaponAsset->GetWeaponData());

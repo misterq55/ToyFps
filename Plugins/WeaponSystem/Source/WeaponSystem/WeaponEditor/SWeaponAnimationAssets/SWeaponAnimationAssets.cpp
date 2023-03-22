@@ -2,6 +2,8 @@
 #include "WeaponSystem/WeaponEditor/WeaponEditor.h"
 #include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
 #include "WeaponSystem/WeaponEditor/SWeaponEditorAssetProperty/SWeaponEditorAssetProperty.h"
+#include "WeaponSystem/WeaponEditor/SWeaponEditorClassProperty/SWeaponEditorClassProperty.h"
+#include "WeaponSystem/CrossHair/WeaponCrossHairWidget.h"
 
 #include "Engine/SkeletalMesh.h"
 #include "Engine/StaticMesh.h"
@@ -258,6 +260,17 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 					.ThumbnailPool(AssetThumbnailPool)
 					.ObjectPath(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsEmptyWeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::GetAssetPath)
 					.OnObjectChanged(WeaponEditor.Pin()->GetViewModel()->GetViewModelAssetObject(TEXT("AdsEmptyWeaponReloadAnimMontage")).ToSharedRef(), &FViewModelAssetObject::OnChangeAsset)
+				]
+			+ SVerticalBox::Slot()
+				.AutoHeight()
+				.HAlign(HAlign_Left)
+				[
+					SNew(SWeaponEditorClassProperty)
+					.ClassName(FText::FromString(TEXT("Cross Hair")))
+					.MetaClass(UWeaponCrossHairWidget::StaticClass())
+					.SelectedClass(WeaponEditor.Pin()->GetViewModel()->GetViewModelAbilityObject(TEXT("CrossHair")).ToSharedRef(), &FViewModelAbilityObject::OnGetAbilityClass)
+					.OnSetClass(WeaponEditor.Pin()->GetViewModel()->GetViewModelAbilityObject(TEXT("CrossHair")).ToSharedRef(), &FViewModelAbilityObject::OnSetAbilityClass)
+					.OnClicked(WeaponEditor.Pin()->GetViewModel()->GetViewModelAbilityObject(TEXT("CrossHair")).ToSharedRef(), &FViewModelAbilityObject::ClickedOnRunAbility)
 				]
 		];
 }
