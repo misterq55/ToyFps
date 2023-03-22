@@ -20,6 +20,9 @@ public:
 public:
 	void SetCrossHair();
 	void HideWhileADS();
+	void SetCenterPivot(const FVector2D& InCenterPivot) {
+		CenterPivot = InCenterPivot;
+	}
 
 private:
 	FVector2D MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector);
