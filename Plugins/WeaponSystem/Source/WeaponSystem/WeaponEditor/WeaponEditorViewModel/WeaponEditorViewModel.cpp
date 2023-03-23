@@ -9,6 +9,7 @@
 #include "Animation/AnimSequenceBase.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/StaticMesh.h"
+#include "WeaponSystem/WeaponEditor/SWeaponCrossHair/SWeaponCrossHair.h"
 
 bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjects)
 {
@@ -180,9 +181,14 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 		},
 		[&]()
 		{
-			UWeaponCrossHairWidget* CrossHair = NewObject<UWeaponCrossHairWidget>(CurrentWeaponAsset->GetWeaponData().CrossHair);
-			CrossHair->SetCenterPivot(FVector2D(-4.960938, -12.540527));
-			CrossHair->AddToViewport();
+			UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
+			/*CrossHair->SetCenterPivot(FVector2D(-4.960938, -12.540527));
+			CrossHair->NativeConstruct();
+			CrossHair->SetOwningCharacter(EditorCharacter);
+			CrossHair->AddToViewport();*/
+
+			// TSharedPtr<SWeaponCrossHair> CrossHairWidget = SNew(SWeaponCrossHair);
+			CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
 		}
 	)));
 

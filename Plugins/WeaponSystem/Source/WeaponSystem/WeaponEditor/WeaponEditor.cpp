@@ -11,6 +11,7 @@
 #include "AdvancedPreviewScene.h"
 #include "WeaponSystem/Character/EditorCharacter.h"
 #include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
+#include "WeaponSystem/WeaponEditor/SWeaponCrossHair/SWeaponCrossHair.h"
 
 void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 {
@@ -36,6 +37,10 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 	WeaponInfo = SNew(SWeaponInfo, SharedThis(this));
 	WeaponAnimationAssets = SNew(SWeaponAnimationAssets, SharedThis(this));
 	WeaponAbilities = SNew(SWeaponAbilities, SharedThis(this));
+
+	CrossHairWidget = SNew(SWeaponCrossHair);
+
+	ViewModel->SetCrossHair(CrossHairWidget);
 
 	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("WeaponEditor_Layout_v1")
 		->AddArea
@@ -165,9 +170,19 @@ TSharedRef<SDockTab> FWeaponEditor::SpawnTab_EditorViewport(const FSpawnTabArgs&
 
 TSharedRef<SDockTab> FWeaponEditor::SpawnTab_FirstPersonViewport(const FSpawnTabArgs& Args)
 {
-	return SNew(SDockTab)
+	TSharedRef<SOverlay> ViewportWithOverlay = SNew(SOverlay)
+		+ SOverlay::Slot()
 		[
 			FirstPersonViewport.ToSharedRef()
+		]
+	+ SOverlay::Slot()
+		[
+			CrossHairWidget.ToSharedRef()
+		];
+
+	return SNew(SDockTab)
+		[
+			ViewportWithOverlay
 		];
 }
 

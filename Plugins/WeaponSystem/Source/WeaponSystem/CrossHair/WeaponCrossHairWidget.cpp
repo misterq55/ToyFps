@@ -11,7 +11,7 @@ void UWeaponCrossHairWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	FTimerHandle SetCrossHairHandle;
+	/*FTimerHandle SetCrossHairHandle;
 	GetWorld()->GetTimerManager().SetTimer(SetCrossHairHandle, FTimerDelegate::CreateLambda([&]()
 		{
 			SetCrossHair();
@@ -21,7 +21,7 @@ void UWeaponCrossHairWidget::NativeConstruct()
 	GetWorld()->GetTimerManager().SetTimer(HideWhileADSHandle, FTimerDelegate::CreateLambda([&]()
 		{
 			HideWhileADS();
-		}), 0.01f, true);
+		}), 0.01f, true);*/
 
 	UCanvasPanel* CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("CanvasPanel")));
 	if (!CanvasPanel)
@@ -49,6 +49,9 @@ void UWeaponCrossHairWidget::SetCrossHair()
 
 	float DeltaTimeSeconds = GetWorld()->DeltaTimeSeconds;
 	
+	/*if (!OwningCharacter)
+		return;*/
+
 	// 무기 발사에 의한 크로스 헤어 벌어짐
 	float WeaponFirePower = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
 

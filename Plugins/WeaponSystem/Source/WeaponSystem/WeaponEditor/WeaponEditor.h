@@ -17,6 +17,7 @@ class SWeaponAbilities;
 class AEditorCharacter;
 class FPreviewScene;
 class UWeaponEditorViewModel;
+class SWeaponCrossHair;
 
 class WEAPONSYSTEM_API FWeaponEditor : public FAssetEditorToolkit
 {
@@ -30,6 +31,10 @@ public:
 
 	TObjectPtr<AEditorCharacter> GetEditorCharacter();
 	UWeaponEditorViewModel* GetViewModel() { return ViewModel; }
+
+	TSharedPtr<SWeaponCrossHair> GetWeaponCrossHair() {
+		return CrossHairWidget;
+	}
 
 protected:
 	void RegisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager);
@@ -50,4 +55,5 @@ private:
 	TSharedPtr<SWeaponAbilities> WeaponAbilities;
 	TSharedPtr<FPreviewScene> WeaponEditorPreviewScene;
 	UWeaponEditorViewModel* ViewModel;
+	TSharedPtr<SWeaponCrossHair> CrossHairWidget;
 };

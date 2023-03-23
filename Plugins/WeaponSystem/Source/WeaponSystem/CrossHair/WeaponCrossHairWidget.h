@@ -23,6 +23,10 @@ public:
 	void SetCenterPivot(const FVector2D& InCenterPivot) {
 		CenterPivot = InCenterPivot;
 	}
+	
+	void SetOwningCharacter(TObjectPtr<class AFpsCharacterBase> InCharacter) {
+		OwningCharacter = InCharacter;
+	}
 
 private:
 	FVector2D MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector);
