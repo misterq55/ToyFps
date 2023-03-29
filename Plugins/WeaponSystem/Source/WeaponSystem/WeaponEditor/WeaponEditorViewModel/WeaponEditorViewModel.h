@@ -91,9 +91,12 @@ public:
 	TSharedPtr<FViewModelAssetObject> GetViewModelAssetObject(const FString& InKey);
 	TSharedPtr<FViewModelAbilityObject> GetViewModelAbilityObject(const FString& InKey);
 
-	void SetCrossHair(TSharedPtr<class SWeaponCrossHair> InCrossHairWidget) {
+	/*void SetCrossHair(TSharedPtr<class SWeaponCrossHair> InCrossHairWidget) {
 		CrossHairWidget = InCrossHairWidget;
-	}
+	}*/
+
+	void SetCrossHair(TSharedPtr<class SWeaponCrossHair> InCrossHairWidget);
+
 private:
 	UWorld* EditorWorld = nullptr;
 	TObjectPtr<class AEditorCharacter> EditorCharacter = nullptr;

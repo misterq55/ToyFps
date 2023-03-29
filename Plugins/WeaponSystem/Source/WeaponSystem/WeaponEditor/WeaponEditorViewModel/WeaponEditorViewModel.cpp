@@ -175,20 +175,22 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 		}
 	)));
 
+	/*if (CurrentWeaponAsset->GetWeaponData().CrossHair)
+	{
+		UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
+		CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
+	}*/
+
 	ViewModelAbilityObject.Add(TEXT("CrossHair"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().CrossHair->GetOwnerClass(),
 		[&](const UClass* SelectedClass) {
 			CurrentWeaponAsset->GetWeaponData().CrossHair = SelectedClass->GetOwnerClass();
+			UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
+			CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
 		},
 		[&]()
 		{
-			UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
-			/*CrossHair->SetCenterPivot(FVector2D(-4.960938, -12.540527));
-			CrossHair->NativeConstruct();
-			CrossHair->SetOwningCharacter(EditorCharacter);
-			CrossHair->AddToViewport();*/
-
-			// TSharedPtr<SWeaponCrossHair> CrossHairWidget = SNew(SWeaponCrossHair);
-			CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
+			/*UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
+			CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);*/
 		}
 	)));
 
@@ -231,4 +233,12 @@ TSharedPtr<FViewModelAssetObject> UWeaponEditorViewModel::GetViewModelAssetObjec
 TSharedPtr<FViewModelAbilityObject> UWeaponEditorViewModel::GetViewModelAbilityObject(const FString& InKey)
 {
 	return ViewModelAbilityObject[InKey];
+}
+
+void UWeaponEditorViewModel::SetCrossHair(TSharedPtr<class SWeaponCrossHair> InCrossHairWidget)
+{
+	CrossHairWidget = InCrossHairWidget;
+
+	UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
+	CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
 }
