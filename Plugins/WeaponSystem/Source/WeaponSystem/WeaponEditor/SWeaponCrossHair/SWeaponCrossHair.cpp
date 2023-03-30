@@ -6,12 +6,25 @@
 #include "Components/Image.h"
 #include "Widgets/SCanvas.h"
 
-// void SWeaponCrossHair::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor)
-void SWeaponCrossHair::Construct(const FArguments& InArgs)
+#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
+
+void SWeaponCrossHair::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor)
 {
-	// WeaponEditor = InSpriteEditor;
+	WeaponEditor = InSpriteEditor;
 	SAssignNew(CanvasWidget, SCanvas);
-	// SCompoundWidget::Construct();
+
+	TWeakPtr<FViewModelCrossHairObject> ViewModelCrossHairObject = WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject();
+
+	SetCenterPivot(ViewModelCrossHairObject.Pin()->GetCenterPivot());
+	ViewModelCrossHairObject.Pin()->OnSetCenterPivot.Unbind();
+	ViewModelCrossHairObject.Pin()->OnSetCenterPivot.BindRaw(this, &SWeaponCrossHair::SetCenterPivot);
+
+	UWeaponCrossHairWidget* CrossHair = ViewModelCrossHairObject.Pin()->GetCrossHair();
+	if (CrossHair)
+		SetCrossHairWidget(CrossHair);
+
+	ViewModelCrossHairObject.Pin()->OnSetCrossHair.Unbind();
+	ViewModelCrossHairObject.Pin()->OnSetCrossHair.BindRaw(this, &SWeaponCrossHair::SetCrossHairWidget);
 }
 
 void SWeaponCrossHair::SetCrossHairWidget(UWeaponCrossHairWidget* InCrossHairWidget)
@@ -36,7 +49,7 @@ void SWeaponCrossHair::SetCrossHairWidget(UWeaponCrossHairWidget* InCrossHairWid
 		UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[i]);
 		UImage* Image = Cast<UImage>(CanvasPanel->GetChildAt(i));
 		FAnchors Anchors = CanvasPanelSlot->GetAnchors();
-		FVector2D Position = CanvasPanelSlot->GetPosition() + FVector2D(250.f, 250.f);
+		FVector2D Position = CanvasPanelSlot->GetPosition() + CenterPivot;
 		FVector2D Size = CanvasPanelSlot->GetSize();
 		
 		FWidgetTransform WidgetTransform = Image->GetRenderTransform();
@@ -60,4 +73,22 @@ void SWeaponCrossHair::SetCrossHairWidget(UWeaponCrossHairWidget* InCrossHairWid
 		[
 			CanvasWidget.ToSharedRef()
 		];
+}
+
+void SWeaponCrossHair::SetCenterPivot(FVector2D InCenterPivot)
+{
+	CenterPivot = InCenterPivot;
+
+	SetCrossHairWidget(CrossHairWidget);
+}
+
+void SWeaponCrossHair::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+{
+	/*int Num = CanvasWidget->GetChildren()->Num();
+
+	for (int32 i = 0; i < Num; i++)
+	{
+		const FSlotBase& SlotBase = CanvasWidget->GetChildren()->GetSlotAt(i);
+		int32 Temp = 0;
+	}*/
 }

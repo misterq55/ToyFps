@@ -5,6 +5,8 @@
 #include "InputCoreTypes.h"
 #include "UnrealClient.h"
 
+#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
+
 FWeaponEditorViewportClient_FirstPerson::FWeaponEditorViewportClient_FirstPerson(FEditorModeTools* InModeTools, FPreviewScene* InPreviewScene, TWeakPtr<FWeaponEditor> InWeaponEditor)
 	: FWeaponEditorViewportClient(InModeTools, InPreviewScene, InWeaponEditor)
 {
@@ -21,6 +23,8 @@ void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
 	EditorCharacter->GetMainCamera()->GetCameraView(DeltaSeconds, ViewInfo);
 	SetViewLocation(ViewInfo.Location);
 	SetViewRotation(EditorCharacter->GetViewRotation());
+
+	WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->SetCenterPivot(FVector2D(Viewport->GetSizeXY().X / 2, Viewport->GetSizeXY().Y / 2));
 
 	Invalidate();
 }
@@ -49,9 +53,15 @@ FSceneView* FWeaponEditorViewportClient_FirstPerson::CalcSceneView(FSceneViewFam
 
 void FWeaponEditorViewportClient_FirstPerson::OnViewportResize(FViewport* InViewport, uint32 InParams)
 {
-	//float Height = InViewport->GetSizeXY().Y;
-	//float Width = Height * AspectRatio;
+	float Height = InViewport->GetSizeXY().Y;
+	float Width = Height * AspectRatio;
 	//InViewport->SetInitialSize(FIntPoint(Width, Height));
 
 	// InViewport->MoveWindow
+
+	/*if (WeaponEditor.IsValid() && WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject().IsValid())
+		WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->SetCenterPivot(FVector2D(InViewport->GetSizeXY().X / 2, InViewport->GetSizeXY().Y / 2));*/
+
+	/*InViewport->GetViewportFrame()->ResizeFrame(Width, Height, EWindowMode::Windowed);
+	Invalidate();*/
 }

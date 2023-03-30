@@ -38,9 +38,9 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 	WeaponAnimationAssets = SNew(SWeaponAnimationAssets, SharedThis(this));
 	WeaponAbilities = SNew(SWeaponAbilities, SharedThis(this));
 
-	CrossHairWidget = SNew(SWeaponCrossHair);
+	CrossHairWidget = SNew(SWeaponCrossHair, SharedThis(this));
 
-	ViewModel->SetCrossHair(CrossHairWidget);
+	// ViewModel->SetCrossHair(CrossHairWidget);
 
 	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("WeaponEditor_Layout_v1")
 		->AddArea

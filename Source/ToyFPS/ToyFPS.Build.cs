@@ -22,6 +22,7 @@ public class ToyFPS : ModuleRules
 				"Slate",
 				"SlateCore",
 				"WeaponSystem",
+				"UMG",
 			});
 
 		// Uncomment if you are using Slate UI

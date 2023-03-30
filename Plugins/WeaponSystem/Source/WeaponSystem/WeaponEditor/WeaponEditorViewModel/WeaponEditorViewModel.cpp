@@ -175,23 +175,21 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 		}
 	)));
 
-	/*if (CurrentWeaponAsset->GetWeaponData().CrossHair)
+	ViewModelCrossHairObject = MakeShareable(new FViewModelCrossHairObject());
+
+	if (CurrentWeaponAsset->GetWeaponData().CrossHair)
 	{
 		UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
-		CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
-	}*/
+		ViewModelCrossHairObject->SetCrossHair(CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair));
+	}
 
 	ViewModelAbilityObject.Add(TEXT("CrossHair"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().CrossHair->GetOwnerClass(),
 		[&](const UClass* SelectedClass) {
 			CurrentWeaponAsset->GetWeaponData().CrossHair = SelectedClass->GetOwnerClass();
 			UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
-			CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
+			ViewModelCrossHairObject->SetCrossHair(CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair));
 		},
-		[&]()
-		{
-			/*UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
-			CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);*/
-		}
+		nullptr
 	)));
 
 	auto OnSetAttackAbilityClass = [&](const UClass* SelectedClass) {
@@ -235,10 +233,10 @@ TSharedPtr<FViewModelAbilityObject> UWeaponEditorViewModel::GetViewModelAbilityO
 	return ViewModelAbilityObject[InKey];
 }
 
-void UWeaponEditorViewModel::SetCrossHair(TSharedPtr<class SWeaponCrossHair> InCrossHairWidget)
-{
-	CrossHairWidget = InCrossHairWidget;
-
-	UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
-	CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
-}
+//void UWeaponEditorViewModel::SetCrossHair(TSharedPtr<class SWeaponCrossHair> InCrossHairWidget)
+//{
+//	CrossHairWidget = InCrossHairWidget;
+//
+//	UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), CurrentWeaponAsset->GetWeaponData().CrossHair);
+//	CrossHairWidget.Pin()->SetCrossHairWidget(CrossHair);
+//}
