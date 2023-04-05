@@ -3,17 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Weapon.h"
+#include "WeaponSystem/Weapon/WeaponBase.h"
 #include "BlueprintEvent_Weapon.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType, Blueprintable)
-class TOYFPS_API ABlueprintEvent_Weapon : public AWeapon
+class TOYFPS_API ABlueprintEvent_Weapon : public AWeaponBase
 {
 	GENERATED_BODY()
 	
+public:
+	ABlueprintEvent_Weapon();
+
 public:
 		virtual void Attack();
 		virtual void Reload();

@@ -35,7 +35,10 @@ void AToyFpsCharacterWithWeaponAsset::BeginPlay()
 	ArmsAnimInstance->SetWeaponData(CurrentWeapon->GetWeaponData());
 
 	UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), WeaponAsset->GetWeaponData().CrossHair);
-	
+
 	if (CrossHair)
+	{
+		CrossHair->StartTimer();
 		CrossHair->AddToViewport();
+	}
 }

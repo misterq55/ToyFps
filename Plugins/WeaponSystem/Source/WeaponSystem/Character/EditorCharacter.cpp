@@ -16,20 +16,20 @@ AEditorCharacter::AEditorCharacter()
 	GetCapsuleComponent()->SetVisibility(false);
 	GetArrowComponent()->SetVisibility(false);
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Demo/PlayerMannequin/Mesh/PlayerMannequin.PlayerMannequin'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/PlayerMannequin.PlayerMannequin'"));
 	GetMesh()->SetSkeletalMesh(MeshObj.Object);
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance> MeshAnim(TEXT("/Script/Engine.AnimBlueprint'/WeaponSystem/BP_EditorCh_AnimBP.BP_EditorCh_AnimBP_C'"));
 	GetMesh()->SetAnimInstanceClass(MeshAnim.Class);
 	GetMesh()->SetVisibility(false);
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> HeadObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Demo/PlayerMannequin/Mesh/Head.Head'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> HeadObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/Head.Head'"));
 	HeadMeshComponent->SetSkeletalMesh(HeadObj.Object);
 	HeadMeshComponent->SetVisibility(false);
 
 	MainCameraComponent->SetCameraMesh(nullptr);
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> ArmsObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Demo/PlayerMannequin/Mesh/Arms.Arms'"));
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> ArmsObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/Arms.Arms'"));
 	ArmsMeshComponent->SetSkeletalMesh(ArmsObj.Object);
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance> ArmsAnim(TEXT("/Script/Engine.AnimBlueprint'/WeaponSystem/BP_EditorCh_Arms_AnimsBP.BP_EditorCh_Arms_AnimsBP_C'"));

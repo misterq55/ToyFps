@@ -27,12 +27,6 @@ public:
 	TSharedPtr<FViewModelAssetObject> GetViewModelAssetObject(const FString& InKey);
 	TSharedPtr<FViewModelAbilityObject> GetViewModelAbilityObject(const FString& InKey);
 
-	/*void SetCrossHair(TSharedPtr<class SWeaponCrossHair> InCrossHairWidget) {
-		CrossHairWidget = InCrossHairWidget;
-	}*/
-
-	// void SetCrossHair(TSharedPtr<class SWeaponCrossHair> InCrossHairWidget);
-
 	TSharedPtr<FViewModelCrossHairObject> GetViewModelCrossHairObject() {
 		return ViewModelCrossHairObject;
 	}
@@ -45,6 +39,5 @@ private:
 	TMap<FString, TSharedPtr<FViewModelAbilityObject>> ViewModelAbilityObject;
 
 	TObjectPtr<class UWeaponAsset> CurrentWeaponAsset;
-	// TWeakPtr<class SWeaponCrossHair> CrossHairWidget;
 	TSharedPtr<FViewModelCrossHairObject> ViewModelCrossHairObject;
 };

@@ -28,6 +28,8 @@ public:
 		OwningCharacter = InCharacter;
 	}
 
+	void StartTimer();
+
 private:
 	FVector2D MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector);
 

@@ -81,14 +81,3 @@ void SWeaponCrossHair::SetCenterPivot(FVector2D InCenterPivot)
 
 	SetCrossHairWidget(CrossHairWidget);
 }
-
-void SWeaponCrossHair::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
-{
-	/*int Num = CanvasWidget->GetChildren()->Num();
-
-	for (int32 i = 0; i < Num; i++)
-	{
-		const FSlotBase& SlotBase = CanvasWidget->GetChildren()->GetSlotAt(i);
-		int32 Temp = 0;
-	}*/
-}

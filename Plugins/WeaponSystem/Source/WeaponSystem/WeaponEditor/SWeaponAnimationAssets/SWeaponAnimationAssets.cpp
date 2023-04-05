@@ -124,7 +124,7 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 				.HAlign(HAlign_Left)
 				[
 					SNew(SWeaponEditorAssetProperty)
-					.ObjectName(FText::FromString(TEXT("Run Animation Sequence")))
+					.ObjectName(FText::FromString(TEXT("Jump 1 Animation Sequence")))
 					.DisplayBrowse(true)
 					.DisplayThumbnail(true)
 					.AllowedClass(UAnimSequenceBase::StaticClass())
@@ -140,7 +140,7 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 				.HAlign(HAlign_Left)
 				[
 					SNew(SWeaponEditorAssetProperty)
-					.ObjectName(FText::FromString(TEXT("Run Animation Sequence")))
+					.ObjectName(FText::FromString(TEXT("Jump 2 Animation Sequence")))
 					.DisplayBrowse(true)
 					.DisplayThumbnail(true)
 					.AllowedClass(UAnimSequenceBase::StaticClass())
@@ -156,7 +156,7 @@ void SWeaponAnimationAssets::Construct(const FArguments& InArgs, TSharedPtr<FWea
 				.HAlign(HAlign_Left)
 				[
 					SNew(SWeaponEditorAssetProperty)
-					.ObjectName(FText::FromString(TEXT("Run Animation Sequence")))
+					.ObjectName(FText::FromString(TEXT("Jump 3 Animation Sequence")))
 					.DisplayBrowse(true)
 					.DisplayThumbnail(true)
 					.AllowedClass(UAnimSequenceBase::StaticClass())

@@ -15,7 +15,6 @@ public:
 	void Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor);
 	void SetCrossHairWidget(UWeaponCrossHairWidget* InCrossHairWidget);
 	void SetCenterPivot(FVector2D InCenterPivot);
-	virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
 
 private:
 	TWeakPtr<FWeaponEditor> WeaponEditor;

@@ -11,18 +11,6 @@ void UWeaponCrossHairWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	FTimerHandle SetCrossHairHandle;
-	GetWorld()->GetTimerManager().SetTimer(SetCrossHairHandle, FTimerDelegate::CreateLambda([&]()
-		{
-			SetCrossHair();
-		}), 0.1f, true);
-
-	FTimerHandle HideWhileADSHandle;
-	GetWorld()->GetTimerManager().SetTimer(HideWhileADSHandle, FTimerDelegate::CreateLambda([&]()
-		{
-			HideWhileADS();
-		}), 0.01f, true);
-
 	UCanvasPanel* CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("CanvasPanel")));
 	if (!CanvasPanel)
 		return;
@@ -84,6 +72,21 @@ void UWeaponCrossHairWidget::SetCrossHair()
 
 void UWeaponCrossHairWidget::HideWhileADS()
 {
+}
+
+void UWeaponCrossHairWidget::StartTimer()
+{
+	FTimerHandle SetCrossHairHandle;
+	GetWorld()->GetTimerManager().SetTimer(SetCrossHairHandle, FTimerDelegate::CreateLambda([&]()
+		{
+			SetCrossHair();
+		}), 0.1f, true);
+
+	FTimerHandle HideWhileADSHandle;
+	GetWorld()->GetTimerManager().SetTimer(HideWhileADSHandle, FTimerDelegate::CreateLambda([&]()
+		{
+			HideWhileADS();
+		}), 0.01f, true);
 }
 
 FVector2D UWeaponCrossHairWidget::MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector)

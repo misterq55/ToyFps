@@ -9,7 +9,9 @@ class FViewModelCrossHairObject
 
 public:
 	FViewModelCrossHairObject() {}
-	~FViewModelCrossHairObject() {}
+	~FViewModelCrossHairObject() {
+		CrossHair = nullptr;
+	}
 
 	void SetCrossHair(class UWeaponCrossHairWidget* InCrossHair) {
 		CrossHair = InCrossHair;

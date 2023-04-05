@@ -33,8 +33,8 @@ void AAmmoShell::ApplyPhysics()
 	if (!AmmoShellMeshComponent)
 		return;
 
-	/*AmmoShellMeshComponent->BodyInstance.bSimulatePhysics = true;
-	AmmoShellMeshComponent->BodyInstance.WeldParent = false;*/
+	AmmoShellMeshComponent->BodyInstance.bSimulatePhysics = true;
+	AmmoShellMeshComponent->BodyInstance.WeldParent = false;
 	// BeginPlay();
 }
 

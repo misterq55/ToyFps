@@ -3,6 +3,18 @@
 
 #include "BlueprintEvent_Weapon.h"
 
+ABlueprintEvent_Weapon::ABlueprintEvent_Weapon()
+{
+	PrimaryActorTick.bCanEverTick = true;
+
+	PrimaryWeapon = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("PrimaryWeapon"));
+	Muzzle = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Muzzle"));
+	Eject = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Eject"));
+
+	Muzzle->SetupAttachment(PrimaryWeapon);
+	Eject->SetupAttachment(Muzzle);
+}
+
 void ABlueprintEvent_Weapon::Attack()
 {
 	Attack_BluePrint();
