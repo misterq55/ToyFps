@@ -7,7 +7,7 @@
 #include "InputActionValue.h"
 #include "ToyFpsCharacter.generated.h"
 
-
+class UWeaponAsset;
 
 UCLASS()
 class TOYFPS_API AToyFpsCharacter : public AFpsCharacterBase
@@ -91,4 +91,11 @@ protected:
 	/** Aim Down Sight Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		class UInputAction* AimDownSightAction;
+
+protected:
+	UPROPERTY(Category = Weapon, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", DisplayName = "Weapon"))
+	TObjectPtr<USceneComponent> WeaponPivot;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Weapon, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<UWeaponAsset> WeaponAsset;
 };

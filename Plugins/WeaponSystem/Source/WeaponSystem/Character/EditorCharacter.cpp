@@ -7,7 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/ArrowComponent.h"
 #include "WeaponSystem/Weapon/WeaponAsset.h"
-#include "WeaponSystem/Weapon/WeaponWithAbilities.h"
+#include "WeaponSystem/Weapon/Weapon.h"
 #include "WeaponSystem/AnimInstance/ArmsAnimInstanceBase.h"
 
 AEditorCharacter::AEditorCharacter()
@@ -45,7 +45,7 @@ AEditorCharacter::AEditorCharacter()
 
 void AEditorCharacter::SpawnWeaponActor()
 {
-	CurrentWeapon = Cast<AWeaponBase>(GetWorld()->SpawnActor(AWeaponWithAbilities::StaticClass()));
+	CurrentWeapon = Cast<AWeaponBase>(GetWorld()->SpawnActor(AWeapon::StaticClass()));
 	
 	if (!CurrentWeapon)
 		return;

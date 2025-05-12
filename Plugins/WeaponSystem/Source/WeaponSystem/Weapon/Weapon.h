@@ -6,7 +6,7 @@
 #include "CoreMinimal.h"
 #include "GameplayAbilitySpec.h"
 #include "WeaponBase.h"
-#include "WeaponWithAbilities.generated.h"
+#include "Weapon.generated.h"
 
 /**
  * 
@@ -15,12 +15,12 @@
 class UAbilitySystemComponent;
 
 UCLASS()
-class WEAPONSYSTEM_API AWeaponWithAbilities : public AWeaponBase, public IAbilitySystemInterface
+class WEAPONSYSTEM_API AWeapon : public AWeaponBase, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
-	AWeaponWithAbilities();
+	AWeapon();
 
 protected:
 	// Called when the game starts or when spawned

@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "WeaponWithAbilities.h"
+#include "Weapon.h"
 #include "WeaponSystem/Weapon/WeaponAbility/WeaponAbility.h"
 #include "Components/TimelineComponent.h"
 #include "AbilitySystemComponent.h"
 
-AWeaponWithAbilities::AWeaponWithAbilities()
+AWeapon::AWeapon()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -23,13 +23,13 @@ AWeaponWithAbilities::AWeaponWithAbilities()
 }
 
 // Called when the game starts or when spawned
-void AWeaponWithAbilities::BeginPlay()
+void AWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	ResetWeapon(WeaponData);
 }
 
-void AWeaponWithAbilities::ResetWeapon(const FWeaponData& InWeaponData)
+void AWeapon::ResetWeapon(const FWeaponData& InWeaponData)
 {
 	Super::ResetWeapon(InWeaponData);
 
@@ -45,7 +45,7 @@ void AWeaponWithAbilities::ResetWeapon(const FWeaponData& InWeaponData)
 	AbilitySystemComponent->GiveAbility(ReloadAbilitySpec);
 }
 
-void AWeaponWithAbilities::Attack()
+void AWeapon::Attack()
 {
 	if (!WeaponData.AttackAbility)
 		return;
@@ -53,7 +53,7 @@ void AWeaponWithAbilities::Attack()
 	AbilitySystemComponent->TryActivateAbility(AttackAbilitySpec.Handle);
 }
 
-void AWeaponWithAbilities::Reload()
+void AWeapon::Reload()
 {
 	if (!WeaponData.ReloadAbility)
 		return;
@@ -61,7 +61,7 @@ void AWeaponWithAbilities::Reload()
 	AbilitySystemComponent->TryActivateAbility(ReloadAbilitySpec.Handle);
 }
 
-void AWeaponWithAbilities::StopAttacking()
+void AWeapon::StopAttacking()
 {
 	if (!WeaponData.AttackAbility)
 		return;
@@ -69,7 +69,7 @@ void AWeaponWithAbilities::StopAttacking()
 	AbilitySystemComponent->CancelAbility(AttackAbilitySpec.Ability);
 }
 
-UAbilitySystemComponent* AWeaponWithAbilities::GetAbilitySystemComponent() const
+UAbilitySystemComponent* AWeapon::GetAbilitySystemComponent() const
 {
 	return AbilitySystemComponent;
 }

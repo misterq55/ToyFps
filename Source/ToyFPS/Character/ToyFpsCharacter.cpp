@@ -7,7 +7,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "ToyFPS/Weapon/Weapon.h"
+#include "WeaponSystem/Weapon/Weapon.h"
+#include "WeaponSystem/Weapon/WeaponAsset.h"
+#include "WeaponSystem/AnimInstance/ArmsAnimInstanceBase.h"
 
 // Sets default values
 AToyFpsCharacter::AToyFpsCharacter()
@@ -15,6 +17,13 @@ AToyFpsCharacter::AToyFpsCharacter()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	WeaponPivot = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Weapon"));
+
+	if (!WeaponPivot)
+		return;
+
+	WeaponPivot->SetupAttachment(ArmsMeshComponent, TEXT("WeaponSocket"));
 }
 
 // Called when the game starts or when spawned
@@ -29,6 +38,27 @@ void AToyFpsCharacter::BeginPlay()
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
+	}
+
+	CurrentWeapon = Cast<AWeaponBase>(GetWorld()->SpawnActor(AWeapon::StaticClass()));
+
+	if (!CurrentWeapon)
+		return;
+
+	CurrentWeapon->SetOwningCharacter(this);
+	CurrentWeapon->SetWeaponData(WeaponAsset->GetWeaponData());
+	CurrentWeapon->AttachToComponent(WeaponPivot, FAttachmentTransformRules::KeepRelativeTransform);
+	CurrentWeapon->ResetWeapon(WeaponAsset->GetWeaponData());
+
+	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
+	ArmsAnimInstance->SetWeaponData(CurrentWeapon->GetWeaponData());
+
+	UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), WeaponAsset->GetWeaponData().CrossHair);
+
+	if (CrossHair)
+	{
+		CrossHair->StartTimer();
+		CrossHair->AddToViewport();
 	}
 }
 
