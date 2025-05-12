@@ -21,37 +21,45 @@ AFpsCharacterBase::AFpsCharacterBase()
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
-	USkeletalMeshComponent* CharacterMeshComponent = GetMesh();
+	USkeletalMeshComponent* characterMeshComponent = GetMesh();
 
-	if (!CharacterMeshComponent)
+	if (!IsValid(characterMeshComponent))
+	{
 		return;
+	}
 
-	CharacterMeshComponent->SetRelativeLocation(FVector(0.f, 0.f, -100.f));
-	CharacterMeshComponent->SetRelativeRotation(FRotator(-0.f, -90.f, -0.f));
+	characterMeshComponent->SetRelativeLocation(FVector(0.f, 0.f, -100.f));
+	characterMeshComponent->SetRelativeRotation(FRotator(-0.f, -90.f, -0.f));
 
 	HeadMeshComponent = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("Head"));
 
-	if (!HeadMeshComponent)
+	if (!IsValid(HeadMeshComponent))
+	{
 		return;
+	}
 
 	HeadMeshComponent->SetRelativeLocation(FVector(-165.869286, -1.064955, -16.934584));
 	HeadMeshComponent->SetRelativeRotation(FRotator(-69.414944, -285.594594, 287.355255));
-	HeadMeshComponent->SetupAttachment(CharacterMeshComponent, TEXT("head"));
+	HeadMeshComponent->SetupAttachment(characterMeshComponent, TEXT("head"));
 
 	MainCameraComponent = CreateOptionalDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 
-	if (!MainCameraComponent)
+	if (!IsValid(MainCameraComponent))
+	{
 		return;
+	}
 
 	MainCameraComponent->SetRelativeLocation(FVector(-5.453166, 9.761212, 6.619132));
 	MainCameraComponent->SetRelativeRotation(FRotator(1.364551, -253.552927, 279.690763));
-	MainCameraComponent->SetupAttachment(CharacterMeshComponent, TEXT("head"));
+	MainCameraComponent->SetupAttachment(characterMeshComponent, TEXT("head"));
 	MainCameraComponent->bUsePawnControlRotation = true;
 
 	ArmsMeshComponent = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
 
-	if (!ArmsMeshComponent)
+	if (!IsValid(ArmsMeshComponent))
+	{
 		return;
+	}
 
 	ArmsMeshComponent->SetRelativeLocation(FVector(-7.729098, -3.047225, -165.559958));
 	ArmsMeshComponent->SetRelativeRotation(FRotator(-0.080375, -89.856430, -0.083177));
@@ -78,21 +86,23 @@ void AFpsCharacterBase::Tick(float DeltaTime)
 	if (RunningCameraShake == nullptr)
 		return;
 
-	APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	if (!PlayerController)
+	APlayerController* playerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (!IsValid(playerController))
+	{
 		return;
+	}
 
 	if (GetVelocity().Length() > 400.f)
 	{
 		bRunningCameraShake = true;
-		PlayerController->ClientStartCameraShake(RunningCameraShake);
+		playerController->ClientStartCameraShake(RunningCameraShake);
 	}
 	else
 	{
 		if (bRunningCameraShake)
 		{
 			bRunningCameraShake = false;
-			PlayerController->ClientStopCameraShake(RunningCameraShake);
+			playerController->ClientStopCameraShake(RunningCameraShake);
 		}
 	}
 }
@@ -104,26 +114,26 @@ void AFpsCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 }
 
-void AFpsCharacterBase::IncreaseSpread(float InIncreaseAmount)
+void AFpsCharacterBase::IncreaseSpread(float increaseAmount)
 {
-	if (SpreadCurrent + InIncreaseAmount >= SpreadMax)
+	if (SpreadCurrent + increaseAmount >= SpreadMax)
 	{
 		SpreadCurrent = SpreadMax;
 	}
 	else
 	{
-		SpreadCurrent = SpreadCurrent + InIncreaseAmount;
+		SpreadCurrent = SpreadCurrent + increaseAmount;
 	}
 }
 
-void AFpsCharacterBase::DecreaseSpread(float InDecreaseAmount)
+void AFpsCharacterBase::DecreaseSpread(float decreaseAmount)
 {
-	if (SpreadCurrent - InDecreaseAmount <= SpreadMin)
+	if (SpreadCurrent - decreaseAmount <= SpreadMin)
 	{
 		SpreadCurrent = SpreadMin;
 	}
 	else
 	{
-		SpreadCurrent = SpreadCurrent - InDecreaseAmount;
+		SpreadCurrent = SpreadCurrent - decreaseAmount;
 	}
 }

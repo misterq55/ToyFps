@@ -10,7 +10,7 @@ class FPreviewScene;
 class SWeaponEditorViewport : public SEditorViewport
 {
 public:
-	enum EWeaponEditorViewport
+	enum E_TFWeaponEditorViewport
 	{
 		EditorViewport,
 		FirstPersonViewport,
@@ -20,12 +20,12 @@ public:
 	SLATE_BEGIN_ARGS(SWeaponEditorViewport) {}
 	SLATE_END_ARGS()
 
-	void Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor, EWeaponEditorViewport InViewportType, FPreviewScene* InPreviewScene);
+	void Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor, E_TFWeaponEditorViewport InViewportType, FPreviewScene* InPreviewScene);
 	virtual TSharedRef<FEditorViewportClient> MakeEditorViewportClient() override;
 
 private:
 	TWeakPtr<FWeaponEditor> WeaponEditor;
 	TSharedPtr<FWeaponEditorViewportClient> EditorViewportClient;
-	EWeaponEditorViewport ViewportType;
+	E_TFWeaponEditorViewport ViewportType;
 	FPreviewScene* WeaponEditorPreviewScene;
 };

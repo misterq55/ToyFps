@@ -4,7 +4,6 @@
 #include "ToyFpsCharacter.h"
 #include "Engine/LocalPlayer.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Kismet/GameplayStatics.h"
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "WeaponSystem/Weapon/Weapon.h"
@@ -20,8 +19,10 @@ AToyFpsCharacter::AToyFpsCharacter()
 
 	WeaponPivot = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Weapon"));
 
-	if (!WeaponPivot)
+	if (!IsValid(WeaponPivot))
+	{
 		return;
+	}
 
 	WeaponPivot->SetupAttachment(ArmsMeshComponent, TEXT("WeaponSocket"));
 }
@@ -42,8 +43,10 @@ void AToyFpsCharacter::BeginPlay()
 
 	CurrentWeapon = Cast<AWeaponBase>(GetWorld()->SpawnActor(AWeapon::StaticClass()));
 
-	if (!CurrentWeapon)
+	if (!IsValid(CurrentWeapon))
+	{
 		return;
+	}
 
 	CurrentWeapon->SetOwningCharacter(this);
 	CurrentWeapon->SetWeaponData(WeaponAsset->GetWeaponData());
@@ -55,7 +58,7 @@ void AToyFpsCharacter::BeginPlay()
 
 	UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), WeaponAsset->GetWeaponData().CrossHair);
 
-	if (CrossHair)
+	if (IsValid(CrossHair))
 	{
 		CrossHair->StartTimer();
 		CrossHair->AddToViewport();
@@ -121,24 +124,30 @@ void AToyFpsCharacter::Attack()
 	if (bSprinting || bReloading)
 		return;
 
-	if (!CurrentWeapon)
+	if (!IsValid(CurrentWeapon))
+	{
 		return;
+	}
 
 	CurrentWeapon->Attack();
 }
 
 void AToyFpsCharacter::StopAttacking()
 {
-	if (!CurrentWeapon)
+	if (!IsValid(CurrentWeapon))
+	{
 		return;
+	}
 
 	CurrentWeapon->StopAttacking();
 }
 
 void AToyFpsCharacter::Reload()
 {
-	if (!CurrentWeapon)
+	if (!IsValid(CurrentWeapon))
+	{
 		return;
+	}
 
 	CurrentWeapon->Reload();
 }
@@ -150,8 +159,10 @@ void AToyFpsCharacter::DoAimimgDownSight()
 
 	bAimDownSight = true;
 
-	if (!CurrentWeapon)
+	if (!IsValid(CurrentWeapon))
+	{
 		return;
+	}
 
 	CurrentWeapon->SniperZoom(bAimDownSight);
 }
@@ -163,8 +174,10 @@ void AToyFpsCharacter::StopAimingDownSight()
 
 	bAimDownSight = false;
 
-	if (!CurrentWeapon)
+	if (!IsValid(CurrentWeapon))
+	{
 		return;
+	}
 
 	CurrentWeapon->SniperZoom(bAimDownSight);
 }

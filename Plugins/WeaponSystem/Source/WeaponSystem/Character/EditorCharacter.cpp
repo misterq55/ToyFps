@@ -8,7 +8,7 @@
 #include "Components/ArrowComponent.h"
 #include "WeaponSystem/Weapon/WeaponAsset.h"
 #include "WeaponSystem/Weapon/Weapon.h"
-#include "WeaponSystem/AnimInstance/ArmsAnimInstanceBase.h"
+#include "WeaponSystem/AnimInstance/armsAnimInstanceBase.h"
 
 AEditorCharacter::AEditorCharacter()
 	: Super()
@@ -16,24 +16,24 @@ AEditorCharacter::AEditorCharacter()
 	GetCapsuleComponent()->SetVisibility(false);
 	GetArrowComponent()->SetVisibility(false);
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> MeshObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/PlayerMannequin.PlayerMannequin'"));
-	GetMesh()->SetSkeletalMesh(MeshObj.Object);
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> meshObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/PlayerMannequin.PlayerMannequin'"));
+	GetMesh()->SetSkeletalMesh(meshObj.Object);
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance> MeshAnim(TEXT("/Script/Engine.AnimBlueprint'/WeaponSystem/BP_EditorCh_AnimBP.BP_EditorCh_AnimBP_C'"));
-	GetMesh()->SetAnimInstanceClass(MeshAnim.Class);
+	static ConstructorHelpers::FClassFinder<UAnimInstance> meshAnim(TEXT("/Script/Engine.AnimBlueprint'/WeaponSystem/BP_EditorCh_AnimBP.BP_EditorCh_AnimBP_C'"));
+	GetMesh()->SetAnimInstanceClass(meshAnim.Class);
 	GetMesh()->SetVisibility(false);
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> HeadObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/Head.Head'"));
-	HeadMeshComponent->SetSkeletalMesh(HeadObj.Object);
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> headObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/Head.Head'"));
+	HeadMeshComponent->SetSkeletalMesh(headObj.Object);
 	HeadMeshComponent->SetVisibility(false);
 
 	MainCameraComponent->SetCameraMesh(nullptr);
 
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> ArmsObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/Arms.Arms'"));
-	ArmsMeshComponent->SetSkeletalMesh(ArmsObj.Object);
+	static ConstructorHelpers::FObjectFinder<USkeletalMesh> armsObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/Arms.Arms'"));
+	ArmsMeshComponent->SetSkeletalMesh(armsObj.Object);
 
-	static ConstructorHelpers::FClassFinder<UAnimInstance> ArmsAnim(TEXT("/Script/Engine.AnimBlueprint'/WeaponSystem/BP_EditorCh_Arms_AnimsBP.BP_EditorCh_Arms_AnimsBP_C'"));
-	ArmsMeshComponent->SetAnimInstanceClass(ArmsAnim.Class);
+	static ConstructorHelpers::FClassFinder<UAnimInstance> armsAnim(TEXT("/Script/Engine.AnimBlueprint'/WeaponSystem/BP_EditorCh_Arms_AnimsBP.BP_EditorCh_Arms_AnimsBP_C'"));
+	ArmsMeshComponent->SetAnimInstanceClass(armsAnim.Class);
 
 	WeaponPivot = CreateOptionalDefaultSubobject<USceneComponent>(TEXT("Weapon"));
 
@@ -57,21 +57,28 @@ void AEditorCharacter::SpawnWeaponActor()
 	ResetArmsAnimInstance();
 }
 
-void AEditorCharacter::SetWeaponAsset(UWeaponAsset* InWeaponAsset)
+void AEditorCharacter::SetWeaponAsset(UWeaponAsset* weaponAsset)
 {
-	WeaponAsset = InWeaponAsset;
+	WeaponAsset = weaponAsset;
 }
 
 void AEditorCharacter::ResetArmsAnimInstance()
 {
-	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
-	ArmsAnimInstance->SetWeaponData(WeaponAsset->GetWeaponData());
+	UArmsAnimInstanceBase* armsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
+	if (IsValid(armsAnimInstance))
+	{
+		return;
+	}
+	
+	armsAnimInstance->SetWeaponData(WeaponAsset->GetWeaponData());
 }
 
 void AEditorCharacter::ResetWeaponData(const FWeaponData& InWeaponData)
 {
-	if (!CurrentWeapon)
+	if (!IsValid(CurrentWeapon))
+	{
 		return;
+	}
 
 	CurrentWeapon->ResetWeapon(WeaponAsset->GetWeaponData());
 }

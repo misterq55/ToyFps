@@ -31,8 +31,8 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 	ViewModel->SetEditorWorld(WeaponEditorPreviewScene->GetWorld());
 	ViewModel->InitializeViewModel(InObjects);
 
-	EditorViewport = SNew(SWeaponEditorViewport, SharedThis(this), SWeaponEditorViewport::EWeaponEditorViewport::EditorViewport, WeaponEditorPreviewScene.Get());
-	FirstPersonViewport = SNew(SWeaponEditorViewport, SharedThis(this), SWeaponEditorViewport::EWeaponEditorViewport::FirstPersonViewport, WeaponEditorPreviewScene.Get());
+	EditorViewport = SNew(SWeaponEditorViewport, SharedThis(this), SWeaponEditorViewport::E_TFWeaponEditorViewport::EditorViewport, WeaponEditorPreviewScene.Get());
+	FirstPersonViewport = SNew(SWeaponEditorViewport, SharedThis(this), SWeaponEditorViewport::E_TFWeaponEditorViewport::FirstPersonViewport, WeaponEditorPreviewScene.Get());
 
 	WeaponInfo = SNew(SWeaponInfo, SharedThis(this));
 	WeaponAnimationAssets = SNew(SWeaponAnimationAssets, SharedThis(this));

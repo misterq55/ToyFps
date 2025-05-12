@@ -20,12 +20,12 @@ void AAmmoShell::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	FTimerHandle WaitHandle;
-	float WaitTime = 10.f; 
-	GetWorld()->GetTimerManager().SetTimer(WaitHandle, FTimerDelegate::CreateLambda([&]()
+	FTimerHandle waitHandle;
+	float waitTime = 10.f; 
+	GetWorld()->GetTimerManager().SetTimer(waitHandle, FTimerDelegate::CreateLambda([&]()
 		{
 			Destroy();
-		}), WaitTime, false); 
+		}), waitTime, false); 
 }
 
 void AAmmoShell::ApplyPhysics()

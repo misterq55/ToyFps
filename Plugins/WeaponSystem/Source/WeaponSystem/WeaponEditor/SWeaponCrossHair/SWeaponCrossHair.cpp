@@ -62,7 +62,7 @@ void SWeaponCrossHair::SetCrossHairWidget(UWeaponCrossHairWidget* InCrossHairWid
 			 .Position(Position)
 			[
 				SNew(SImage)
-				.Image(&Image->Brush)
+				.Image(&Image->GetBrush())
 				.RenderTransformPivot(Anchors.Minimum)
 				.RenderTransform(SlateRenderTranform)
 			]

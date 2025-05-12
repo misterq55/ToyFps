@@ -3,26 +3,28 @@
 
 #include "WeaponCrossHairWidget.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Components/CanvasPanel.h"
-#include "Components/CanvasPanelSlot.h"
+#include "Components/canvasPanel.h"
+#include "Components/canvasPanelSlot.h"
 #include "WeaponSystem/Character/FpsCharacterBase.h"
 
 void UWeaponCrossHairWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	UCanvasPanel* CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("CanvasPanel")));
-	if (!CanvasPanel)
-		return;
-
-	for (int32 i = 0; i < CanvasPanel->GetSlots().Num(); i++)
+	UCanvasPanel* canvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
+	if (!IsValid(canvasPanel))
 	{
-		UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[i]);
-		FVector2D PositionVector = CanvasPanelSlot->GetPosition();
+		return;
+	}
 
-		FVector2D UnitVector = CenterPivot - PositionVector;
-		UnitVector.Normalize();
-		CrossHairUnitVectors.Add(UnitVector);
+	for (int32 i = 0; i < canvasPanel->GetSlots().Num(); i++)
+	{
+		UCanvasPanelSlot* canvasPanelSlot = Cast<UCanvasPanelSlot>(canvasPanel->GetSlots()[i]);
+		FVector2D positionVector = canvasPanelSlot->GetPosition();
+
+		FVector2D unitVector = CenterPivot - positionVector;
+		unitVector.Normalize();
+		CrossHairUnitVectors.Add(unitVector);
 	}
 	
 	OwningCharacter = Cast<AFpsCharacterBase>(GetOwningPlayerPawn());
@@ -30,43 +32,49 @@ void UWeaponCrossHairWidget::NativeConstruct()
 
 void UWeaponCrossHairWidget::SetCrossHair()
 {
-	UCanvasPanel* CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("CanvasPanel")));
+	UCanvasPanel* canvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
 	
-	if (!CanvasPanel)
-		return;
-
-	float DeltaTimeSeconds = GetWorld()->DeltaTimeSeconds;
-	
-	if (!OwningCharacter)
-		return;
-
-	// ¹«±â ¹ß»ç¿¡ ÀÇÇÑ Å©·Î½º Çì¾î ¹ú¾îÁü
-	float WeaponFirePower = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
-
-	for (int32 i = 0; i < CanvasPanel->GetSlots().Num(); i++)
+	if (!IsValid(canvasPanel))
 	{
-		UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[i]);
-		FVector2D Position = CanvasPanelSlot->GetPosition();
+		return;
+	}
 
-		if (!CanvasPanelSlot)
+	float deltaTimeSeconds = GetWorld()->DeltaTimeSeconds;
+	
+	if (!IsValid(OwningCharacter))
+	{
+		return;
+	}
+
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ç¿¡ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½Î½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	float weaponFirePower = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
+
+	for (int32 i = 0; i < canvasPanel->GetSlots().Num(); i++)
+	{
+		UCanvasPanelSlot* canvasPanelSlot = Cast<UCanvasPanelSlot>(canvasPanel->GetSlots()[i]);
+		FVector2D position = canvasPanelSlot->GetPosition();
+
+		if (!IsValid(canvasPanelSlot))
+		{
 			continue;
+		}
 
-		FVector Velocity = OwningCharacter->GetVelocity();
-		float VelocityLength = Velocity.Length();
-		float Power = VelocityLength * 0.4f * -1.f;
+		FVector velocity = OwningCharacter->GetVelocity();
+		float velocityLength = velocity.Length();
+		float power = velocityLength * 0.4f * -1.f;
 		
-		FVector2D UnitVector = CrossHairUnitVectors[i];
-		FVector2D PowerVector = UnitVector * Power;
+		FVector2D unitVector = CrossHairUnitVectors[i];
+		FVector2D PowerVector = unitVector * power;
 		
-		FVector2D InterpedVector = 
+		FVector2D interpedVector = 
 			FVector2D(
-				UKismetMathLibrary::FInterpTo(Position.X, PowerVector.X, DeltaTimeSeconds, InterpSpeed),
-			UKismetMathLibrary::FInterpTo(Position.Y, PowerVector.Y, DeltaTimeSeconds, InterpSpeed));
+				UKismetMathLibrary::FInterpTo(position.X, PowerVector.X, deltaTimeSeconds, InterpSpeed),
+			UKismetMathLibrary::FInterpTo(position.Y, PowerVector.Y, deltaTimeSeconds, InterpSpeed));
 
-		FVector2D WeaponFirePowerVector = UnitVector * WeaponFirePower * 2.5f;
-		FVector2D NewPosition = MakePositionLimit(InterpedVector + WeaponFirePowerVector, UnitVector * UpperBound, UnitVector * LowerBound);
+		FVector2D weaponFirePowerVector = unitVector * weaponFirePower * 2.5f;
+		FVector2D newPosition = MakePositionLimit(interpedVector + weaponFirePowerVector, unitVector * UpperBound, unitVector * LowerBound);
 
-		CanvasPanelSlot->SetPosition(NewPosition);
+		canvasPanelSlot->SetPosition(newPosition);
 	}
 }
 
@@ -76,51 +84,51 @@ void UWeaponCrossHairWidget::HideWhileADS()
 
 void UWeaponCrossHairWidget::StartTimer()
 {
-	FTimerHandle SetCrossHairHandle;
-	GetWorld()->GetTimerManager().SetTimer(SetCrossHairHandle, FTimerDelegate::CreateLambda([&]()
+	FTimerHandle setCrossHairHandle;
+	GetWorld()->GetTimerManager().SetTimer(setCrossHairHandle, FTimerDelegate::CreateLambda([&]()
 		{
 			SetCrossHair();
 		}), 0.1f, true);
 
-	FTimerHandle HideWhileADSHandle;
-	GetWorld()->GetTimerManager().SetTimer(HideWhileADSHandle, FTimerDelegate::CreateLambda([&]()
+	FTimerHandle hideWhileADSHandle;
+	GetWorld()->GetTimerManager().SetTimer(hideWhileADSHandle, FTimerDelegate::CreateLambda([&]()
 		{
 			HideWhileADS();
 		}), 0.01f, true);
 }
 
-FVector2D UWeaponCrossHairWidget::MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector)
+FVector2D UWeaponCrossHairWidget::MakePositionLimit(const FVector2D& position, const FVector2D& upperBoundVector, const FVector2D& lowerBoundVector)
 {
-	FVector2D NewPosition = InPosition;
+	FVector2D newPosition = position;
 
-	FVector2D CalcUpperBoundVector = InUpperBoundVector;
-	if (CalcUpperBoundVector.X < 0)
-		CalcUpperBoundVector.X *= -1.f;
-	if (CalcUpperBoundVector.Y < 0)
-		CalcUpperBoundVector.Y *= -1.f;
+	FVector2D calcUpperBoundVector = upperBoundVector;
+	if (calcUpperBoundVector.X < 0)
+		calcUpperBoundVector.X *= -1.f;
+	if (calcUpperBoundVector.Y < 0)
+		calcUpperBoundVector.Y *= -1.f;
 
-	FVector2D CalcLowerBoundVector = InLowerBoundVector;
-	if (CalcLowerBoundVector.X < 0)
-		CalcLowerBoundVector.X *= -1.f;
-	if (CalcLowerBoundVector.Y < 0)
-		CalcLowerBoundVector.Y *= -1.f;
+	FVector2D calcLowerBoundVector = lowerBoundVector;
+	if (calcLowerBoundVector.X < 0)
+		calcLowerBoundVector.X *= -1.f;
+	if (calcLowerBoundVector.Y < 0)
+		calcLowerBoundVector.Y *= -1.f;
 
-	float CalcX = NewPosition.X;
-	if (CalcX < 0)
-		CalcX *= -1.f;
-	float CalcY = NewPosition.Y;
-	if (CalcY < 0)
-		CalcY *= -1.f;
+	float calcX = newPosition.X;
+	if (calcX < 0)
+		calcX *= -1.f;
+	float calcY = newPosition.Y;
+	if (calcY < 0)
+		calcY *= -1.f;
 
-	if (CalcX < CalcLowerBoundVector.X)
-		NewPosition.X = InLowerBoundVector.X;
-	else if (CalcX > CalcUpperBoundVector.X)
-		NewPosition.X = InUpperBoundVector.X;
+	if (calcX < calcLowerBoundVector.X)
+		newPosition.X = lowerBoundVector.X;
+	else if (calcX > calcUpperBoundVector.X)
+		newPosition.X = upperBoundVector.X;
 
-	if (CalcY < CalcLowerBoundVector.Y)
-		NewPosition.Y = InLowerBoundVector.Y;
-	else if (CalcY > CalcUpperBoundVector.Y)
-		NewPosition.Y = InUpperBoundVector.Y;
+	if (calcY < calcLowerBoundVector.Y)
+		newPosition.Y = lowerBoundVector.Y;
+	else if (calcY > calcUpperBoundVector.Y)
+		newPosition.Y = upperBoundVector.Y;
 
-	return NewPosition;
+	return newPosition;
 }

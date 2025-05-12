@@ -32,7 +32,7 @@ protected:
 		float Direction = 0.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)
-		bool IsAccelarating = false;
+		bool bIsAccelarating = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)
 		float Speed = 0.f;
@@ -44,7 +44,7 @@ protected:
 		bool AimDownSight = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)
-		bool IsSprinting = false;
+		bool bIsSprinting = false;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Transient, Category = ArmAnimation)
 		bool EnableJump = false;

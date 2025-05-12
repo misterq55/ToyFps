@@ -4,7 +4,7 @@
 #include "WeaponSystem/WeaponEditor/WeaponEditorViewportClient/WeaponEditorViewportClient_FirstPerson.h"
 #include "PreviewScene.h"
 
-void SWeaponEditorViewport::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor, EWeaponEditorViewport InViewportType, FPreviewScene* InPreviewScene)
+void SWeaponEditorViewport::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor, E_TFWeaponEditorViewport InViewportType, FPreviewScene* InPreviewScene)
 {
 	WeaponEditor = InSpriteEditor;
 	ViewportType = InViewportType;
@@ -16,11 +16,11 @@ TSharedRef<FEditorViewportClient> SWeaponEditorViewport::MakeEditorViewportClien
 {
 	switch (ViewportType)
 	{
-	case EWeaponEditorViewport::EditorViewport:
+	case E_TFWeaponEditorViewport::EditorViewport:
 		EditorViewportClient = MakeShareable(new FWeaponEditorViewportClient_Editor(nullptr, WeaponEditorPreviewScene, WeaponEditor));
 		break;
 
-	case EWeaponEditorViewport::FirstPersonViewport:
+	case E_TFWeaponEditorViewport::FirstPersonViewport:
 		EditorViewportClient = MakeShareable(new FWeaponEditorViewportClient_FirstPerson(nullptr, WeaponEditorPreviewScene, WeaponEditor));
 		break;
 

@@ -29,14 +29,16 @@ void AWeapon::BeginPlay()
 	ResetWeapon(WeaponData);
 }
 
-void AWeapon::ResetWeapon(const FWeaponData& InWeaponData)
+void AWeapon::ResetWeapon(const FWeaponData& weaponData)
 {
-	Super::ResetWeapon(InWeaponData);
+	Super::ResetWeapon(weaponData);
 
-	WeaponData = InWeaponData;
+	WeaponData = weaponData;
 
-	if (!WeaponData.AttackAbility)
+	if (!IsValid(WeaponData.AttackAbility))
+	{
 		return;
+	}
 
 	AttackAbilitySpec = AbilitySystemComponent->BuildAbilitySpecFromClass(WeaponData.AttackAbility, 0, -1);
 	AbilitySystemComponent->GiveAbility(AttackAbilitySpec);
@@ -47,24 +49,30 @@ void AWeapon::ResetWeapon(const FWeaponData& InWeaponData)
 
 void AWeapon::Attack()
 {
-	if (!WeaponData.AttackAbility)
+	if (!IsValid(WeaponData.AttackAbility))
+	{
 		return;
+	}
 
 	AbilitySystemComponent->TryActivateAbility(AttackAbilitySpec.Handle);
 }
 
 void AWeapon::Reload()
 {
-	if (!WeaponData.ReloadAbility)
+	if (!IsValid(WeaponData.ReloadAbility))
+	{
 		return;
+	}
 
 	AbilitySystemComponent->TryActivateAbility(ReloadAbilitySpec.Handle);
 }
 
 void AWeapon::StopAttacking()
 {
-	if (!WeaponData.AttackAbility)
+	if (!IsValid(WeaponData.AttackAbility))
+	{
 		return;
+	}
 
 	AbilitySystemComponent->CancelAbility(AttackAbilitySpec.Ability);
 }

@@ -4,7 +4,6 @@
 #include "WeaponBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
-#include "Kismet/KismetSystemLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Engine/DamageEvents.h"
 #include "WeaponSystem/Character/FpsCharacterBase.h"
@@ -43,36 +42,38 @@ void AWeaponBase::ResetWeapon(const FWeaponData& InWeaponData)
 	Eject->SetRelativeTransform(InWeaponData.EjectTransform);
 }
 
-void AWeaponBase::LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation)
+void AWeaponBase::LineTrace(FVector& muzzleLocation, FVector& imactPoint, FRotator& projectileRotation)
 {
 	AFpsCharacterBase* FpsCharacter = Cast<AFpsCharacterBase>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	if (!FpsCharacter)
-		return;
-
-	FVector StartLocation = FpsCharacter->GetMainCamera()->GetComponentLocation();
-	FVector ForwardVector = FpsCharacter->GetMainCamera()->GetForwardVector() * 20000.f;
-
-	float Max = FpsCharacter->GetSpreadCurrent() * 10000.f + WeaponData.BulletSpread;
-	float Min = Max * -1.f;
-
-	FVector EndLocation = FVector(UKismetMathLibrary::RandomFloatInRange(Min, Max), UKismetMathLibrary::RandomFloatInRange(Min, Max), UKismetMathLibrary::RandomFloatInRange(Min, Max)) + ForwardVector;
-
-	FHitResult HitResult;
-
-	GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());
-	GetWorld()->LineTraceSingleByChannel(HitResult, Muzzle->GetComponentLocation(), HitResult.ImpactPoint, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());
-
-	OutMuzzleLocation = Muzzle->GetComponentLocation();
-	OutImactPoint = HitResult.ImpactPoint;
-
-	ProjectileRotation = UKismetMathLibrary::FindLookAtRotation(HitResult.TraceStart, HitResult.TraceEnd);
-
-	if (HitResult.GetActor())
+	if (!IsValid(FpsCharacter))
 	{
-		APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		return;
+	}
 
-		FDamageEvent DmgEvent;
-		HitResult.GetActor()->TakeDamage(WeaponData.AttackDamage, DmgEvent, PlayerController, HitResult.GetActor());
+	FVector startLocation = FpsCharacter->GetMainCamera()->GetComponentLocation();
+	FVector forwardVector = FpsCharacter->GetMainCamera()->GetForwardVector() * 20000.f;
+
+	float max = FpsCharacter->GetSpreadCurrent() * 10000.f + WeaponData.BulletSpread;
+	float min = max * -1.f;
+
+	FVector endLocation = FVector(UKismetMathLibrary::RandomFloatInRange(min, max), UKismetMathLibrary::RandomFloatInRange(min, max), UKismetMathLibrary::RandomFloatInRange(min, max)) + forwardVector;
+
+	FHitResult hitResult;
+
+	GetWorld()->LineTraceSingleByChannel(hitResult, startLocation, endLocation, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());
+	GetWorld()->LineTraceSingleByChannel(hitResult, Muzzle->GetComponentLocation(), hitResult.ImpactPoint, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());
+
+	muzzleLocation = Muzzle->GetComponentLocation();
+	imactPoint = hitResult.ImpactPoint;
+
+	projectileRotation = UKismetMathLibrary::FindLookAtRotation(hitResult.TraceStart, hitResult.TraceEnd);
+
+	if (hitResult.GetActor())
+	{
+		APlayerController* playerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+
+		FDamageEvent dmgEvent;
+		hitResult.GetActor()->TakeDamage(WeaponData.AttackDamage, dmgEvent, playerController, hitResult.GetActor());
 	}
 }
 
