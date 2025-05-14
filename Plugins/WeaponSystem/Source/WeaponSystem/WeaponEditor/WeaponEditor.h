@@ -19,7 +19,7 @@ class FPreviewScene;
 class UWeaponEditorViewModel;
 class SWeaponCrossHair;
 
-class WEAPONSYSTEM_API FWeaponEditor : public FAssetEditorToolkit
+class WEAPONSYSTEM_API FWeaponEditor : public FAssetEditorToolkit, public FTickableEditorObject
 {
 public:
 	void InitEditor(const TArray<UObject*>& InObjects);
@@ -35,6 +35,12 @@ public:
 	TSharedPtr<SWeaponCrossHair> GetWeaponCrossHair() {
 		return CrossHairWidget;
 	}
+
+	// FTickableEditorObject Interface
+	virtual TStatId GetStatId() const override;
+	virtual void Tick(float DeltaTime) override;
+	virtual bool IsTickable() const override { return true; }
+	// End of FTickableEditorObject interface
 
 protected:
 	void RegisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager);

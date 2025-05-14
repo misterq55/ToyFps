@@ -26,6 +26,8 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 	}
 
 	WeaponEditorPreviewScene = MakeShareable(new FAdvancedPreviewScene(FPreviewScene::ConstructionValues()));
+
+	WeaponEditorPreviewScene->GetWorld()->bShouldSimulatePhysics = true;
 	
 	ViewModel = NewObject<UWeaponEditorViewModel>(WeaponEditorPreviewScene->GetWorld());
 	ViewModel->SetEditorWorld(WeaponEditorPreviewScene->GetWorld());
@@ -129,6 +131,19 @@ FLinearColor FWeaponEditor::GetWorldCentricTabColorScale() const
 TObjectPtr<AEditorCharacter> FWeaponEditor::GetEditorCharacter()
 {
 	return ViewModel->GetEditorCharacter();
+}
+
+TStatId FWeaponEditor::GetStatId() const
+{
+	RETURN_QUICK_DECLARE_CYCLE_STAT(FWeaponEditor, STATGROUP_Tickables);
+}
+
+void FWeaponEditor::Tick(float DeltaTime)
+{
+	if (WeaponEditorPreviewScene.IsValid() && IsValid(WeaponEditorPreviewScene->GetWorld()))
+	{
+		WeaponEditorPreviewScene->GetWorld()->Tick(LEVELTICK_All, DeltaTime);
+	}
 }
 
 void FWeaponEditor::RegisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager)
