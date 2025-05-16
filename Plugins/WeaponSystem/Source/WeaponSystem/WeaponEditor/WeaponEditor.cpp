@@ -28,6 +28,7 @@ void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 	WeaponEditorPreviewScene = MakeShareable(new FAdvancedPreviewScene(FPreviewScene::ConstructionValues()));
 
 	WeaponEditorPreviewScene->GetWorld()->bShouldSimulatePhysics = true;
+	WeaponEditorPreviewScene->GetWorld()->bAllowAudioPlayback = true;
 	
 	ViewModel = NewObject<UWeaponEditorViewModel>(WeaponEditorPreviewScene->GetWorld());
 	ViewModel->SetEditorWorld(WeaponEditorPreviewScene->GetWorld());
