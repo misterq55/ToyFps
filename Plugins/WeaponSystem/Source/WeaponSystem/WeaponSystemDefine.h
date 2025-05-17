@@ -55,6 +55,9 @@ struct WEAPONSYSTEM_API FWeaponData
 		UAnimSequenceBase* AnimSequence_WeaponRun = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UAnimSequenceBase* AnimSequence_WeaponFire = nullptr;
+
+	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UAnimMontage* AnimMontage_WeaponFire = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
