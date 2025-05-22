@@ -24,6 +24,11 @@ void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
 	SetViewLocation(ViewInfo.Location);
 	SetViewRotation(EditorCharacter->GetViewRotation());
 
+	if (!WeaponEditor.IsValid())
+	{
+		return;
+	}
+	
 	if (WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->GetCrossHair() && WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->GetCrossHair()->IsValidLowLevel())
 		WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->SetCenterPivot(FVector2D(Viewport->GetSizeXY().X / 2, Viewport->GetSizeXY().Y / 2));
 

@@ -201,6 +201,7 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 
 	auto OnClickAttackAbility = [&]() {
 		EditorCharacter->GetCurrentWeapon()->Attack();
+		EditorCharacter->GetCurrentWeapon()->StopAttacking();
 	};
 
 	ViewModelAbilityObject.Add(TEXT("Attack"), MakeShareable(new FViewModelAbilityObject(CurrentWeaponAsset->GetWeaponData().AttackAbility->GetOwnerClass(),
