@@ -15,9 +15,19 @@ FWeaponEditorViewportClient_FirstPerson::FWeaponEditorViewportClient_FirstPerson
 
 void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
 {
-	GetPreviewScene()->GetWorld()->Tick(ELevelTick::LEVELTICK_All, DeltaSeconds);
+	// GetPreviewScene()->GetWorld()->Tick(ELevelTick::LEVELTICK_All, DeltaSeconds);
 
+	if (!WeaponEditor.IsValid())
+	{
+		return;
+	}
+	
 	AEditorCharacter *EditorCharacter = WeaponEditor.Pin()->GetEditorCharacter();
+
+	if (!IsValid(EditorCharacter))
+	{
+		return;
+	}
 
 	FMinimalViewInfo ViewInfo;
 	EditorCharacter->GetMainCamera()->GetCameraView(DeltaSeconds, ViewInfo);
@@ -28,9 +38,14 @@ void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
 	{
 		return;
 	}
+
+	if (!WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject().IsValid() || !IsValid(WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->GetCrossHair()))
+	{
+		return;
+	}
 	
-	if (WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->GetCrossHair() && WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->GetCrossHair()->IsValidLowLevel())
-		WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->SetCenterPivot(FVector2D(Viewport->GetSizeXY().X / 2, Viewport->GetSizeXY().Y / 2));
+	//if (WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->GetCrossHair() && WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->GetCrossHair()->IsValidLowLevel())
+	WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject()->SetCenterPivot(FVector2D(Viewport->GetSizeXY().X / 2, Viewport->GetSizeXY().Y / 2));
 
 	Invalidate();
 }
