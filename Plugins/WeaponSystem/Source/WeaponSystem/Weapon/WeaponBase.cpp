@@ -30,16 +30,16 @@ void AWeaponBase::Tick(float DeltaTime)
 
 }
 
-void AWeaponBase::SetWeaponData(FWeaponData InWeaponData)
+void AWeaponBase::SetWeaponData(FWeaponData weaponData)
 {
-	WeaponData = InWeaponData;
+	WeaponData = weaponData;
 }
 
-void AWeaponBase::ResetWeapon(const FWeaponData& InWeaponData)
+void AWeaponBase::ResetWeapon(const FWeaponData& weaponData)
 {
-	PrimaryWeapon->SetSkeletalMesh(InWeaponData.WeaponMesh);
-	Muzzle->SetRelativeTransform(InWeaponData.MuzzleTransform);
-	Eject->SetRelativeTransform(InWeaponData.EjectTransform);
+	PrimaryWeapon->SetSkeletalMesh(weaponData.WeaponMesh);
+	Muzzle->SetRelativeTransform(weaponData.MuzzleTransform);
+	Eject->SetRelativeTransform(weaponData.EjectTransform);
 }
 
 void AWeaponBase::LineTrace(FVector& muzzleLocation, FVector& imactPoint, FRotator& projectileRotation)
