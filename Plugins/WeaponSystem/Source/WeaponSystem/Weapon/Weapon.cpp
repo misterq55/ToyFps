@@ -54,7 +54,14 @@ void AWeapon::Attack()
 		return;
 	}
 
-	AbilitySystemComponent->TryActivateAbility(AttackAbilitySpec.Handle);
+	if (AttackAbilitySpec.IsActive())
+	{
+		AbilitySystemComponent->AbilitySpecInputPressed(AttackAbilitySpec);
+	}
+	else
+	{
+		AbilitySystemComponent->TryActivateAbility(AttackAbilitySpec.Handle);
+	}
 }
 
 void AWeapon::Reload()
@@ -64,7 +71,14 @@ void AWeapon::Reload()
 		return;
 	}
 
-	AbilitySystemComponent->TryActivateAbility(ReloadAbilitySpec.Handle);
+	if (ReloadAbilitySpec.IsActive())
+	{
+		AbilitySystemComponent->AbilitySpecInputPressed(ReloadAbilitySpec);
+	}
+	else
+	{
+		AbilitySystemComponent->TryActivateAbility(ReloadAbilitySpec.Handle);
+	}
 }
 
 void AWeapon::StopAttacking()

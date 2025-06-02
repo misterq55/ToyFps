@@ -21,11 +21,9 @@ AEditorCharacter::AEditorCharacter()
 
 	static ConstructorHelpers::FClassFinder<UAnimInstance> meshAnim(TEXT("/Script/Engine.AnimBlueprint'/WeaponSystem/BP_EditorCh_AnimBP.BP_EditorCh_AnimBP_C'"));
 	GetMesh()->SetAnimInstanceClass(meshAnim.Class);
-	GetMesh()->SetVisibility(false);
 
 	static ConstructorHelpers::FObjectFinder<USkeletalMesh> headObj(TEXT("/Script/Engine.SkeletalMesh'/Game/UltimateFPSAnimationsKIT/Mesh/Head.Head'"));
 	HeadMeshComponent->SetSkeletalMesh(headObj.Object);
-	HeadMeshComponent->SetVisibility(false);
 
 	MainCameraComponent->SetCameraMesh(nullptr);
 
