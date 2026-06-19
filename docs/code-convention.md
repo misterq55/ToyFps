@@ -5,7 +5,7 @@ This document defines coding and module-architecture conventions for the ToyFPS 
 ## 1) Unreal naming
 - Classes: `U` (UObject), `A` (Actor), `F` (struct/value type), `I` (interface), `T` (template/container), `E` (enum).
 - Member variables: use `PascalCase` and clear intent-focused names; avoid unexplained abbreviations.
-- Local variables and function parameters: use `camelCase`.
+- Function parameters and local variables: follow Unreal-style naming (typically `PascalCase`, with `InXxx` allowed for input params).
 - Functions: verb-first names for actions, noun/adjective names for queries/accessors.
 
 ## 2) Module boundaries
@@ -27,12 +27,16 @@ This document defines coding and module-architecture conventions for the ToyFPS 
 - Initialize local variables as `const` whenever they are not reassigned after initialization.
 - Add comments only for non-obvious intent or constraints.
 
-## 5) Safety and packaging
+## 5) Enforcement policy
+- Hard enforcement: `const` local initialization when reassignment is not needed.
+- Naming/style enforcement: follow Unreal conventions as the default, but prioritize consistency and safe incremental migration over large mechanical renames.
+
+## 6) Safety and packaging
 - Any packaging fix should preserve runtime/editor separation.
 - Validate `*.Build.cs`, `.uplugin`, and `ToyFPS.uproject` together when changing architecture.
 - Avoid committing transient IDE/local files unless intentionally shared.
 
-## 6) Commit messages
+## 7) Commit messages
 - Use concise, purpose-first messages.
 - Prefer Conventional Commit style where possible (`fix:`, `refactor:`, `build:`, `chore:`).
 - For packaging-impact changes, mention packaging intent explicitly.
