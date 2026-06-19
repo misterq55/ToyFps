@@ -44,7 +44,7 @@ class FViewModelAssetObject
 {
 public:
 	FViewModelAssetObject() {}
-	FViewModelAssetObject(FString InAssetPath, std::function<void(const FAssetData& AssetData)> InAssetChangeLambda) {
+	FViewModelAssetObject(FString InAssetPath, TFunction<void(const FAssetData& AssetData)> InAssetChangeLambda) {
 		SetAssetPath(InAssetPath);
 		OnChangeAssetLambda = InAssetChangeLambda;
 	}
@@ -64,7 +64,7 @@ public:
 
 private:
 	FString AssetPath;
-	std::function<void(const FAssetData& AssetData)> OnChangeAssetLambda;
+	TFunction<void(const FAssetData& AssetData)> OnChangeAssetLambda;
 };
 
 class FViewModelAbilityObject
@@ -72,7 +72,7 @@ class FViewModelAbilityObject
 public:
 	FViewModelAbilityObject() {}
 
-	FViewModelAbilityObject(const UClass* SelectedClass, std::function<void(const UClass* SelectedClass)> InOnSetClassLambda, std::function<void()> InOnClickAbilityLambda) {
+	FViewModelAbilityObject(const UClass* SelectedClass, TFunction<void(const UClass* SelectedClass)> InOnSetClassLambda, TFunction<void()> InOnClickAbilityLambda) {
 		AbilityClass = MakeWeakObjectPtr(SelectedClass);
 		OnSetClassLambda = InOnSetClassLambda;
 		OnClickAbilityLambda = InOnClickAbilityLambda;
@@ -101,6 +101,6 @@ public:
 	}
 private:
 	TWeakObjectPtr<const UClass> AbilityClass;
-	std::function<void(const UClass* SelectedClass)> OnSetClassLambda;
-	std::function<void()> OnClickAbilityLambda;
+	TFunction<void(const UClass* SelectedClass)> OnSetClassLambda;
+	TFunction<void()> OnClickAbilityLambda;
 };
