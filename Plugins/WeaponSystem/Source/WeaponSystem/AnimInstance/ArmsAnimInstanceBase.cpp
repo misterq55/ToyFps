@@ -22,12 +22,12 @@ void UArmsAnimInstanceBase::NativeUpdateAnimation(float DeltaSeconds)
 		return;
 	}
 
-	FVector velocity = OwningCharacter->GetVelocity();
+	const FVector velocity = OwningCharacter->GetVelocity();
 	Speed = velocity.Length();
 
 	Direction = UKismetAnimationLibrary::CalculateDirection(velocity, OwningCharacter->GetActorRotation());
 
-	UCharacterMovementComponent* characterMovement = OwningCharacter->GetCharacterMovement();
+	UCharacterMovementComponent* const characterMovement = OwningCharacter->GetCharacterMovement();
 	if (!IsValid(characterMovement))
 	{
 		return;

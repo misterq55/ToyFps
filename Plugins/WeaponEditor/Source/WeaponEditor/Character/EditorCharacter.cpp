@@ -62,7 +62,7 @@ void AEditorCharacter::SetWeaponAsset(UWeaponAsset* weaponAsset)
 
 void AEditorCharacter::ResetArmsAnimInstance()
 {
-	UArmsAnimInstanceBase* armsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
+	UArmsAnimInstanceBase* const armsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
 	if (!IsValid(armsAnimInstance))
 	{
 		return;

@@ -11,7 +11,7 @@ void UWeaponCrossHairWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	UCanvasPanel* canvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
+	UCanvasPanel* const canvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
 	if (!IsValid(canvasPanel))
 	{
 		return;
@@ -19,8 +19,8 @@ void UWeaponCrossHairWidget::NativeConstruct()
 
 	for (int32 i = 0; i < canvasPanel->GetSlots().Num(); i++)
 	{
-		UCanvasPanelSlot* canvasPanelSlot = Cast<UCanvasPanelSlot>(canvasPanel->GetSlots()[i]);
-		FVector2D positionVector = canvasPanelSlot->GetPosition();
+		UCanvasPanelSlot* const canvasPanelSlot = Cast<UCanvasPanelSlot>(canvasPanel->GetSlots()[i]);
+		const FVector2D positionVector = canvasPanelSlot->GetPosition();
 
 		FVector2D unitVector = CenterPivot - positionVector;
 		unitVector.Normalize();
@@ -32,47 +32,47 @@ void UWeaponCrossHairWidget::NativeConstruct()
 
 void UWeaponCrossHairWidget::SetCrossHair()
 {
-	UCanvasPanel* canvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
+	UCanvasPanel* const canvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
 	
 	if (!IsValid(canvasPanel))
 	{
 		return;
 	}
 
-	float deltaTimeSeconds = GetWorld()->DeltaTimeSeconds;
+	const float deltaTimeSeconds = GetWorld()->DeltaTimeSeconds;
 	
 	if (!IsValid(OwningCharacter))
 	{
 		return;
 	}
 
-	// ���� �߻翡 ���� ũ�ν� ��� ������
-	float weaponFirePower = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
+	
+	const float weaponFirePower = UKismetMathLibrary::MapRangeUnclamped(OwningCharacter->GetSpreadCurrent(), 0.f, OwningCharacter->GetSpreadMax(), 0.f, OwningCharacter->GetSpreadMax() * -350.f);
 
 	for (int32 i = 0; i < canvasPanel->GetSlots().Num(); i++)
 	{
-		UCanvasPanelSlot* canvasPanelSlot = Cast<UCanvasPanelSlot>(canvasPanel->GetSlots()[i]);
-		FVector2D position = canvasPanelSlot->GetPosition();
+		UCanvasPanelSlot* const canvasPanelSlot = Cast<UCanvasPanelSlot>(canvasPanel->GetSlots()[i]);
+		const FVector2D position = canvasPanelSlot->GetPosition();
 
 		if (!IsValid(canvasPanelSlot))
 		{
 			continue;
 		}
 
-		FVector velocity = OwningCharacter->GetVelocity();
-		float velocityLength = velocity.Length();
-		float power = velocityLength * 0.4f * -1.f;
+		const FVector velocity = OwningCharacter->GetVelocity();
+		const float velocityLength = velocity.Length();
+		const float power = velocityLength * 0.4f * -1.f;
 		
-		FVector2D unitVector = CrossHairUnitVectors[i];
-		FVector2D PowerVector = unitVector * power;
+		const FVector2D unitVector = CrossHairUnitVectors[i];
+		const FVector2D PowerVector = unitVector * power;
 		
-		FVector2D interpedVector = 
+		const FVector2D interpedVector = 
 			FVector2D(
 				UKismetMathLibrary::FInterpTo(position.X, PowerVector.X, deltaTimeSeconds, InterpSpeed),
 			UKismetMathLibrary::FInterpTo(position.Y, PowerVector.Y, deltaTimeSeconds, InterpSpeed));
 
-		FVector2D weaponFirePowerVector = unitVector * weaponFirePower * 2.5f;
-		FVector2D newPosition = MakePositionLimit(interpedVector + weaponFirePowerVector, unitVector * UpperBound, unitVector * LowerBound);
+		const FVector2D weaponFirePowerVector = unitVector * weaponFirePower * 2.5f;
+		const FVector2D newPosition = MakePositionLimit(interpedVector + weaponFirePowerVector, unitVector * UpperBound, unitVector * LowerBound);
 
 		canvasPanelSlot->SetPosition(newPosition);
 	}

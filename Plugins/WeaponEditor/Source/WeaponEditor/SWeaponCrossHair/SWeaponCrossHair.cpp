@@ -13,13 +13,13 @@ void SWeaponCrossHair::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEdi
 	WeaponEditor = InSpriteEditor;
 	SAssignNew(CanvasWidget, SCanvas);
 
-	TWeakPtr<FViewModelCrossHairObject> ViewModelCrossHairObject = WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject();
+	const TWeakPtr<FViewModelCrossHairObject> ViewModelCrossHairObject = WeaponEditor.Pin()->GetViewModel()->GetViewModelCrossHairObject();
 
 	SetCenterPivot(ViewModelCrossHairObject.Pin()->GetCenterPivot());
 	ViewModelCrossHairObject.Pin()->OnSetCenterPivot.Unbind();
 	ViewModelCrossHairObject.Pin()->OnSetCenterPivot.BindRaw(this, &SWeaponCrossHair::SetCenterPivot);
 
-	UWeaponCrossHairWidget* CrossHair = ViewModelCrossHairObject.Pin()->GetCrossHair();
+	UWeaponCrossHairWidget* const CrossHair = ViewModelCrossHairObject.Pin()->GetCrossHair();
 	if (CrossHair)
 		SetCrossHairWidget(CrossHair);
 
@@ -39,21 +39,21 @@ void SWeaponCrossHair::SetCrossHairWidget(UWeaponCrossHairWidget* InCrossHairWid
 	
 	CanvasWidget->ClearChildren();
 
-	UCanvasPanel* CanvasPanel = Cast<UCanvasPanel>(CrossHairWidget->GetWidgetFromName(TEXT("CanvasPanel")));
+	UCanvasPanel* const CanvasPanel = Cast<UCanvasPanel>(CrossHairWidget->GetWidgetFromName(TEXT("CanvasPanel")));
 
 	if (!CanvasPanel)
 		return;
 
 	for (int32 i = 0; i < CanvasPanel->GetSlots().Num(); i++)
 	{
-		UCanvasPanelSlot* CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[i]);
-		UImage* Image = Cast<UImage>(CanvasPanel->GetChildAt(i));
-		FAnchors Anchors = CanvasPanelSlot->GetAnchors();
-		FVector2D Position = CanvasPanelSlot->GetPosition() + CenterPivot;
-		FVector2D Size = CanvasPanelSlot->GetSize();
+		UCanvasPanelSlot* const CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[i]);
+		UImage* const Image = Cast<UImage>(CanvasPanel->GetChildAt(i));
+		const FAnchors Anchors = CanvasPanelSlot->GetAnchors();
+		const FVector2D Position = CanvasPanelSlot->GetPosition() + CenterPivot;
+		const FVector2D Size = CanvasPanelSlot->GetSize();
 		
-		FWidgetTransform WidgetTransform = Image->GetRenderTransform();
-		FSlateRenderTransform SlateRenderTranform(Concatenate(WidgetTransform.Translation, FQuat2D(FMath::DegreesToRadians(WidgetTransform.Angle))));
+		const FWidgetTransform WidgetTransform = Image->GetRenderTransform();
+		const FSlateRenderTransform SlateRenderTranform(Concatenate(WidgetTransform.Translation, FQuat2D(FMath::DegreesToRadians(WidgetTransform.Angle))));
 		
 		CanvasWidget->AddSlot()
 			 .HAlign(HAlign_Center)

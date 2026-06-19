@@ -21,7 +21,7 @@ void AAmmoShell::BeginPlay()
 	Super::BeginPlay();
 	
 	FTimerHandle waitHandle;
-	float waitTime = 10.f; 
+	const float waitTime = 10.f; 
 	GetWorld()->GetTimerManager().SetTimer(waitHandle, FTimerDelegate::CreateLambda([&]()
 		{
 			Destroy();

@@ -22,7 +22,7 @@ void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
 		return;
 	}
 	
-	AEditorCharacter *EditorCharacter = WeaponEditor.Pin()->GetEditorCharacter();
+	AEditorCharacter* const EditorCharacter = WeaponEditor.Pin()->GetEditorCharacter();
 
 	if (!IsValid(EditorCharacter))
 	{
@@ -53,29 +53,22 @@ void FWeaponEditorViewportClient_FirstPerson::Tick(float DeltaSeconds)
 void FWeaponEditorViewportClient_FirstPerson::MouseMove(FViewport* InViewport, int32 x, int32 y)
 {
 	const bool RightMouseButtonDown = Viewport->KeyState(EKeys::RightMouseButton);
-
-	/*if (!RightMouseButtonDown)
-		return;
-
-	int32 Temp = 0;*/
-
 	if (RightMouseButtonDown)
 	{
-		int32 Temp = 0;
 	}
 }
 
 FSceneView* FWeaponEditorViewportClient_FirstPerson::CalcSceneView(FSceneViewFamily* ViewFamily, const int32 StereoViewIndex)
 {
-	FSceneView* SceneView = FEditorViewportClient::CalcSceneView(ViewFamily, StereoViewIndex);
+	FSceneView* const SceneView = FEditorViewportClient::CalcSceneView(ViewFamily, StereoViewIndex);
 	SceneView->UnscaledViewRect;
 	return SceneView;
 }
 
 void FWeaponEditorViewportClient_FirstPerson::OnViewportResize(FViewport* InViewport, uint32 InParams)
 {
-	float Height = InViewport->GetSizeXY().Y;
-	float Width = Height * AspectRatio;
+	const float Height = InViewport->GetSizeXY().Y;
+	const float Width = Height * AspectRatio;
 	//InViewport->SetInitialSize(FIntPoint(Width, Height));
 
 	// InViewport->MoveWindow

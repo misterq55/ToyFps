@@ -21,7 +21,7 @@ AFpsCharacterBase::AFpsCharacterBase()
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
-	USkeletalMeshComponent* characterMeshComponent = GetMesh();
+	USkeletalMeshComponent* const characterMeshComponent = GetMesh();
 
 	if (!IsValid(characterMeshComponent))
 	{
@@ -86,7 +86,7 @@ void AFpsCharacterBase::Tick(float DeltaTime)
 	if (RunningCameraShake == nullptr)
 		return;
 
-	APlayerController* playerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	APlayerController* const playerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (!IsValid(playerController))
 	{
 		return;

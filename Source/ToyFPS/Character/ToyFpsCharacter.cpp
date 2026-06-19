@@ -53,10 +53,10 @@ void AToyFpsCharacter::BeginPlay()
 	CurrentWeapon->AttachToComponent(WeaponPivot, FAttachmentTransformRules::KeepRelativeTransform);
 	CurrentWeapon->ResetWeapon(WeaponAsset->GetWeaponData());
 
-	UArmsAnimInstanceBase* ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
+	UArmsAnimInstanceBase* const ArmsAnimInstance = Cast<UArmsAnimInstanceBase>(ArmsMeshComponent->GetAnimInstance());
 	ArmsAnimInstance->SetWeaponData(CurrentWeapon->GetWeaponData());
 
-	UWeaponCrossHairWidget* CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), WeaponAsset->GetWeaponData().CrossHair);
+	UWeaponCrossHairWidget* const CrossHair = CreateWidget<UWeaponCrossHairWidget>(GetWorld(), WeaponAsset->GetWeaponData().CrossHair);
 
 	if (IsValid(CrossHair))
 	{
@@ -74,7 +74,7 @@ void AToyFpsCharacter::Tick(float DeltaTime)
 void AToyFpsCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
-	FVector2D MovementVector = Value.Get<FVector2D>();
+	const FVector2D MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
@@ -87,7 +87,7 @@ void AToyFpsCharacter::Move(const FInputActionValue& Value)
 void AToyFpsCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
-	FVector2D LookAxisVector = Value.Get<FVector2D>();
+	const FVector2D LookAxisVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
