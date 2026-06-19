@@ -1,8 +1,8 @@
 #include "SWeaponAnimationAssets.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditor.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
-#include "WeaponSystem/WeaponEditor/SWeaponEditorAssetProperty/SWeaponEditorAssetProperty.h"
-#include "WeaponSystem/WeaponEditor/SWeaponEditorClassProperty/SWeaponEditorClassProperty.h"
+#include "WeaponEditor.h"
+#include "WeaponEditorViewModel/WeaponEditorViewModel.h"
+#include "SWeaponEditorAssetProperty/SWeaponEditorAssetProperty.h"
+#include "SWeaponEditorClassProperty/SWeaponEditorClassProperty.h"
 #include "WeaponSystem/CrossHair/WeaponCrossHairWidget.h"
 
 #include "Engine/SkeletalMesh.h"

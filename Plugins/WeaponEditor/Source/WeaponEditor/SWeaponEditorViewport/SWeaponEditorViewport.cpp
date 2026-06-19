@@ -1,7 +1,7 @@
 #include "SWeaponEditorViewport.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditor.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditorViewportClient/WeaponEditorViewportClient_Editor.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditorViewportClient/WeaponEditorViewportClient_FirstPerson.h"
+#include "WeaponEditor.h"
+#include "WeaponEditorViewportClient/WeaponEditorViewportClient_Editor.h"
+#include "WeaponEditorViewportClient/WeaponEditorViewportClient_FirstPerson.h"
 #include "PreviewScene.h"
 
 void SWeaponEditorViewport::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor, E_TFWeaponEditorViewport InViewportType, FPreviewScene* InPreviewScene)

@@ -4,14 +4,14 @@
 #include "WeaponEditor.h"
 #include "Widgets/Docking/SDockTab.h"
 #include "IDetailsView.h"
-#include "WeaponSystem/WeaponEditor/SWeaponEditorViewport/SWeaponEditorViewport.h"
-#include "WeaponSystem/WeaponEditor/SWeaponInfo/SWeaponInfo.h"
-#include "WeaponSystem/WeaponEditor/SWeaponAnimationAssets/SWeaponAnimationAssets.h"
-#include "WeaponSystem/WeaponEditor/SWeaponAbilities/SWeaponAbilities.h"
+#include "SWeaponEditorViewport/SWeaponEditorViewport.h"
+#include "SWeaponInfo/SWeaponInfo.h"
+#include "SWeaponAnimationAssets/SWeaponAnimationAssets.h"
+#include "SWeaponAbilities/SWeaponAbilities.h"
 #include "AdvancedPreviewScene.h"
-#include "WeaponSystem/Character/EditorCharacter.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
-#include "WeaponSystem/WeaponEditor/SWeaponCrossHair/SWeaponCrossHair.h"
+#include "Character/EditorCharacter.h"
+#include "WeaponEditorViewModel/WeaponEditorViewModel.h"
+#include "SWeaponCrossHair/SWeaponCrossHair.h"
 
 void FWeaponEditor::InitEditor(const TArray<UObject*>& InObjects)
 {

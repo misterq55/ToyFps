@@ -3,13 +3,13 @@
 
 #include "WeaponEditorViewModel.h"
 #include "WeaponSystem/Weapon/WeaponAsset.h"
-#include "WeaponSystem/Character/EditorCharacter.h"
+#include "Character/EditorCharacter.h"
 #include "WeaponSystem/Weapon/WeaponBase.h"
 #include "Animation/BlendSpace.h"
 #include "Animation/AnimSequenceBase.h"
 #include "Engine/SkeletalMesh.h"
 #include "Engine/StaticMesh.h"
-#include "WeaponSystem/WeaponEditor/SWeaponCrossHair/SWeaponCrossHair.h"
+#include "SWeaponCrossHair/SWeaponCrossHair.h"
 
 bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjects)
 {

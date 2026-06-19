@@ -1,6 +1,6 @@
 #include "WeaponAssetAction.h"
 #include "WeaponSystem/Weapon/WeaponAsset.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditor.h"
+#include "WeaponEditor.h"
 
 
 FText FWeaponAssetAction::GetName() const

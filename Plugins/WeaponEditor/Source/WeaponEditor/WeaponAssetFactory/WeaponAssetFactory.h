@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class WEAPONSYSTEM_API UWeaponAssetFactory : public UFactory
+class WEAPONEDITOR_API UWeaponAssetFactory : public UFactory
 {
 	GENERATED_UCLASS_BODY()
 

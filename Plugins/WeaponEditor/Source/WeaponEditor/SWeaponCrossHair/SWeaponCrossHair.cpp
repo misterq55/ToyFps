@@ -1,12 +1,12 @@
 #include "SWeaponCrossHair.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditor.h"
+#include "WeaponEditor.h"
 #include "WeaponSystem/CrossHair/WeaponCrossHairWidget.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
 #include "Components/Image.h"
 #include "Widgets/SCanvas.h"
 
-#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
+#include "WeaponEditorViewModel/WeaponEditorViewModel.h"
 
 void SWeaponCrossHair::Construct(const FArguments& InArgs, TSharedPtr<FWeaponEditor> InSpriteEditor)
 {

@@ -1,7 +1,7 @@
 #include "SWeaponAbilities.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditor.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
-#include "WeaponSystem/WeaponEditor/SWeaponEditorClassProperty/SWeaponEditorClassProperty.h"
+#include "WeaponEditor.h"
+#include "WeaponEditorViewModel/WeaponEditorViewModel.h"
+#include "SWeaponEditorClassProperty/SWeaponEditorClassProperty.h"
 
 #include "WeaponSystem/Weapon/WeaponAbility/WeaponAbility.h"
 

@@ -19,7 +19,7 @@ class FPreviewScene;
 class UWeaponEditorViewModel;
 class SWeaponCrossHair;
 
-class WEAPONSYSTEM_API FWeaponEditor : public FAssetEditorToolkit, public FTickableEditorObject
+class WEAPONEDITOR_API FWeaponEditor : public FAssetEditorToolkit, public FTickableEditorObject
 {
 public:
 	void InitEditor(const TArray<UObject*>& InObjects);

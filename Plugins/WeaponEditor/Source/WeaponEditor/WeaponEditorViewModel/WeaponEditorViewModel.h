@@ -12,7 +12,7 @@
  */
 
 UCLASS()
-class WEAPONSYSTEM_API UWeaponEditorViewModel : public UObject
+class WEAPONEDITOR_API UWeaponEditorViewModel : public UObject
 {
 	GENERATED_BODY()
 	

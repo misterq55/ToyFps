@@ -1,11 +1,11 @@
 #include "WeaponEditorViewportClient_FirstPerson.h"
-#include "WeaponSystem/WeaponEditor/WeaponEditor.h"
-#include "WeaponSystem/Character/EditorCharacter.h"
+#include "WeaponEditor.h"
+#include "Character/EditorCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "InputCoreTypes.h"
 #include "UnrealClient.h"
 
-#include "WeaponSystem/WeaponEditor/WeaponEditorViewModel/WeaponEditorViewModel.h"
+#include "WeaponEditorViewModel/WeaponEditorViewModel.h"
 
 FWeaponEditorViewportClient_FirstPerson::FWeaponEditorViewportClient_FirstPerson(FEditorModeTools* InModeTools, FPreviewScene* InPreviewScene, TWeakPtr<FWeaponEditor> InWeaponEditor)
 	: FWeaponEditorViewportClient(InModeTools, InPreviewScene, InWeaponEditor)

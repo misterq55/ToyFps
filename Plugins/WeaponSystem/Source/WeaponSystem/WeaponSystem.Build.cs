@@ -29,8 +29,6 @@ public class WeaponSystem : ModuleRules
 				"GameplayTasks",
 				"GameplayAbilities",
 				"GameplayTags",
-				"PropertyEditor",
-				// ... add other public dependencies that you statically link with here ...
 			}
 			);
 			
@@ -40,15 +38,9 @@ public class WeaponSystem : ModuleRules
 			{
 				"CoreUObject",
 				"Engine",
-				"Slate",
-				"SlateCore",
-				"UnrealEd", 
-				"KismetWidgets",
-				"AdvancedPreviewScene",
 				"InputCore",
-				"UMG", 
+				"UMG",
 				"AnimGraphRuntime",
-				// ... add private dependencies that you statically link with here ...	
 			}
 			);
 		

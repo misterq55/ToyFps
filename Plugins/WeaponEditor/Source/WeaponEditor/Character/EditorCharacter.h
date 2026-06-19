@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "FpsCharacterBase.h"
+#include "WeaponSystem/Character/FpsCharacterBase.h"
 #include "WeaponSystem/WeaponSystemDefine.h"
 #include "EditorCharacter.generated.h"
 
@@ -14,7 +14,7 @@
 class UWeaponAsset;
 
 UCLASS()
-class WEAPONSYSTEM_API AEditorCharacter : public AFpsCharacterBase
+class WEAPONEDITOR_API AEditorCharacter : public AFpsCharacterBase
 {
 	GENERATED_BODY()
 	
