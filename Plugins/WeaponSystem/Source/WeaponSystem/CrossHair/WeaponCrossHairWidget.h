@@ -16,6 +16,7 @@ class WEAPONSYSTEM_API UWeaponCrossHairWidget : public UUserWidget
 
 public:
 	virtual void NativeConstruct() override;
+	virtual void NativeDestruct() override;
 
 public:
 	void SetCrossHair();
@@ -32,6 +33,7 @@ public:
 
 private:
 	FVector2D MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector);
+	FTimerHandle SetCrossHairTimerHandle;
 
 protected:
 	TArray<FVector2D> CrossHairUnitVectors;

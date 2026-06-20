@@ -50,6 +50,8 @@ void AWeaponBase::LineTrace(FVector& OutMuzzleLocation, FVector& OutImpactPoint,
 		return;
 	}
 
+	FpsCharacter->IncreaseSpread(WeaponData.SpreadPerShot);
+
 	const FVector StartLocation = FpsCharacter->GetMainCamera()->GetComponentLocation();
 	const FVector ForwardVector = FpsCharacter->GetMainCamera()->GetForwardVector() * 20000.f;
 
