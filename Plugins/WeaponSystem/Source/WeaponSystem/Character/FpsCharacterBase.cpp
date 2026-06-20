@@ -8,6 +8,9 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
+const float AFpsCharacterBase::SprintSpeed = 600.f;
+const float AFpsCharacterBase::NormalSpeed = 300.f;
+
 // Sets default values
 AFpsCharacterBase::AFpsCharacterBase()
 {
@@ -21,15 +24,15 @@ AFpsCharacterBase::AFpsCharacterBase()
 	GetCharacterMovement()->MaxWalkSpeed = NormalSpeed;
 	GetCharacterMovement()->GetNavAgentPropertiesRef().bCanCrouch = true;
 
-	USkeletalMeshComponent* const characterMeshComponent = GetMesh();
+	USkeletalMeshComponent* const CharacterMeshComponent = GetMesh();
 
-	if (!IsValid(characterMeshComponent))
+	if (!IsValid(CharacterMeshComponent))
 	{
 		return;
 	}
 
-	characterMeshComponent->SetRelativeLocation(FVector(0.f, 0.f, -100.f));
-	characterMeshComponent->SetRelativeRotation(FRotator(-0.f, -90.f, -0.f));
+	CharacterMeshComponent->SetRelativeLocation(FVector(0.f, 0.f, -100.f));
+	CharacterMeshComponent->SetRelativeRotation(FRotator(-0.f, -90.f, -0.f));
 
 	HeadMeshComponent = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("Head"));
 
@@ -40,7 +43,7 @@ AFpsCharacterBase::AFpsCharacterBase()
 
 	HeadMeshComponent->SetRelativeLocation(FVector(-165.869286, -1.064955, -16.934584));
 	HeadMeshComponent->SetRelativeRotation(FRotator(-69.414944, -285.594594, 287.355255));
-	HeadMeshComponent->SetupAttachment(characterMeshComponent, TEXT("head"));
+	HeadMeshComponent->SetupAttachment(CharacterMeshComponent, TEXT("head"));
 
 	MainCameraComponent = CreateOptionalDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 
@@ -51,7 +54,7 @@ AFpsCharacterBase::AFpsCharacterBase()
 
 	MainCameraComponent->SetRelativeLocation(FVector(-5.453166, 9.761212, 6.619132));
 	MainCameraComponent->SetRelativeRotation(FRotator(1.364551, -253.552927, 279.690763));
-	MainCameraComponent->SetupAttachment(characterMeshComponent, TEXT("head"));
+	MainCameraComponent->SetupAttachment(CharacterMeshComponent, TEXT("head"));
 	MainCameraComponent->bUsePawnControlRotation = true;
 
 	ArmsMeshComponent = CreateOptionalDefaultSubobject<USkeletalMeshComponent>(TEXT("Arms"));
@@ -86,8 +89,8 @@ void AFpsCharacterBase::Tick(float DeltaTime)
 	if (RunningCameraShake == nullptr)
 		return;
 
-	APlayerController* const playerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	if (!IsValid(playerController))
+	APlayerController* const PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (!IsValid(PlayerController))
 	{
 		return;
 	}
@@ -95,14 +98,14 @@ void AFpsCharacterBase::Tick(float DeltaTime)
 	if (GetVelocity().Length() > 400.f)
 	{
 		bRunningCameraShake = true;
-		playerController->ClientStartCameraShake(RunningCameraShake);
+		PlayerController->ClientStartCameraShake(RunningCameraShake);
 	}
 	else
 	{
 		if (bRunningCameraShake)
 		{
 			bRunningCameraShake = false;
-			playerController->ClientStopCameraShake(RunningCameraShake);
+			PlayerController->ClientStopCameraShake(RunningCameraShake);
 		}
 	}
 }
@@ -114,26 +117,26 @@ void AFpsCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 }
 
-void AFpsCharacterBase::IncreaseSpread(float increaseAmount)
+void AFpsCharacterBase::IncreaseSpread(float InIncreaseAmount)
 {
-	if (SpreadCurrent + increaseAmount >= SpreadMax)
+	if (SpreadCurrent + InIncreaseAmount >= SpreadMax)
 	{
 		SpreadCurrent = SpreadMax;
 	}
 	else
 	{
-		SpreadCurrent = SpreadCurrent + increaseAmount;
+		SpreadCurrent = SpreadCurrent + InIncreaseAmount;
 	}
 }
 
-void AFpsCharacterBase::DecreaseSpread(float decreaseAmount)
+void AFpsCharacterBase::DecreaseSpread(float InDecreaseAmount)
 {
-	if (SpreadCurrent - decreaseAmount <= SpreadMin)
+	if (SpreadCurrent - InDecreaseAmount <= SpreadMin)
 	{
 		SpreadCurrent = SpreadMin;
 	}
 	else
 	{
-		SpreadCurrent = SpreadCurrent - decreaseAmount;
+		SpreadCurrent = SpreadCurrent - InDecreaseAmount;
 	}
 }

@@ -35,7 +35,7 @@ public:
 		bCrouching = InCrouching;
 	}
 
-	bool GetCrouching() {
+	bool IsCrouching() const {
 		return bCrouching;
 	}
 
@@ -43,23 +43,23 @@ public:
 		bSprinting = InSprinting;
 	}
 
-	bool GetSprinting() {
+	bool IsSprinting() const {
 		return bSprinting;
 	}
 
-	float GetSpreadCurrent() {
+	float GetSpreadCurrent() const {
 		return SpreadCurrent;
 	}
 
-	float GetSpreadMax() {
+	float GetSpreadMax() const {
 		return SpreadMax;
 	}
 
-	float GetSpreadMin() {
+	float GetSpreadMin() const {
 		return SpreadMin;
 	}
 
-	bool GetAimDownSight() {
+	bool IsAimingDownSight() const {
 		return bAimDownSight;
 	}
 
@@ -67,11 +67,11 @@ public:
 		bAimDownSight = InAimDownSight;
 	}
 
-	TObjectPtr<UCameraComponent> GetMainCamera() {
+	TObjectPtr<UCameraComponent> GetMainCamera() const {
 		return MainCameraComponent;
 	}
 
-	TObjectPtr<AWeaponBase> GetCurrentWeapon() {
+	TObjectPtr<AWeaponBase> GetCurrentWeapon() const {
 		return CurrentWeapon;
 	}
 
@@ -82,8 +82,8 @@ public:
 		void DecreaseSpread(float InDecreaseAmount);
 
 protected:
-	const float SprintSpeed = 600;
-	const float NormalSpeed = 300.f;
+	static const float SprintSpeed;
+	static const float NormalSpeed;
 	float SpreadDecreaseSpeed = 1.f;
 
 protected:

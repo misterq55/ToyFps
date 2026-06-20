@@ -84,33 +84,33 @@ bool UWeaponEditorViewModel::InitializeViewModel(const TArray<UObject*>& InObjec
 		}
 	)));
 
-	ViewModelAssetObject.Add(TEXT("Jump1AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence1->GetPathName(),
+	ViewModelAssetObject.Add(TEXT("Jump1AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponJumpSequence1->GetPathName(),
 		[&](const FAssetData& AssetData) {
 			if (!CurrentWeaponAsset)
 				return;
 
-			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence1 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
+			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponJumpSequence1 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
 			EditorCharacter->ResetArmsAnimInstance();
 		}
 	)));
 
-	ViewModelAssetObject.Add(TEXT("Jump2AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence2->GetPathName(),
+	ViewModelAssetObject.Add(TEXT("Jump2AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponJumpSequence2->GetPathName(),
 		[&](const FAssetData& AssetData) {
 			if (!CurrentWeaponAsset)
 				return;
 
-			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence2 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
+			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponJumpSequence2 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
 			EditorCharacter->ResetArmsAnimInstance();
 		}
 	)));
 
 
-	ViewModelAssetObject.Add(TEXT("Jump3AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence3->GetPathName(),
+	ViewModelAssetObject.Add(TEXT("Jump3AnimSequencePath"), MakeShareable(new FViewModelAssetObject(CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponJumpSequence3->GetPathName(),
 		[&](const FAssetData& AssetData) {
 			if (!CurrentWeaponAsset)
 				return;
 
-			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeoponJumpSequence3 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
+			CurrentWeaponAsset->GetWeaponData().AnimSequence_WeaponJumpSequence3 = Cast<UAnimSequenceBase>(AssetData.GetAsset());
 			EditorCharacter->ResetArmsAnimInstance();
 		}
 	)));

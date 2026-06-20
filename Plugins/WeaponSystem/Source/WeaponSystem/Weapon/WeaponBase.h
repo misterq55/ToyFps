@@ -37,16 +37,16 @@ public:
 		virtual void Draw() {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-		virtual void Equipe() {}
+		virtual void Equip() {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 		virtual void StopAttacking() {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-		virtual void SecondartAttack() {}
+		virtual void SecondaryAttack() {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-		virtual void SniperZoom(bool Toggle) {}
+		virtual void SniperZoom(bool InToggle) {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 		virtual void HideMuzzleFlash() {}
@@ -55,7 +55,7 @@ public:
 		virtual void UnHideMuzzleFlash() {}
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
-		virtual void LineTrace(FVector& OutMuzzleLocation, FVector& OutImactPoint, FRotator& ProjectileRotation);
+		virtual void LineTrace(FVector& OutMuzzleLocation, FVector& OutImpactPoint, FRotator& ProjectileRotation);
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 		void ReloadAmmo();
@@ -79,7 +79,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Weapon)
 	AFpsCharacterBase* GetOwningCharacter() {
-		return OwningCharacter;
+		return OwningCharacter.Get();
 	};
 
 	virtual void ResetWeapon(const FWeaponData& InWeaponData);
@@ -111,5 +111,5 @@ protected:
 		FWeaponData WeaponData;
 
 private:
-	TObjectPtr<AFpsCharacterBase> OwningCharacter;
+	TWeakObjectPtr<AFpsCharacterBase> OwningCharacter;
 };

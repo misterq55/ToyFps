@@ -35,17 +35,17 @@ void UArmsAnimInstanceBase::NativeUpdateAnimation(float DeltaSeconds)
 
 	bIsAccelarating = characterMovement->GetCurrentAcceleration().Length() > 0.f;
 	EnableJump = characterMovement->IsFalling();
-	bIsSprinting = OwningCharacter->GetSprinting();
-	AimDownSight = OwningCharacter->GetAimDownSight();
+	bIsSprinting = OwningCharacter->IsSprinting();
+	AimDownSight = OwningCharacter->IsAimingDownSight();
 }
 
-void UArmsAnimInstanceBase::SetWeaponData(const FWeaponData& weaponData)
+void UArmsAnimInstanceBase::SetWeaponData(const FWeaponData& InWeaponData)
 {
-	BlendSpace_WeaponIdle = weaponData.BlendSpace_WeaponIdle;
-	BlendSpace_WeaponAdsIdle = weaponData.BlendSpace_WeaponAdsIdle;
-	AnimSequence_WeoponJumpSequence1 = weaponData.AnimSequence_WeoponJumpSequence1;
-	AnimSequence_WeoponJumpSequence2 = weaponData.AnimSequence_WeoponJumpSequence2;
-	AnimSequence_WeoponJumpSequence3 = weaponData.AnimSequence_WeoponJumpSequence3;
-	AnimSequence_WeaponWalk = weaponData.AnimSequence_WeaponWalk;
-	AnimSequence_WeaponRun = weaponData.AnimSequence_WeaponRun;
+	BlendSpace_WeaponIdle = InWeaponData.BlendSpace_WeaponIdle;
+	BlendSpace_WeaponAdsIdle = InWeaponData.BlendSpace_WeaponAdsIdle;
+	AnimSequence_WeaponJumpSequence1 = InWeaponData.AnimSequence_WeaponJumpSequence1;
+	AnimSequence_WeaponJumpSequence2 = InWeaponData.AnimSequence_WeaponJumpSequence2;
+	AnimSequence_WeaponJumpSequence3 = InWeaponData.AnimSequence_WeaponJumpSequence3;
+	AnimSequence_WeaponWalk = InWeaponData.AnimSequence_WeaponWalk;
+	AnimSequence_WeaponRun = InWeaponData.AnimSequence_WeaponRun;
 }

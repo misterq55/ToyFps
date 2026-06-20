@@ -30,19 +30,19 @@ void AWeaponBase::Tick(float DeltaTime)
 
 }
 
-void AWeaponBase::SetWeaponData(FWeaponData weaponData)
+void AWeaponBase::SetWeaponData(FWeaponData InWeaponData)
 {
-	WeaponData = weaponData;
+	WeaponData = InWeaponData;
 }
 
-void AWeaponBase::ResetWeapon(const FWeaponData& weaponData)
+void AWeaponBase::ResetWeapon(const FWeaponData& InWeaponData)
 {
-	PrimaryWeapon->SetSkeletalMesh(weaponData.WeaponMesh);
-	Muzzle->SetRelativeTransform(weaponData.MuzzleTransform);
-	Eject->SetRelativeTransform(weaponData.EjectTransform);
+	PrimaryWeapon->SetSkeletalMesh(InWeaponData.WeaponMesh);
+	Muzzle->SetRelativeTransform(InWeaponData.MuzzleTransform);
+	Eject->SetRelativeTransform(InWeaponData.EjectTransform);
 }
 
-void AWeaponBase::LineTrace(FVector& muzzleLocation, FVector& imactPoint, FRotator& projectileRotation)
+void AWeaponBase::LineTrace(FVector& OutMuzzleLocation, FVector& OutImpactPoint, FRotator& ProjectileRotation)
 {
 	AFpsCharacterBase* const FpsCharacter = Cast<AFpsCharacterBase>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (!IsValid(FpsCharacter))
@@ -50,30 +50,30 @@ void AWeaponBase::LineTrace(FVector& muzzleLocation, FVector& imactPoint, FRotat
 		return;
 	}
 
-	const FVector startLocation = FpsCharacter->GetMainCamera()->GetComponentLocation();
-	const FVector forwardVector = FpsCharacter->GetMainCamera()->GetForwardVector() * 20000.f;
+	const FVector StartLocation = FpsCharacter->GetMainCamera()->GetComponentLocation();
+	const FVector ForwardVector = FpsCharacter->GetMainCamera()->GetForwardVector() * 20000.f;
 
-	const float max = FpsCharacter->GetSpreadCurrent() * 10000.f + WeaponData.BulletSpread;
-	const float min = max * -1.f;
+	const float Max = FpsCharacter->GetSpreadCurrent() * 10000.f + WeaponData.BulletSpread;
+	const float Min = Max * -1.f;
 
-	const FVector endLocation = FVector(UKismetMathLibrary::RandomFloatInRange(min, max), UKismetMathLibrary::RandomFloatInRange(min, max), UKismetMathLibrary::RandomFloatInRange(min, max)) + forwardVector;
+	const FVector EndLocation = FVector(UKismetMathLibrary::RandomFloatInRange(Min, Max), UKismetMathLibrary::RandomFloatInRange(Min, Max), UKismetMathLibrary::RandomFloatInRange(Min, Max)) + ForwardVector;
 
-	FHitResult hitResult;
+	FHitResult HitResult;
 
-	GetWorld()->LineTraceSingleByChannel(hitResult, startLocation, endLocation, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());
-	GetWorld()->LineTraceSingleByChannel(hitResult, Muzzle->GetComponentLocation(), hitResult.ImpactPoint, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());
+	GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());
+	GetWorld()->LineTraceSingleByChannel(HitResult, Muzzle->GetComponentLocation(), HitResult.ImpactPoint, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());
 
-	muzzleLocation = Muzzle->GetComponentLocation();
-	imactPoint = hitResult.ImpactPoint;
+	OutMuzzleLocation = Muzzle->GetComponentLocation();
+	OutImpactPoint = HitResult.ImpactPoint;
 
-	projectileRotation = UKismetMathLibrary::FindLookAtRotation(hitResult.TraceStart, hitResult.TraceEnd);
+	ProjectileRotation = UKismetMathLibrary::FindLookAtRotation(HitResult.TraceStart, HitResult.TraceEnd);
 
-	if (hitResult.GetActor())
+	if (HitResult.GetActor())
 	{
-		APlayerController* const playerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		APlayerController* const PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 
-		FDamageEvent dmgEvent;
-		hitResult.GetActor()->TakeDamage(WeaponData.AttackDamage, dmgEvent, playerController, hitResult.GetActor());
+		FDamageEvent DmgEvent;
+		HitResult.GetActor()->TakeDamage(WeaponData.AttackDamage, DmgEvent, PlayerController, HitResult.GetActor());
 	}
 }
 

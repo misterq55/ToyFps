@@ -30,10 +30,10 @@ public:
 
 protected:
 	/** Called for movement input */
-	void Move(const FInputActionValue& Value);
+	void Move(const FInputActionValue& InValue);
 
 	/** Called for looking input */
-	void Look(const FInputActionValue& Value);
+	void Look(const FInputActionValue& InValue);
 
 	void DoCrouching();
 	void StopCrouching();
@@ -46,7 +46,7 @@ protected:
 
 	void Reload();
 
-	void DoAimimgDownSight();
+	void DoAimingDownSight();
 	void StopAimingDownSight();
 
 	// Called to bind functionality to input

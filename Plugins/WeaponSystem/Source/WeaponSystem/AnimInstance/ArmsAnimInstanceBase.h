@@ -50,13 +50,13 @@ protected:
 		bool EnableJump = false;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponJumpSequence1 = nullptr;
+		UAnimSequenceBase* AnimSequence_WeaponJumpSequence1 = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponJumpSequence2 = nullptr;
+		UAnimSequenceBase* AnimSequence_WeaponJumpSequence2 = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-		UAnimSequenceBase* AnimSequence_WeoponJumpSequence3 = nullptr;
+		UAnimSequenceBase* AnimSequence_WeaponJumpSequence3 = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		UAnimSequenceBase* AnimSequence_WeaponWalk = nullptr;

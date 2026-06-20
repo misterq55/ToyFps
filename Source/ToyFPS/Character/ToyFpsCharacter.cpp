@@ -71,10 +71,10 @@ void AToyFpsCharacter::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AToyFpsCharacter::Move(const FInputActionValue& Value)
+void AToyFpsCharacter::Move(const FInputActionValue& InValue)
 {
 	// input is a Vector2D
-	const FVector2D MovementVector = Value.Get<FVector2D>();
+	const FVector2D MovementVector = InValue.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
@@ -84,10 +84,10 @@ void AToyFpsCharacter::Move(const FInputActionValue& Value)
 	}
 }
 
-void AToyFpsCharacter::Look(const FInputActionValue& Value)
+void AToyFpsCharacter::Look(const FInputActionValue& InValue)
 {
 	// input is a Vector2D
-	const FVector2D LookAxisVector = Value.Get<FVector2D>();
+	const FVector2D LookAxisVector = InValue.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
@@ -152,7 +152,7 @@ void AToyFpsCharacter::Reload()
 	CurrentWeapon->Reload();
 }
 
-void AToyFpsCharacter::DoAimimgDownSight()
+void AToyFpsCharacter::DoAimingDownSight()
 {
 	if (bReloading)
 		return;
@@ -214,7 +214,7 @@ void AToyFpsCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &AToyFpsCharacter::Reload);
 
 		//Aiming Down Sight
-		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Started, this, &AToyFpsCharacter::DoAimimgDownSight);
+		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Started, this, &AToyFpsCharacter::DoAimingDownSight);
 		EnhancedInputComponent->BindAction(AimDownSightAction, ETriggerEvent::Completed, this, &AToyFpsCharacter::StopAimingDownSight);
 	}
 }

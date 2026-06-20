@@ -18,14 +18,14 @@ class TOYFPS_API ADamageableStaticMeshActor : public AStaticMeshActor, public ID
 public:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 	virtual void SetDamage(float InDamage);
-	virtual void SetHP(float InHP);
-	virtual float GetHP();
-	virtual bool GetDead();
+	virtual void SetHealth(float InHealth);
+	virtual float GetHealth();
+	virtual bool IsDead();
 	virtual void SetDead(bool InDead);
 
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Damageable, meta = (AllowPrivateAccess = "true"))
-		float HP = 0.f;
+		float Health = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Damageable, meta = (AllowPrivateAccess = "true"))
 		bool bDead = false;

@@ -5,9 +5,7 @@
 
 float ADamageableStaticMeshActor::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
 {
-	float FinalDamage = 0.f;
-
-	FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	const float FinalDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	SetDamage(FinalDamage);
 
 	return FinalDamage;
@@ -15,26 +13,26 @@ float ADamageableStaticMeshActor::TakeDamage(float DamageAmount, struct FDamageE
 
 void ADamageableStaticMeshActor::SetDamage(float InDamage)
 {
-	HP -= InDamage;
+	Health -= InDamage;
 	
-	if (HP < 0)
+	if (Health < 0)
 	{
-		HP = 0;
+		Health = 0;
 		SetDead(true);
 	}
 }
 
-void ADamageableStaticMeshActor::SetHP(float InHP)
+void ADamageableStaticMeshActor::SetHealth(float InHealth)
 {
-	HP = InHP;
+	Health = InHealth;
 }
 
-float ADamageableStaticMeshActor::GetHP()
+float ADamageableStaticMeshActor::GetHealth()
 {
-	return HP;
+	return Health;
 }
 
-bool ADamageableStaticMeshActor::GetDead()
+bool ADamageableStaticMeshActor::IsDead()
 {
 	return bDead;
 }
