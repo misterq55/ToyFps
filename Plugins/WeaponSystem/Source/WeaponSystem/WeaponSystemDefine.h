@@ -31,7 +31,10 @@ struct WEAPONSYSTEM_API FWeaponData
 		float BulletSpread = 0.f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
-		float SpreadPerShot = 0.1f;
+		float SpreadMin = 0.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
+		float SpreadMax = 0.3f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
 		float UndrawTime = 0.f;

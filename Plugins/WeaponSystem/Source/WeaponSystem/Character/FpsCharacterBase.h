@@ -51,14 +51,6 @@ public:
 		return SpreadCurrent;
 	}
 
-	float GetSpreadMax() const {
-		return SpreadMax;
-	}
-
-	float GetSpreadMin() const {
-		return SpreadMin;
-	}
-
 	bool IsAimingDownSight() const {
 		return bAimDownSight;
 	}
@@ -119,9 +111,4 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
 		float SpreadCurrent = 0.f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
-		float SpreadMax = 0.3f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = CrossHair, meta = (AllowPrivateAccess = "true"))
-		float SpreadMin = 0.f;
 };

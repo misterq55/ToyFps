@@ -50,16 +50,13 @@ void AWeaponBase::LineTrace(FVector& OutMuzzleLocation, FVector& OutImpactPoint,
 		return;
 	}
 
-	FpsCharacter->IncreaseSpread(WeaponData.SpreadPerShot);
-
 	const FVector StartLocation = FpsCharacter->GetMainCamera()->GetComponentLocation();
-	const FVector ForwardVector = FpsCharacter->GetMainCamera()->GetForwardVector() * 20000.f;
-
-	const float Max = FpsCharacter->GetSpreadCurrent() * 10000.f + WeaponData.BulletSpread;
-	const float Min = Max * -1.f;
-
-	const FVector EndLocation = FVector(UKismetMathLibrary::RandomFloatInRange(Min, Max), UKismetMathLibrary::RandomFloatInRange(Min, Max), UKismetMathLibrary::RandomFloatInRange(Min, Max)) + ForwardVector;
-
+	const FVector ForwardVector = FpsCharacter->GetMainCamera()->GetForwardVector();
+	
+	const float HalfAngleDeg = FpsCharacter->GetSpreadCurrent() + WeaponData.BulletSpread;
+	const FVector ShootDir = UKismetMathLibrary::RandomUnitVectorInConeInDegrees(ForwardVector, HalfAngleDeg);
+	const FVector EndLocation = StartLocation + ShootDir * 20000.f;
+	
 	FHitResult HitResult;
 
 	GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility, FCollisionQueryParams());

@@ -7,6 +7,7 @@
 #include "Components/CanvasPanelSlot.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "WeaponSystem/Character/FpsCharacterBase.h"
+#include "WeaponSystem/Weapon/WeaponBase.h"
 
 void UWeaponCrossHairWidget::NativeConstruct()
 {
@@ -72,74 +73,146 @@ void UWeaponCrossHairWidget::NativeDestruct()
 	Super::NativeDestruct();
 }
 
+// void UWeaponCrossHairWidget::SetCrossHair()
+// {
+// 	UCanvasPanel* const CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
+// 	
+// 	if (!IsValid(CanvasPanel))
+// 	{
+// 		return;
+// 	}
+//
+// 	UWorld* const World = GetWorld();
+// 	if (!IsValid(World))
+// 	{
+// 		return;
+// 	}
+//
+// 	const float DeltaTimeSeconds = World->DeltaTimeSeconds;
+// 	
+// 	if (!IsValid(OwningCharacter))
+// 	{
+// 		return;
+// 	}
+//
+// 	UCharacterMovementComponent* const CharacterMovement = OwningCharacter->GetCharacterMovement();
+// 	if (!IsValid(CharacterMovement))
+// 	{
+// 		return;
+// 	}
+//
+// 	const float LowerRadius = FMath::Abs(LowerBound);
+// 	const float UpperRadius = FMath::Abs(UpperBound);
+// 	const float RadiusRange = FMath::Max(UpperRadius - LowerRadius, 0.f);
+//
+// 	const float MaxWalkSpeed = CharacterMovement->MaxWalkSpeed;
+// 	const float MovementAlpha = MaxWalkSpeed > 0.f
+// 		? FMath::Clamp(OwningCharacter->GetVelocity().Size2D() / MaxWalkSpeed, 0.f, 1.f)
+// 		: 0.f;
+//
+// 	AWeaponBase* const CurrentWeapon = OwningCharacter->GetCurrentWeapon();
+// 	const float SpreadMin = IsValid(CurrentWeapon) ? CurrentWeapon->GetWeaponData().SpreadMin : 0.f;
+// 	const float SpreadMax = IsValid(CurrentWeapon) ? CurrentWeapon->GetWeaponData().SpreadMax : 0.f;
+//
+// 	const float SpreadRange = SpreadMax - SpreadMin;
+// 	const float SpreadAlpha = SpreadRange > 0.f
+// 		? FMath::Clamp((OwningCharacter->GetSpreadCurrent() - SpreadMin) / SpreadRange, 0.f, 1.f)
+// 		: 0.f;
+//
+// 	const float TargetAlpha = FMath::Clamp(MovementAlpha + SpreadAlpha, 0.f, 1.f);
+// 	const float TargetRadius = LowerRadius + (RadiusRange * TargetAlpha);
+// 	const int32 SlotCount = FMath::Min(CanvasPanel->GetSlots().Num(), CrossHairUnitVectors.Num());
+//
+// 	for (int32 Index = 0; Index < SlotCount; Index++)
+// 	{
+// 		UCanvasPanelSlot* const CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[Index]);
+//
+// 		if (!IsValid(CanvasPanelSlot))
+// 		{
+// 			continue;
+// 		}
+//
+// 		const FVector2D Position = CanvasPanelSlot->GetPosition();
+// 		const FVector2D UnitVector = CrossHairUnitVectors[Index];
+// 		const FVector2D TargetPosition = UnitVector * TargetRadius;
+// 		const FVector2D UpperBoundVector = UnitVector * UpperRadius;
+// 		const FVector2D LowerBoundVector = UnitVector * LowerRadius;
+// 		const FVector2D NewPosition = MakePositionLimit(
+// 			FVector2D(
+// 				UKismetMathLibrary::FInterpTo(Position.X, TargetPosition.X, DeltaTimeSeconds, InterpSpeed),
+// 				UKismetMathLibrary::FInterpTo(Position.Y, TargetPosition.Y, DeltaTimeSeconds, InterpSpeed)),
+// 			UpperBoundVector,
+// 			LowerBoundVector);
+//
+// 		CanvasPanelSlot->SetPosition(NewPosition);
+// 	}
+// }
+
 void UWeaponCrossHairWidget::SetCrossHair()
 {
-	UCanvasPanel* const CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
-	
-	if (!IsValid(CanvasPanel))
-	{
-		return;
-	}
+	const float DeltaTimeSeconds = GetWorld()->DeltaTimeSeconds;
 
-	UWorld* const World = GetWorld();
-	if (!IsValid(World))
-	{
-		return;
-	}
-
-	const float DeltaTimeSeconds = World->DeltaTimeSeconds;
-	
 	if (!IsValid(OwningCharacter))
 	{
 		return;
 	}
+
+	AWeaponBase* const CurrentWeapon = OwningCharacter->GetCurrentWeapon();
+	const FWeaponData& WeaponData = IsValid(CurrentWeapon) ? CurrentWeapon->GetWeaponData() : FWeaponData();
+
+	// 발사 반동에 따른 크로스헤어 확산 목표값 계산
+	const float HalfAngleRad = FMath::DegreesToRadians(OwningCharacter->GetSpreadCurrent() + WeaponData.BulletSpread);
+	const float TargetFirePower = FMath::Tan(HalfAngleRad) * CachedPixelFactor;
+
+	// 발사 시 빠르게 벌어지고, 회복 시 천천히 복귀
+	const float FirePowerInterpSpeed = (TargetFirePower > CurrentFirePower) ? FirePowerInterpSpeedSpread : FirePowerInterpSpeedRecover;
+	CurrentFirePower = UKismetMathLibrary::FInterpTo(CurrentFirePower, TargetFirePower, DeltaTimeSeconds, FirePowerInterpSpeed);
 
 	UCharacterMovementComponent* const CharacterMovement = OwningCharacter->GetCharacterMovement();
 	if (!IsValid(CharacterMovement))
 	{
 		return;
 	}
+	
+	const FVector Velocity = OwningCharacter->GetVelocity();
+	const float VelocityLength = FVector(Velocity.X, Velocity.Y, 0.f).Length();
+	const float Power = CharacterMovement->IsFalling()
+		? AirSpreadPower
+		: VelocityLength * 0.4f;
 
-	const float LowerRadius = FMath::Abs(LowerBound);
-	const float UpperRadius = FMath::Abs(UpperBound);
-	const float RadiusRange = FMath::Max(UpperRadius - LowerRadius, 0.f);
-
-	const float MaxWalkSpeed = CharacterMovement->MaxWalkSpeed;
-	const float MovementAlpha = MaxWalkSpeed > 0.f
-		? FMath::Clamp(OwningCharacter->GetVelocity().Size2D() / MaxWalkSpeed, 0.f, 1.f)
-		: 0.f;
-
-	const float SpreadRange = OwningCharacter->GetSpreadMax() - OwningCharacter->GetSpreadMin();
-	const float SpreadAlpha = SpreadRange > 0.f
-		? FMath::Clamp((OwningCharacter->GetSpreadCurrent() - OwningCharacter->GetSpreadMin()) / SpreadRange, 0.f, 1.f)
-		: 0.f;
-
-	const float TargetAlpha = FMath::Clamp(MovementAlpha + SpreadAlpha, 0.f, 1.f);
-	const float TargetRadius = LowerRadius + (RadiusRange * TargetAlpha);
-	const int32 SlotCount = FMath::Min(CanvasPanel->GetSlots().Num(), CrossHairUnitVectors.Num());
-
-	for (int32 Index = 0; Index < SlotCount; Index++)
+	UCanvasPanel* const CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
+	if (!IsValid(CanvasPanel))
 	{
-		UCanvasPanelSlot* const CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[Index]);
+		return;
+	}
+
+	const int32 SlotNum = CanvasPanel->GetSlots().Num();
+	for (int32 i = 0; i < SlotNum; i++)
+	{
+		UCanvasPanelSlot* const CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[i]);
 
 		if (!IsValid(CanvasPanelSlot))
 		{
 			continue;
 		}
 
-		const FVector2D Position = CanvasPanelSlot->GetPosition();
-		const FVector2D UnitVector = CrossHairUnitVectors[Index];
-		const FVector2D TargetPosition = UnitVector * TargetRadius;
-		const FVector2D UpperBoundVector = UnitVector * UpperRadius;
-		const FVector2D LowerBoundVector = UnitVector * LowerRadius;
-		const FVector2D NewPosition = MakePositionLimit(
-			FVector2D(
-				UKismetMathLibrary::FInterpTo(Position.X, TargetPosition.X, DeltaTimeSeconds, InterpSpeed),
-				UKismetMathLibrary::FInterpTo(Position.Y, TargetPosition.Y, DeltaTimeSeconds, InterpSpeed)),
-			UpperBoundVector,
-			LowerBoundVector);
+		const FVector2D UnitVector = CrossHairUnitVectors[i];
 
-		CanvasPanelSlot->SetPosition(NewPosition);
+		// target = velocity spread + fire spread
+		const float TargetSpread = Power + CurrentFirePower;
+
+		// interp from current position toward target (no feedback loop)
+		const FVector2D CurrentPos = CanvasPanelSlot->GetPosition();
+		const float CurrentProjection = FVector2D::DotProduct(CurrentPos, UnitVector);
+		const float InterpedProjection = UKismetMathLibrary::FInterpTo(CurrentProjection, TargetSpread, DeltaTimeSeconds, InterpSpeed);
+		const float TotalDisplacementScalar = InterpedProjection;
+
+		// UnitVector 축에 투영해 바운드 클램프
+		const float LowerBound = FMath::Tan(FMath::DegreesToRadians(WeaponData.SpreadMin)) * CachedPixelFactor;
+		const float UpperBound = FMath::Tan(FMath::DegreesToRadians(WeaponData.SpreadMax + WeaponData.BulletSpread)) * CachedPixelFactor;
+		const float ClampedProjection = FMath::Clamp(TotalDisplacementScalar, LowerBound, UpperBound);
+
+		CanvasPanelSlot->SetPosition(UnitVector * ClampedProjection);
 	}
 }
 

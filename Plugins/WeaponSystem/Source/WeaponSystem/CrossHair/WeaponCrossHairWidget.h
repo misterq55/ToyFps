@@ -39,15 +39,33 @@ protected:
 	TArray<FVector2D> CrossHairUnitVectors;
 	TObjectPtr<class AFpsCharacterBase> OwningCharacter;
 
-	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float InterpSpeed = 3.f;
+	// UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	// 	float InterpSpeed = 3.f;
+	//
+	// UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	// 	float UpperBound = -250.f;
+	//
+	// UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	// 	float LowerBound = -25.f;
+	//
+	// UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	// 	FVector2D CenterPivot;
+	
+	float CurrentFirePower = 0.f;
+	float CachedPixelFactor = 0.f;
 
 	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float UpperBound = -250.f;
+	float InterpSpeed = 3.f;
 
 	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		float LowerBound = -25.f;
+	float FirePowerInterpSpeedSpread = 20.f;
 
 	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		FVector2D CenterPivot;
+	float FirePowerInterpSpeedRecover = 5.f;
+
+	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float AirSpreadPower = 80.f;
+
+	UPROPERTY(Category = CrossHair, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	FVector2D CenterPivot;
 };

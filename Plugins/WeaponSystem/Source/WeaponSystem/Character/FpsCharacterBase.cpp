@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "WeaponSystem/Weapon/WeaponBase.h"
 
 const float AFpsCharacterBase::SprintSpeed = 600.f;
 const float AFpsCharacterBase::NormalSpeed = 300.f;
@@ -81,6 +82,9 @@ void AFpsCharacterBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	AWeaponBase* const EquippedWeapon = CurrentWeapon.Get();
+	const float SpreadMin = IsValid(EquippedWeapon) ? EquippedWeapon->GetWeaponData().SpreadMin : 0.f;
+
 	if (SpreadCurrent >= SpreadMin)
 	{
 		DecreaseSpread(DeltaTime * SpreadDecreaseSpeed);
@@ -119,6 +123,9 @@ void AFpsCharacterBase::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 void AFpsCharacterBase::IncreaseSpread(float InIncreaseAmount)
 {
+	AWeaponBase* const EquippedWeapon = CurrentWeapon.Get();
+	const float SpreadMax = IsValid(EquippedWeapon) ? EquippedWeapon->GetWeaponData().SpreadMax : 0.f;
+
 	if (SpreadCurrent + InIncreaseAmount >= SpreadMax)
 	{
 		SpreadCurrent = SpreadMax;
@@ -131,6 +138,9 @@ void AFpsCharacterBase::IncreaseSpread(float InIncreaseAmount)
 
 void AFpsCharacterBase::DecreaseSpread(float InDecreaseAmount)
 {
+	AWeaponBase* const EquippedWeapon = CurrentWeapon.Get();
+	const float SpreadMin = IsValid(EquippedWeapon) ? EquippedWeapon->GetWeaponData().SpreadMin : 0.f;
+
 	if (SpreadCurrent - InDecreaseAmount <= SpreadMin)
 	{
 		SpreadCurrent = SpreadMin;
