@@ -60,7 +60,6 @@ void AToyFpsCharacter::BeginPlay()
 
 	if (IsValid(CrossHair))
 	{
-		CrossHair->StartTimer();
 		CrossHair->AddToViewport();
 	}
 }

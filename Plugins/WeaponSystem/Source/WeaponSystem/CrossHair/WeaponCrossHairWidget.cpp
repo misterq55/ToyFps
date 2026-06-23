@@ -8,10 +8,13 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "WeaponSystem/Character/FpsCharacterBase.h"
 #include "WeaponSystem/Weapon/WeaponBase.h"
+#include "Camera/CameraComponent.h"
 
 void UWeaponCrossHairWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
+	OwningCharacter = Cast<AFpsCharacterBase>(GetOwningPlayerPawn());
+	
 	CrossHairUnitVectors.Empty();
 
 	UCanvasPanel* const CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
@@ -21,9 +24,10 @@ void UWeaponCrossHairWidget::NativeConstruct()
 	}
 
 	TArray<FVector2D> SlotPositions;
-	SlotPositions.Reserve(CanvasPanel->GetSlots().Num());
+	const int32 SlotNum = CanvasPanel->GetSlots().Num();
+	SlotPositions.Reserve(SlotNum);
 
-	for (int32 Index = 0; Index < CanvasPanel->GetSlots().Num(); Index++)
+	for (int32 Index = 0; Index < SlotNum; Index++)
 	{
 		UCanvasPanelSlot* const CanvasPanelSlot = Cast<UCanvasPanelSlot>(CanvasPanel->GetSlots()[Index]);
 		if (!IsValid(CanvasPanelSlot))
@@ -36,7 +40,6 @@ void UWeaponCrossHairWidget::NativeConstruct()
 
 	if (SlotPositions.Num() == 0)
 	{
-		OwningCharacter = Cast<AFpsCharacterBase>(GetOwningPlayerPawn());
 		return;
 	}
 
@@ -59,18 +62,27 @@ void UWeaponCrossHairWidget::NativeConstruct()
 		UnitVector.Normalize();
 		CrossHairUnitVectors.Add(UnitVector);
 	}
-	
-	OwningCharacter = Cast<AFpsCharacterBase>(GetOwningPlayerPawn());
 }
 
-void UWeaponCrossHairWidget::NativeDestruct()
+void UWeaponCrossHairWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	if (UWorld* const World = GetWorld())
+	Super::NativeTick(MyGeometry, InDeltaTime);
+	
+	if (!IsValid(OwningCharacter))
 	{
-		World->GetTimerManager().ClearTimer(SetCrossHairTimerHandle);
+		OwningCharacter = Cast<AFpsCharacterBase>(GetOwningPlayerPawn());
 	}
-
-	Super::NativeDestruct();
+	
+	if (IsValid(OwningCharacter))
+	{
+		const float ScreenHalfWidth = MyGeometry.GetLocalSize().X * 0.5f;
+		const float HalfFovTan = FMath::Tan(FMath::DegreesToRadians(OwningCharacter->GetMainCamera()->FieldOfView * 0.5f));
+		CachedPixelFactor = (HalfFovTan > 0.f) ? ScreenHalfWidth / HalfFovTan : 0.f;
+	}
+	
+	HideWhileADS();
+	
+	SetCrossHair();
 }
 
 void UWeaponCrossHairWidget::SetCrossHair()
@@ -143,41 +155,15 @@ void UWeaponCrossHairWidget::SetCrossHair()
 
 void UWeaponCrossHairWidget::HideWhileADS()
 {
-}
-
-void UWeaponCrossHairWidget::StartTimer()
-{
-	UWorld* const World = GetWorld();
-	if (!IsValid(World))
+	UCanvasPanel* const CanvasPanel = Cast<UCanvasPanel>(GetWidgetFromName(TEXT("canvasPanel")));
+	if (!IsValid(OwningCharacter) || !IsValid(CanvasPanel))
 	{
 		return;
 	}
 
-	World->GetTimerManager().ClearTimer(SetCrossHairTimerHandle);
-	World->GetTimerManager().SetTimer(SetCrossHairTimerHandle, this, &UWeaponCrossHairWidget::SetCrossHair, 0.1f, true);
-}
+	const ESlateVisibility newVisibility = OwningCharacter->IsAimingDownSight()
+		? ESlateVisibility::Hidden
+		: ESlateVisibility::Visible;
 
-FVector2D UWeaponCrossHairWidget::MakePositionLimit(const FVector2D& InPosition, const FVector2D& InUpperBoundVector, const FVector2D& InLowerBoundVector)
-{
-	FVector2D NewPosition = InPosition;
-
-	const float AbsUpperX = FMath::Abs(InUpperBoundVector.X);
-	const float AbsLowerX = FMath::Abs(InLowerBoundVector.X);
-	const float AbsUpperY = FMath::Abs(InUpperBoundVector.Y);
-	const float AbsLowerY = FMath::Abs(InLowerBoundVector.Y);
-
-	const float ClampedAbsX = FMath::Clamp(FMath::Abs(NewPosition.X), AbsLowerX, AbsUpperX);
-	const float ClampedAbsY = FMath::Clamp(FMath::Abs(NewPosition.Y), AbsLowerY, AbsUpperY);
-
-	const float SignX = !FMath::IsNearlyZero(InUpperBoundVector.X)
-		? FMath::Sign(InUpperBoundVector.X)
-		: (!FMath::IsNearlyZero(InLowerBoundVector.X) ? FMath::Sign(InLowerBoundVector.X) : 1.f);
-	const float SignY = !FMath::IsNearlyZero(InUpperBoundVector.Y)
-		? FMath::Sign(InUpperBoundVector.Y)
-		: (!FMath::IsNearlyZero(InLowerBoundVector.Y) ? FMath::Sign(InLowerBoundVector.Y) : 1.f);
-
-	NewPosition.X = ClampedAbsX * SignX;
-	NewPosition.Y = ClampedAbsY * SignY;
-
-	return NewPosition;
+	CanvasPanel->SetVisibility(newVisibility);
 }
