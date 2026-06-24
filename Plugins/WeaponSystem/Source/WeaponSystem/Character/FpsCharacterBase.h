@@ -76,7 +76,6 @@ public:
 protected:
 	static const float SprintSpeed;
 	static const float NormalSpeed;
-	float SpreadDecreaseSpeed = 1.f;
 
 protected:
 	UPROPERTY(Category = ToyFpsCharacter, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))

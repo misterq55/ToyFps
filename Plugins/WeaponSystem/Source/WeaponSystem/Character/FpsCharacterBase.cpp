@@ -87,7 +87,8 @@ void AFpsCharacterBase::Tick(float DeltaTime)
 
 	if (SpreadCurrent >= SpreadMin)
 	{
-		DecreaseSpread(DeltaTime * SpreadDecreaseSpeed);
+		const float DecreaseSpeed = IsValid(CurrentWeapon) ? CurrentWeapon->GetWeaponData().SpreadDecreaseSpeed : 1.f;
+		DecreaseSpread(DeltaTime * DecreaseSpeed);
 	}
 
 	if (RunningCameraShake == nullptr)

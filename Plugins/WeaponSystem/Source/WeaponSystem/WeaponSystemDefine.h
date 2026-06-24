@@ -38,6 +38,21 @@ struct WEAPONSYSTEM_API FWeaponData
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Weapon Data")
 		float UndrawTime = 0.f;
+	
+	UPROPERTY(Category = "Weapon|Attack", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	bool bAutoFire = false;
+
+	UPROPERTY(Category = "Weapon|Attack", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float FireInterval = 0.12f;
+
+	UPROPERTY(Category = "Weapon|Attack", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float SpreadIncrement = 1.f;
+
+	UPROPERTY(Category = "Weapon|Attack", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	float SpreadDecreaseSpeed = 1.f;
+
+	UPROPERTY(Category = "Weapon|Attack", EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USoundBase> DryfireSound = nullptr;
 
 	UPROPERTY(Category = Weapon, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		TObjectPtr<USkeletalMesh> WeaponMesh;
